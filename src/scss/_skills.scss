@@ -1,0 +1,69 @@
+// Skills row: horizontal band of 10 skills + exhaustion tracker
+
+.nos-skills-row {
+	grid-area: skills;
+	display: grid;
+	grid-template-columns: repeat(10, 1fr) auto;
+	border-bottom: $nos-border-thick;
+}
+
+.nos-skill {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: $nos-gap-sm $nos-gap-xs;
+	border-right: $nos-border-thin;
+	cursor: pointer;
+	transition: $nos-transition;
+
+	&:hover {
+		background: $nos-highlight;
+	}
+
+	&__ability {
+		font-size: $nos-text-xxs;
+		text-transform: uppercase;
+		color: $nos-text-secondary;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+	}
+
+	&__value {
+		font-size: $nos-text-lg;
+		font-weight: 700;
+		line-height: 1.2;
+	}
+
+	&__name {
+		font-size: $nos-text-xxs;
+		min-width: 4.5rem;
+		text-align: center;
+	}
+}
+
+// Exhaustion tracker (wounds)
+.nos-exhaustion {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: $nos-gap-sm $nos-gap-md;
+	min-width: 5rem;
+
+	&__label {
+		font-size: $nos-text-xxs;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+		color: $nos-text-secondary;
+		margin-bottom: $nos-gap-sm;
+	}
+
+	&__diamonds {
+		display: flex;
+		gap: $nos-gap-sm;
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+}

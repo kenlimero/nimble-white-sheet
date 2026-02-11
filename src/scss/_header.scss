@@ -1,0 +1,101 @@
+// Header row styles
+
+.nos-header {
+	grid-area: header;
+	display: grid;
+	grid-template-columns: 1.5fr 1.5fr auto 1fr auto;
+	grid-template-areas: 'name meta actions hwt hitdie';
+	align-items: end;
+	gap: $nos-gap-md;
+	padding: $nos-gap-md $nos-gap-lg;
+	border-bottom: $nos-border-thick;
+
+	&__name {
+		grid-area: name;
+
+		label {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: $nos-text-secondary;
+			display: block;
+			margin-bottom: $nos-gap-xs;
+		}
+
+		input {
+			width: 100%;
+			font-size: $nos-text-lg;
+			font-weight: 700;
+			text-align: left;
+		}
+	}
+
+	&__meta {
+		grid-area: meta;
+
+		label {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: $nos-text-secondary;
+			display: block;
+			margin-bottom: $nos-gap-xs;
+		}
+
+		.nos-meta-text {
+			font-size: $nos-text-sm;
+			font-weight: 500;
+			display: flex;
+			align-items: center;
+			gap: $nos-gap-sm;
+		}
+	}
+
+	&__actions {
+		grid-area: actions;
+	}
+
+	&__hw {
+		grid-area: hwt;
+
+		label {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: $nos-text-secondary;
+			display: block;
+			margin-bottom: $nos-gap-xs;
+		}
+
+		.nos-hw-fields {
+			display: flex;
+			gap: $nos-gap-sm;
+
+			input {
+				width: 4rem;
+				font-size: $nos-text-sm;
+			}
+		}
+	}
+
+	&__hitdie {
+		grid-area: hitdie;
+
+		label {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			color: $nos-text-secondary;
+			display: block;
+			margin-bottom: $nos-gap-xs;
+			text-align: center;
+		}
+
+		.nos-hitdie-value {
+			font-size: $nos-text-lg;
+			font-weight: 700;
+			text-align: center;
+			display: block;
+		}
+	}
+}

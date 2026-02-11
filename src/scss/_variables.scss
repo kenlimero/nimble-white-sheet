@@ -1,0 +1,49 @@
+// Official Nimble Sheet Variables
+// Paper-form aesthetic: black borders, white backgrounds, clean geometric shapes
+
+// Colors
+$nos-border-color: #333;
+$nos-border-light: #888;
+$nos-bg-primary: #fafafa;
+$nos-bg-secondary: #f0f0f0;
+$nos-bg-input: #fff;
+$nos-text-primary: #222;
+$nos-text-secondary: #555;
+$nos-text-label: #fff;
+$nos-accent: #444;
+$nos-highlight: hsl(210, 60%, 90%);
+$nos-danger: #b01b19;
+$nos-success: hsl(139, 48%, 36%);
+$nos-mana-color: hsl(212, 47%, 44%);
+
+// Pentagon label background
+$nos-label-bg: #333;
+$nos-label-text: #fff;
+
+// Borders
+$nos-border-thick: 2px solid $nos-border-color;
+$nos-border-thin: 1px solid $nos-border-color;
+$nos-border-light-thin: 1px solid $nos-border-light;
+
+// Typography
+$nos-font-family: 'Roboto Condensed', 'Roboto', sans-serif;
+$nos-font-mono: 'Source Code Pro', monospace;
+
+$nos-text-xxs: 0.579rem;
+$nos-text-xs: 0.694rem;
+$nos-text-sm: 0.833rem;
+$nos-text-md: 1rem;
+$nos-text-lg: 1.2rem;
+$nos-text-xl: 1.44rem;
+$nos-text-xxl: 1.728rem;
+$nos-text-xxxl: 2.074rem;
+
+// Spacing
+$nos-gap-xs: 0.125rem;
+$nos-gap-sm: 0.25rem;
+$nos-gap-md: 0.5rem;
+$nos-gap-lg: 0.75rem;
+$nos-gap-xl: 1rem;
+
+// Transitions
+$nos-transition: all 0.15s ease-in-out;

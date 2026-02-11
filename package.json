@@ -1,0 +1,26 @@
+{
+	"name": "nimble-official-sheet",
+	"version": "0.1.0",
+	"description": "Official Nimble character sheet reskin for FoundryVTT",
+	"type": "module",
+	"private": true,
+	"scripts": {
+		"build": "vite build",
+		"dev": "vite"
+	},
+	"engines": {
+		"node": ">=22.1.0"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "2.3.1",
+		"@sveltejs/vite-plugin-svelte": "6.2.1",
+		"fvtt-types": "npm:@league-of-foundry-developers/foundry-vtt-types@^13.345.1",
+		"sass": "^1.93.2",
+		"vite": "^7.1.12"
+	},
+	"dependencies": {
+		"svelte": "^5.42.2",
+		"svelte-preprocess": "^6.0.3",
+		"typescript": "^5.9.3"
+	}
+}

@@ -1,0 +1,29 @@
+{
+	"id": "nimble-official-sheet",
+	"title": "Nimble Official Character Sheet",
+	"description": "An alternative character sheet for the Nimble 2 system, matching the official paper character sheet layout.",
+	"version": "0.1.0",
+	"compatibility": {
+		"minimum": "13",
+		"verified": "13",
+		"maximum": "13"
+	},
+	"relationships": {
+		"systems": [
+			{
+				"id": "nimble",
+				"type": "system",
+				"compatibility": {
+					"minimum": "0.6.0"
+				}
+			}
+		]
+	},
+	"esmodules": ["nimble-official-sheet.js"],
+	"styles": ["nimble-official-sheet.css"],
+	"authors": [
+		{
+			"name": "Nimble Sheet Contributors"
+		}
+	]
+}

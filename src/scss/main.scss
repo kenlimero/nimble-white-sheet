@@ -1,0 +1,63 @@
+@use 'variables' as *;
+
+@import 'layout';
+@import 'shapes';
+@import 'form-aesthetic';
+@import 'header';
+@import 'stats';
+@import 'skills';
+@import 'content';
+
+// Sidebar controls (edit toggle, level up/down, rest)
+.nos-sidebar-controls {
+	position: absolute;
+	top: 0;
+	right: -2.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: $nos-gap-sm;
+	z-index: 10;
+
+	.nos-sidebar-btn {
+		width: 2rem;
+		height: 2rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: $nos-bg-secondary;
+		border: $nos-border-thin;
+		border-radius: 2px;
+		cursor: pointer;
+		font-size: $nos-text-sm;
+		color: $nos-text-secondary;
+		transition: $nos-transition;
+
+		&:hover {
+			background: $nos-highlight;
+			color: $nos-text-primary;
+		}
+
+		&:disabled {
+			opacity: 0.3;
+			cursor: default;
+		}
+
+		&--active {
+			background: $nos-border-color;
+			color: $nos-label-text;
+		}
+	}
+}
+
+// Nimble logo at bottom-right
+.nos-logo {
+	position: absolute;
+	bottom: $nos-gap-sm;
+	right: $nos-gap-md;
+	font-size: $nos-text-xs;
+	color: $nos-border-light;
+	font-weight: 700;
+	font-style: italic;
+	opacity: 0.5;
+	pointer-events: none;
+}

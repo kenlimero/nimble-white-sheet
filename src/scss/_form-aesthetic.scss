@@ -1,0 +1,101 @@
+// Paper-form aesthetic: flat, print-like appearance
+
+.nimble-official-sheet {
+	// Global input styles
+	input[type='text'],
+	input[type='number'] {
+		background: transparent;
+		border: none;
+		border-bottom: 1px solid $nos-border-light;
+		border-radius: 0;
+		font-family: $nos-font-family;
+		font-size: $nos-text-md;
+		color: $nos-text-primary;
+		padding: 0.125rem 0.25rem;
+		text-align: center;
+		outline: none;
+		transition: $nos-transition;
+
+		&:focus {
+			border-bottom-color: $nos-border-color;
+			background: $nos-highlight;
+		}
+
+		&:disabled {
+			opacity: 0.8;
+			cursor: default;
+		}
+	}
+
+	// Clickable/rollable elements
+	.nos-rollable {
+		cursor: pointer;
+		transition: $nos-transition;
+		user-select: none;
+
+		&:hover {
+			background: $nos-highlight;
+		}
+
+		&:active {
+			transform: scale(0.97);
+		}
+	}
+
+	// Section boxes
+	.nos-box {
+		border: $nos-border-thick;
+		background: $nos-bg-primary;
+		position: relative;
+	}
+
+	// Small icon buttons (edit, configure)
+	.nos-icon-btn {
+		background: none;
+		border: none;
+		cursor: pointer;
+		color: $nos-text-secondary;
+		font-size: $nos-text-xs;
+		padding: 0.125rem;
+		opacity: 0;
+		transition: $nos-transition;
+
+		&:hover {
+			color: $nos-text-primary;
+		}
+	}
+
+	// Show icon buttons on hover of parent
+	*:hover > .nos-icon-btn {
+		opacity: 0.65;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
+
+	// Tab button styles
+	.nos-tab-btn {
+		background: none;
+		border: none;
+		border-bottom: 2px solid transparent;
+		cursor: pointer;
+		font-family: $nos-font-family;
+		font-size: $nos-text-sm;
+		font-weight: 600;
+		color: $nos-text-secondary;
+		padding: 0.375rem 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		transition: $nos-transition;
+
+		&:hover {
+			color: $nos-text-primary;
+		}
+
+		&--active {
+			color: $nos-text-primary;
+			border-bottom-color: $nos-border-color;
+		}
+	}
+}

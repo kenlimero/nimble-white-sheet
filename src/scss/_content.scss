@@ -1,0 +1,266 @@
+// Content area: tabbed content + inventory sidebar
+
+.nos-content {
+	grid-area: content;
+	display: grid;
+	grid-template-columns: 1fr 10rem;
+	grid-template-rows: auto 1fr;
+	grid-template-areas:
+		'tabs sidebar-header'
+		'body sidebar';
+	overflow: hidden;
+
+	&__tabs {
+		grid-area: tabs;
+		display: flex;
+		gap: 0;
+		border-bottom: $nos-border-thin;
+		padding: 0 $nos-gap-md;
+	}
+
+	&__body {
+		grid-area: body;
+		overflow-y: auto;
+		padding: $nos-gap-md $nos-gap-lg;
+	}
+
+	&__sidebar-header {
+		grid-area: sidebar-header;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-left: $nos-border-thick;
+		border-bottom: $nos-border-thin;
+		padding: $nos-gap-sm;
+
+		span {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			letter-spacing: 0.08em;
+			font-weight: 700;
+			color: $nos-text-secondary;
+			writing-mode: horizontal-tb;
+		}
+	}
+
+	&__sidebar {
+		grid-area: sidebar;
+		border-left: $nos-border-thick;
+		overflow-y: auto;
+		padding: $nos-gap-sm;
+	}
+}
+
+// Item cards in content area
+.nos-item {
+	display: flex;
+	align-items: center;
+	gap: $nos-gap-md;
+	padding: $nos-gap-sm $nos-gap-sm;
+	border-bottom: 1px solid #ddd;
+	transition: $nos-transition;
+
+	&:hover {
+		background: $nos-highlight;
+
+		.nos-icon-btn {
+			opacity: 0.65;
+		}
+	}
+
+	&__img {
+		width: 1.5rem;
+		height: 1.5rem;
+		border-radius: 2px;
+		object-fit: cover;
+		flex-shrink: 0;
+	}
+
+	&__name {
+		flex: 1;
+		font-size: $nos-text-sm;
+		font-weight: 500;
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__meta {
+		font-size: $nos-text-xxs;
+		color: $nos-text-secondary;
+	}
+
+	&__controls {
+		display: flex;
+		gap: $nos-gap-xs;
+		align-items: center;
+	}
+
+	&__qty {
+		width: 2rem;
+		font-size: $nos-text-xs;
+	}
+}
+
+// Inventory slot in sidebar
+.nos-slot {
+	border-bottom: 1px solid $nos-border-light;
+	padding: $nos-gap-xs $nos-gap-sm;
+	font-size: $nos-text-xs;
+	min-height: 1.5rem;
+	display: flex;
+	align-items: center;
+
+	&--empty {
+		color: $nos-text-secondary;
+		font-style: italic;
+	}
+}
+
+// Currency display
+.nos-currency {
+	display: flex;
+	gap: $nos-gap-lg;
+	padding: $nos-gap-sm 0;
+	margin-bottom: $nos-gap-md;
+	border-bottom: $nos-border-light-thin;
+
+	&__coin {
+		display: flex;
+		align-items: center;
+		gap: $nos-gap-sm;
+
+		label {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			font-weight: 700;
+			color: $nos-text-secondary;
+		}
+
+		input {
+			width: 3rem;
+			font-size: $nos-text-sm;
+		}
+	}
+}
+
+// Bio tab
+.nos-bio {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: $nos-gap-md;
+
+	&__field {
+		display: flex;
+		flex-direction: column;
+		gap: $nos-gap-xs;
+
+		label {
+			font-size: $nos-text-xxs;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			font-weight: 600;
+			color: $nos-text-secondary;
+		}
+
+		input {
+			text-align: left;
+		}
+	}
+
+	&__notes {
+		grid-column: 1 / -1;
+		min-height: 8rem;
+	}
+}
+
+// Spells grouping
+.nos-spell-tier {
+	margin-bottom: $nos-gap-lg;
+
+	&__heading {
+		font-size: $nos-text-sm;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: $nos-text-secondary;
+		padding-bottom: $nos-gap-xs;
+		border-bottom: $nos-border-thin;
+		margin-bottom: $nos-gap-sm;
+	}
+}
+
+// Features grouping
+.nos-feature-group {
+	margin-bottom: $nos-gap-lg;
+
+	&__heading {
+		font-size: $nos-text-sm;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: $nos-text-secondary;
+		padding-bottom: $nos-gap-xs;
+		border-bottom: $nos-border-thin;
+		margin-bottom: $nos-gap-sm;
+	}
+}
+
+// Search bar
+.nos-search {
+	display: flex;
+	align-items: center;
+	gap: $nos-gap-sm;
+	margin-bottom: $nos-gap-md;
+
+	input {
+		flex: 1;
+		text-align: left;
+		font-size: $nos-text-sm;
+		padding: $nos-gap-sm;
+	}
+}
+
+// Settings tab
+.nos-settings {
+	display: flex;
+	flex-direction: column;
+	gap: $nos-gap-lg;
+
+	&__group {
+		h3 {
+			font-size: $nos-text-sm;
+			font-weight: 700;
+			text-transform: uppercase;
+			letter-spacing: 0.05em;
+			color: $nos-text-secondary;
+			margin-bottom: $nos-gap-md;
+			padding-bottom: $nos-gap-xs;
+			border-bottom: $nos-border-thin;
+		}
+	}
+
+	&__row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: $nos-gap-sm 0;
+
+		label {
+			font-size: $nos-text-sm;
+			font-weight: 500;
+		}
+
+		input[type='checkbox'] {
+			width: 1rem;
+			height: 1rem;
+		}
+
+		input[type='number'] {
+			width: 4rem;
+			text-align: center;
+		}
+	}
+}

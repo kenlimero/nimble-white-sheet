@@ -1,0 +1,189 @@
+// Stats row styles: ability scores + combat stats + class resources
+
+.nos-stats {
+	grid-area: stats;
+	display: grid;
+	grid-template-columns: repeat(4, 1fr) 2fr;
+	grid-template-rows: auto auto;
+	grid-template-areas:
+		'str dex int wil combat'
+		'resources resources resources resources resources';
+	border-bottom: $nos-border-thick;
+}
+
+// Individual ability score box
+.nos-ability {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	border-right: $nos-border-thin;
+	padding: $nos-gap-md $nos-gap-sm;
+	cursor: pointer;
+	transition: $nos-transition;
+	position: relative;
+
+	&:hover {
+		background: $nos-highlight;
+	}
+
+	&__value {
+		font-size: $nos-text-xxl;
+		font-weight: 700;
+		line-height: 1;
+		margin-bottom: $nos-gap-sm;
+	}
+
+	&__label {
+		font-size: $nos-text-xs;
+		padding: 0.2rem 0.75rem;
+		min-width: 3rem;
+	}
+
+	&__base {
+		font-size: $nos-text-xxs;
+		color: $nos-text-secondary;
+		margin-top: $nos-gap-xs;
+	}
+}
+
+// Combat stats section (right of abilities)
+.nos-combat {
+	grid-area: combat;
+	display: grid;
+	grid-template-columns: repeat(6, 1fr);
+	grid-template-rows: 1fr;
+	border-left: $nos-border-thick;
+
+	&__stat {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: $nos-gap-sm;
+		border-right: $nos-border-thin;
+		text-align: center;
+
+		&:last-child {
+			border-right: none;
+		}
+
+		&--clickable {
+			cursor: pointer;
+			transition: $nos-transition;
+
+			&:hover {
+				background: $nos-highlight;
+			}
+		}
+	}
+
+	&__icon {
+		font-size: $nos-text-sm;
+		color: $nos-text-secondary;
+		margin-bottom: $nos-gap-xs;
+	}
+
+	&__label {
+		font-size: $nos-text-xxs;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: $nos-text-secondary;
+		margin-bottom: $nos-gap-xs;
+		font-weight: 600;
+	}
+
+	&__value {
+		font-size: $nos-text-xl;
+		font-weight: 700;
+		line-height: 1;
+	}
+
+	&__input {
+		width: 3rem;
+		font-size: $nos-text-lg;
+		font-weight: 700;
+		text-align: center;
+	}
+
+	&__sub {
+		font-size: $nos-text-xxs;
+		color: $nos-text-secondary;
+	}
+}
+
+// HP-specific styles
+.nos-hp {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: $nos-gap-xs;
+
+	&__bar {
+		display: flex;
+		align-items: center;
+		gap: $nos-gap-xs;
+	}
+
+	&__current,
+	&__max {
+		width: 2.5rem;
+		font-weight: 700;
+	}
+
+	&__separator {
+		font-weight: 700;
+		color: $nos-text-secondary;
+	}
+
+	&--bloodied {
+		.nos-combat__value,
+		.nos-hp__current {
+			color: $nos-danger;
+		}
+	}
+}
+
+// Class resources bar
+.nos-resources {
+	grid-area: resources;
+	display: flex;
+	align-items: center;
+	gap: $nos-gap-md;
+	padding: $nos-gap-sm $nos-gap-lg;
+	border-top: $nos-border-thick;
+	min-height: 1.75rem;
+
+	&__label {
+		font-size: $nos-text-xs;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+		color: $nos-text-secondary;
+		white-space: nowrap;
+	}
+
+	&__mana {
+		display: flex;
+		align-items: center;
+		gap: $nos-gap-sm;
+
+		label {
+			font-size: $nos-text-xs;
+			font-weight: 600;
+			color: $nos-mana-color;
+		}
+
+		input {
+			width: 2.5rem;
+			font-size: $nos-text-sm;
+			font-weight: 700;
+			color: $nos-mana-color;
+		}
+
+		.nos-resources__separator {
+			color: $nos-text-secondary;
+			font-size: $nos-text-xs;
+		}
+	}
+}
