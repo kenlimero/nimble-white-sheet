@@ -203,6 +203,14 @@
 		return prepareCharacterMetadata(c, sub, anc, size);
 	});
 
+	// Wounds
+	let wounds = $derived(actor.reactive.system.attributes.wounds);
+	function toggleWounds(woundLevel) {
+		let newWoundsValue = woundLevel;
+		if (woundLevel <= wounds.value) newWoundsValue = woundLevel - 1;
+		actor.update({ 'system.attributes.wounds.value': newWoundsValue });
+	}
+
 	// Flags
 	let flags = $derived(actor.reactive.flags.nimble);
 	let editingEnabled = $derived(flags?.editingEnabled ?? true);
@@ -237,6 +245,8 @@
 		{hitDiceData}
 		{hasMana}
 		{mana}
+		{wounds}
+		{toggleWounds}
 		{updateCurrentHP}
 		{updateMaxHP}
 		{updateTempHP}

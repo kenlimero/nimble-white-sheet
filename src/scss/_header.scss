@@ -8,8 +8,6 @@
 	align-items: center;
 	gap: $nos-gap-md;
 	padding: $nos-gap-sm $nos-gap-lg;
-	border-bottom: $nos-border-thick;
-
 	&__portrait {
 		grid-area: portrait;
 		cursor: pointer;
@@ -19,12 +17,11 @@
 			height: 6rem;
 			object-fit: cover;
 			border-radius: 3px;
-			border: $nos-border-thin;
+			border: none;
 			transition: $nos-transition;
 		}
 
 		&:hover img {
-			border-color: $nos-accent;
 			opacity: 0.85;
 		}
 	}
@@ -72,21 +69,30 @@
 
 	&__hitdie {
 		grid-area: hitdie;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		padding: $nos-gap-xs $nos-gap-sm;
+		border: $nos-border-thin;
+		border-radius: 3px;
+		background: rgba(255, 255, 255, 0.85);
 		text-align: center;
 
 		label {
 			font-size: $nos-text-xxs;
 			text-transform: uppercase;
-			letter-spacing: 0.08em;
+			letter-spacing: 0.05em;
 			color: $nos-text-secondary;
-			display: block;
-			margin-bottom: $nos-gap-xs;
+			font-weight: 600;
+			margin-bottom: 0;
 		}
 	}
 
 	&__hitdie-value {
-		font-size: $nos-text-md;
+		font-size: $nos-text-sm;
 		font-weight: 700;
+		line-height: 1;
 	}
 
 }

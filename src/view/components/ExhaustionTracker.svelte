@@ -5,18 +5,20 @@
 	let { wounds, toggleWounds } = $props();
 </script>
 
-<div class="nos-exhaustion">
-	<span class="nos-exhaustion__label">{localize('NWS.Exhaustion')}</span>
-	<div class="nos-exhaustion__diamonds">
+<div class="nos-wounds">
+	<span class="nos-wounds__label">{localize('NWS.Exhaustion')}</span>
+	<div class="nos-wounds__drops">
 		{#each { length: wounds.max }, i}
 			<button
-				class="nos-diamond"
-				class:nos-diamond--active={wounds.value > i}
+				class="nos-wounds__drop"
+				class:nos-wounds__drop--active={wounds.value > i}
 				type="button"
 				data-tooltip={format('NWS.ToggleWound', { n: i + 1 })}
 				aria-label={format('NWS.ToggleWound', { n: i + 1 })}
 				onclick={() => toggleWounds(i + 1)}
-			></button>
+			>
+				<i class="fa-solid fa-droplet"></i>
+			</button>
 		{/each}
 	</div>
 </div>

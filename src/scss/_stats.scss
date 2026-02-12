@@ -6,9 +6,16 @@
 	grid-template-columns: 1fr 1fr;
 	grid-template-rows: auto auto;
 	grid-template-areas:
-		'abilities combat'
-		'resources resources';
-	border-bottom: $nos-border-thick;
+		'abilities right'
+		'wounds right';
+	align-items: start;
+	padding-top: $nos-gap-sm;
+}
+
+.nos-right-col {
+	grid-area: right;
+	display: flex;
+	flex-direction: column;
 }
 
 // Abilities block — fixed at 50% of sheet width, boxes take 4/5 of space
@@ -17,7 +24,6 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-right: $nos-border-thick;
 	padding: $nos-gap-xs 10%;
 	gap: $nos-gap-sm;
 	position: relative;
@@ -112,19 +118,28 @@
 
 // Combat stats section (right of abilities)
 .nos-combat {
-	grid-area: combat;
 	display: grid;
-	grid-template-columns: auto 1fr auto auto;
+	grid-template-columns: repeat(4, 1fr);
 	grid-template-rows: 1fr;
+	padding: 0 10%;
+	gap: $nos-gap-sm;
+	align-content: center;
+	align-items: center;
+	justify-content: center;
+	max-height: 60%;
 
 	&__pair {
 		display: flex;
 		flex-direction: column;
-		border-right: $nos-border-thin;
+		border: $nos-border-thin;
+		border-radius: 3px;
+		background: rgba(255, 255, 255, 0.85);
 
 		.nos-combat__stat {
 			flex: 1;
-			border-right: none;
+			border: none;
+			border-radius: 0;
+			background: none;
 
 			&:first-child {
 				border-bottom: $nos-border-thin;
@@ -138,12 +153,10 @@
 		align-items: center;
 		justify-content: center;
 		padding: $nos-gap-xs $nos-gap-sm;
-		border-right: $nos-border-thin;
+		border: $nos-border-thin;
+		border-radius: 3px;
+		background: rgba(255, 255, 255, 0.85);
 		text-align: center;
-
-		&:last-child {
-			border-right: none;
-		}
 
 		&--clickable {
 			cursor: pointer;
@@ -156,7 +169,7 @@
 	}
 
 	&__icon {
-		font-size: $nos-text-xs;
+		font-size: $nos-text-xxs;
 		color: $nos-text-secondary;
 		margin-bottom: 0;
 	}
@@ -171,14 +184,14 @@
 	}
 
 	&__value {
-		font-size: $nos-text-md;
+		font-size: $nos-text-sm;
 		font-weight: 700;
 		line-height: 1;
 	}
 
 	&__input {
 		width: 2.5rem;
-		font-size: $nos-text-sm;
+		font-size: $nos-text-xs;
 		font-weight: 700;
 		text-align: center;
 	}
@@ -205,7 +218,7 @@
 	&__current,
 	&__max {
 		width: 2rem;
-		font-size: $nos-text-sm;
+		font-size: $nos-text-xs;
 		font-weight: 700;
 	}
 
@@ -224,12 +237,10 @@
 
 // Class resources bar
 .nos-resources {
-	grid-area: resources;
 	display: flex;
 	align-items: center;
 	gap: $nos-gap-md;
 	padding: $nos-gap-sm $nos-gap-lg;
-	border-top: $nos-border-thick;
 	min-height: 1.5rem;
 
 	&__label {
@@ -262,6 +273,54 @@
 		.nos-resources__separator {
 			color: $nos-text-secondary;
 			font-size: $nos-text-xs;
+		}
+	}
+}
+
+// Wounds / Exhaustion tracker
+.nos-wounds {
+	grid-area: wounds;
+	display: flex;
+	align-items: center;
+	gap: $nos-gap-md;
+	padding: $nos-gap-sm $nos-gap-lg;
+
+	&__label {
+		font-size: $nos-text-xs;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+		color: $nos-text-secondary;
+		white-space: nowrap;
+	}
+
+	&__drops {
+		display: flex;
+		align-items: center;
+		gap: $nos-gap-xs;
+	}
+
+	&__drop {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		padding: 0.2rem;
+		cursor: pointer;
+		font-size: 1rem;
+		color: #ccc;
+		-webkit-text-stroke: 1px #999;
+		transition: $nos-transition;
+
+		&:hover {
+			transform: scale(1.2);
+			color: #b01b19;
+		}
+
+		&--active {
+			color: #b01b19;
+			-webkit-text-stroke: 1px #fff;
 		}
 	}
 }
