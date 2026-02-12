@@ -6,7 +6,7 @@
 </script>
 
 <div class="nos-wounds">
-	<span class="nos-wounds__label">{localize('NWS.Exhaustion')}</span>
+	<span class="nos-wounds__label">{localize('NWS.Wounds')}</span>
 	<div class="nos-wounds__drops">
 		{#each { length: wounds.max }, i}
 			<button

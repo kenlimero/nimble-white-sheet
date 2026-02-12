@@ -37,6 +37,9 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		return this._actor;
 	}
 
+	static MIN_WIDTH = 650;
+	static MIN_HEIGHT = 400;
+
 	static override DEFAULT_OPTIONS = {
 		classes: ['nimble-white-sheet'],
 		window: {
@@ -48,6 +51,16 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			height: 750,
 		},
 	};
+
+	override setPosition(position: { width?: number; height?: number; [key: string]: unknown }) {
+		if (position.width !== undefined && position.width < WhiteCharacterSheet.MIN_WIDTH) {
+			position.width = WhiteCharacterSheet.MIN_WIDTH;
+		}
+		if (position.height !== undefined && position.height < WhiteCharacterSheet.MIN_HEIGHT) {
+			position.height = WhiteCharacterSheet.MIN_HEIGHT;
+		}
+		return super.setPosition(position);
+	}
 
 	protected override async _prepareContext(
 		options: Parameters<foundry.applications.sheets.ActorSheetV2['_prepareContext']>[0],

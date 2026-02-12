@@ -1,9 +1,6 @@
 // Main grid layout for the white sheet (4-row layout)
 
 .nimble-white-sheet {
-	min-width: 650px;
-	min-height: 750px;
-
 	.window-content {
 		padding: 0;
 		overflow: hidden;
@@ -20,7 +17,7 @@
 		'skills'
 		'content';
 	height: 100%;
-	background: $nos-bg-primary url('/modules/nimble-white-sheet/PaperTexture.webp') center / cover no-repeat;
+	background: $nos-bg-primary;
 	font-family: $nos-font-family;
 	color: $nos-text-primary;
 	overflow: hidden;

@@ -3,7 +3,7 @@
 	import formatModifier from '../../utils/formatModifier.js';
 	import AbilityBox from '../components/AbilityBox.svelte';
 	import ClassResourceBar from '../components/ClassResourceBar.svelte';
-	import ExhaustionTracker from '../components/ExhaustionTracker.svelte';
+	import WoundTracker from '../components/WoundTracker.svelte';
 
 	let {
 		actor,
@@ -181,5 +181,5 @@
 		/>
 	</div>
 
-	<ExhaustionTracker {wounds} {toggleWounds} />
+	<WoundTracker {wounds} {toggleWounds} />
 </section>
