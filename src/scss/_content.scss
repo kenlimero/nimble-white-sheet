@@ -9,6 +9,7 @@
 		'tabs sidebar-header'
 		'body sidebar';
 	overflow: hidden;
+	min-height: 0;
 
 	&__tabs {
 		grid-area: tabs;
@@ -49,6 +50,13 @@
 		overflow-y: auto;
 		padding: $nos-gap-sm;
 	}
+}
+
+// 2-column grid for items
+.nos-item-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0 $nos-gap-lg;
 }
 
 // Item cards in content area
@@ -112,6 +120,24 @@
 	min-height: 1.5rem;
 	display: flex;
 	align-items: center;
+	gap: $nos-gap-sm;
+
+	&__img {
+		width: 1.25rem;
+		height: 1.25rem;
+		object-fit: cover;
+		border-radius: 2px;
+		flex-shrink: 0;
+	}
+
+	&__name {
+		flex: 1;
+		cursor: pointer;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
 
 	&--empty {
 		color: $nos-text-secondary;
@@ -192,6 +218,17 @@
 	}
 }
 
+// Features 2-column row (ancestry + background)
+.nos-feature-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 0 $nos-gap-lg;
+
+	.nos-feature-group {
+		margin-bottom: $nos-gap-lg;
+	}
+}
+
 // Features grouping
 .nos-feature-group {
 	margin-bottom: $nos-gap-lg;
@@ -223,44 +260,3 @@
 	}
 }
 
-// Settings tab
-.nos-settings {
-	display: flex;
-	flex-direction: column;
-	gap: $nos-gap-lg;
-
-	&__group {
-		h3 {
-			font-size: $nos-text-sm;
-			font-weight: 700;
-			text-transform: uppercase;
-			letter-spacing: 0.05em;
-			color: $nos-text-secondary;
-			margin-bottom: $nos-gap-md;
-			padding-bottom: $nos-gap-xs;
-			border-bottom: $nos-border-thin;
-		}
-	}
-
-	&__row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		padding: $nos-gap-sm 0;
-
-		label {
-			font-size: $nos-text-sm;
-			font-weight: 500;
-		}
-
-		input[type='checkbox'] {
-			width: 1rem;
-			height: 1rem;
-		}
-
-		input[type='number'] {
-			width: 4rem;
-			text-align: center;
-		}
-	}
-}

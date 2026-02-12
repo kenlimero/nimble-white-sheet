@@ -1,7 +1,7 @@
 {
-	"id": "nimble-official-sheet",
-	"title": "Nimble Official Character Sheet",
-	"description": "An alternative character sheet for the Nimble 2 system, matching the official paper character sheet layout.",
+	"id": "nimble-white-sheet",
+	"title": "Nimble White Character Sheet",
+	"description": "An alternative character sheet for the Nimble 2 system, with a clean white paper layout.",
 	"version": "0.1.0",
 	"compatibility": {
 		"minimum": "13",
@@ -19,8 +19,20 @@
 			}
 		]
 	},
-	"esmodules": ["nimble-official-sheet.js"],
-	"styles": ["nimble-official-sheet.css"],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "lang/en.json"
+		},
+		{
+			"lang": "fr",
+			"name": "Fran\u00e7ais",
+			"path": "lang/fr.json"
+		}
+	],
+	"esmodules": ["nimble-white-sheet.js"],
+	"styles": ["nimble-white-sheet.css"],
 	"authors": [
 		{
 			"name": "Nimble Sheet Contributors"

@@ -3,47 +3,91 @@
 .nos-stats {
 	grid-area: stats;
 	display: grid;
-	grid-template-columns: repeat(4, 1fr) 2fr;
+	grid-template-columns: 1fr 1fr;
 	grid-template-rows: auto auto;
 	grid-template-areas:
-		'str dex int wil combat'
-		'resources resources resources resources resources';
+		'abilities combat'
+		'resources resources';
 	border-bottom: $nos-border-thick;
 }
 
-// Individual ability score box
+// Abilities block — fixed at 50% of sheet width, boxes take 4/5 of space
+.nos-abilities {
+	grid-area: abilities;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-right: $nos-border-thick;
+	padding: $nos-gap-xs 10%;
+	gap: $nos-gap-sm;
+}
+
+// Individual ability score box (skill-like format)
 .nos-ability {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
-	border-right: $nos-border-thin;
-	padding: $nos-gap-md $nos-gap-sm;
-	cursor: pointer;
-	transition: $nos-transition;
-	position: relative;
+	gap: 2px;
+	flex: 1;
 
-	&:hover {
-		background: $nos-highlight;
+	// d20 save button (top)
+	&__roll {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+		transition: $nos-transition;
+
+		&:hover {
+			transform: scale(1.15);
+		}
+
+		&--advantage .nos-ability__d20 {
+			color: $nos-success;
+		}
+
+		&--disadvantage .nos-ability__d20 {
+			color: $nos-danger;
+		}
+	}
+
+	&__d20 {
+		font-size: 1.25rem;
+		color: $nos-text-secondary;
+	}
+
+	// Main ability box — centered bonus only
+	&__box {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: none;
+		border: 2px solid #333;
+		border-radius: 3px;
+		padding: $nos-gap-sm $nos-gap-sm;
+		cursor: pointer;
+		width: 100%;
+		transition: $nos-transition;
+
+		&:hover {
+			background: $nos-highlight;
+		}
 	}
 
 	&__value {
-		font-size: $nos-text-xxl;
+		font-size: $nos-text-lg;
 		font-weight: 700;
 		line-height: 1;
-		margin-bottom: $nos-gap-sm;
 	}
 
-	&__label {
-		font-size: $nos-text-xs;
-		padding: 0.2rem 0.75rem;
-		min-width: 3rem;
-	}
-
-	&__base {
+	// Banner label (same style as skills)
+	&__name {
 		font-size: $nos-text-xxs;
-		color: $nos-text-secondary;
-		margin-top: $nos-gap-xs;
+		min-width: 1.5rem;
+		text-align: center;
 	}
 }
 
@@ -51,16 +95,30 @@
 .nos-combat {
 	grid-area: combat;
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
+	grid-template-columns: auto 1fr auto auto;
 	grid-template-rows: 1fr;
-	border-left: $nos-border-thick;
+
+	&__pair {
+		display: flex;
+		flex-direction: column;
+		border-right: $nos-border-thin;
+
+		.nos-combat__stat {
+			flex: 1;
+			border-right: none;
+
+			&:first-child {
+				border-bottom: $nos-border-thin;
+			}
+		}
+	}
 
 	&__stat {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		padding: $nos-gap-sm;
+		padding: $nos-gap-xs $nos-gap-sm;
 		border-right: $nos-border-thin;
 		text-align: center;
 
@@ -79,9 +137,9 @@
 	}
 
 	&__icon {
-		font-size: $nos-text-sm;
+		font-size: $nos-text-xs;
 		color: $nos-text-secondary;
-		margin-bottom: $nos-gap-xs;
+		margin-bottom: 0;
 	}
 
 	&__label {
@@ -89,19 +147,19 @@
 		text-transform: uppercase;
 		letter-spacing: 0.05em;
 		color: $nos-text-secondary;
-		margin-bottom: $nos-gap-xs;
+		margin-bottom: 0;
 		font-weight: 600;
 	}
 
 	&__value {
-		font-size: $nos-text-xl;
+		font-size: $nos-text-md;
 		font-weight: 700;
 		line-height: 1;
 	}
 
 	&__input {
-		width: 3rem;
-		font-size: $nos-text-lg;
+		width: 2.5rem;
+		font-size: $nos-text-sm;
 		font-weight: 700;
 		text-align: center;
 	}
@@ -127,7 +185,8 @@
 
 	&__current,
 	&__max {
-		width: 2.5rem;
+		width: 2rem;
+		font-size: $nos-text-sm;
 		font-weight: 700;
 	}
 
@@ -152,7 +211,7 @@
 	gap: $nos-gap-md;
 	padding: $nos-gap-sm $nos-gap-lg;
 	border-top: $nos-border-thick;
-	min-height: 1.75rem;
+	min-height: 1.5rem;
 
 	&__label {
 		font-size: $nos-text-xs;

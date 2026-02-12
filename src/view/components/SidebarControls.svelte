@@ -10,8 +10,8 @@
 		class:nos-sidebar-btn--active={editingEnabled}
 		type="button"
 		aria-pressed={editingEnabled}
-		aria-label={editingEnabled ? 'Disable editing' : 'Enable editing'}
-		data-tooltip={editingEnabled ? 'Editing Enabled' : 'Editing Locked'}
+		aria-label={editingEnabled ? localize('NWS.DisableEditing') : localize('NWS.EnableEditing')}
+		data-tooltip={editingEnabled ? localize('NWS.EditingEnabled') : localize('NWS.EditingLocked')}
 		onclick={toggleEditingEnabled}
 	>
 		<i class="fa-solid {editingEnabled ? 'fa-pen' : 'fa-lock'}"></i>
@@ -20,8 +20,8 @@
 	<button
 		class="nos-sidebar-btn"
 		type="button"
-		aria-label="Level Up"
-		data-tooltip="Level Up"
+		aria-label={localize('NWS.LevelUp')}
+		data-tooltip={localize('NWS.LevelUp')}
 		onclick={() => actor.triggerLevelUp()}
 		disabled={!classItem || classItem?.system?.classLevel >= 20}
 	>
@@ -31,8 +31,8 @@
 	<button
 		class="nos-sidebar-btn"
 		type="button"
-		aria-label="Revert Last Level Up"
-		data-tooltip="Revert Last Level Up"
+		aria-label={localize('NWS.RevertLastLevelUp')}
+		data-tooltip={localize('NWS.RevertLastLevelUp')}
 		onclick={() => actor.triggerLevelDown()}
 		disabled={actor.reactive.system.levelUpHistory.length === 0}
 	>
@@ -42,8 +42,8 @@
 	<button
 		class="nos-sidebar-btn"
 		type="button"
-		aria-label="Field Rest"
-		data-tooltip="Field Rest"
+		aria-label={localize('NWS.FieldRest')}
+		data-tooltip={localize('NWS.FieldRest')}
 		onclick={() => actor.triggerRest({ restType: 'field' })}
 	>
 		<i class="fa-regular fa-hourglass-half"></i>
@@ -52,8 +52,8 @@
 	<button
 		class="nos-sidebar-btn"
 		type="button"
-		aria-label="Safe Rest"
-		data-tooltip="Safe Rest"
+		aria-label={localize('NWS.SafeRest')}
+		data-tooltip={localize('NWS.SafeRest')}
 		onclick={() => actor.triggerRest({ restType: 'safe' })}
 	>
 		<i class="fa-solid fa-moon"></i>

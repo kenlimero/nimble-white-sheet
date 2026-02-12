@@ -1,19 +1,27 @@
-// Main grid layout for the official sheet (landscape 4-row layout)
+// Main grid layout for the white sheet (4-row layout)
 
-.nimble-official-sheet {
+.nimble-white-sheet {
+	min-width: 650px;
+	min-height: 750px;
+
 	.window-content {
-		display: grid;
-		grid-template-rows: auto auto auto 1fr;
-		grid-template-columns: 1fr;
-		grid-template-areas:
-			'header'
-			'stats'
-			'skills'
-			'content';
-		background: $nos-bg-primary;
-		font-family: $nos-font-family;
-		color: $nos-text-primary;
 		padding: 0;
 		overflow: hidden;
 	}
+}
+
+.nos-sheet {
+	display: grid;
+	grid-template-rows: auto auto auto 1fr;
+	grid-template-columns: 1fr;
+	grid-template-areas:
+		'header'
+		'stats'
+		'skills'
+		'content';
+	height: 100%;
+	background: $nos-bg-primary;
+	font-family: $nos-font-family;
+	color: $nos-text-primary;
+	overflow: hidden;
 }

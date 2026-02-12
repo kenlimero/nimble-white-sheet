@@ -1,12 +1,19 @@
 <script>
 	import localize from '../../utils/localize.js';
-	import ActionsDiamond from '../components/ActionsDiamond.svelte';
 
 	let { actor, metaData, editingEnabled, hitDiceData } = $props();
 
 	let details = $derived(actor.reactive.system.details);
+	let actorImg = $derived(actor.reactive.img);
 
-	// Get the primary hit die size label
+	function pickPortrait() {
+		new FilePicker({
+			type: 'image',
+			current: actor.img,
+			callback: (path) => actor.update({ img: path }),
+		}).render(true);
+	}
+
 	let hitDieLabel = $derived.by(() => {
 		const sizes = Object.keys(hitDiceData.bySize);
 		if (sizes.length === 0) return '—';
@@ -16,8 +23,15 @@
 </script>
 
 <header class="nos-header">
+	<div class="nos-header__portrait" onclick={pickPortrait}>
+		<img
+			src={actorImg}
+			alt={actor.reactive.name}
+		/>
+	</div>
+
 	<div class="nos-header__name">
-		<label>Character Name</label>
+		<label>{localize('NWS.CharacterName')}</label>
 		<input
 			type="text"
 			value={actor.reactive.name}
@@ -29,7 +43,7 @@
 	</div>
 
 	<div class="nos-header__meta">
-		<label>Ancestry, Class, & Level</label>
+		<label>{localize('NWS.AncestryClassLevel')}</label>
 		<div class="nos-meta-text">
 			{#if metaData}
 				<span>{metaData}</span>
@@ -39,8 +53,8 @@
 			<button
 				class="nos-icon-btn"
 				type="button"
-				aria-label="Edit"
-				data-tooltip="Edit Metadata"
+				aria-label={localize('NWS.EditMetadata')}
+				data-tooltip={localize('NWS.EditMetadata')}
 				onclick={() => actor.editMetadata()}
 				disabled={!editingEnabled}
 			>
@@ -49,32 +63,9 @@
 		</div>
 	</div>
 
-	<div class="nos-header__actions">
-		<ActionsDiamond />
-	</div>
-
-	<div class="nos-header__hw">
-		<label>Height & Weight</label>
-		<div class="nos-hw-fields">
-			<input
-				type="text"
-				value={details.height ?? ''}
-				placeholder="Height"
-				onchange={({ target }) => actor.update({ 'system.details.height': target.value })}
-				disabled={!editingEnabled}
-			/>
-			<input
-				type="text"
-				value={details.weight ?? ''}
-				placeholder="Weight"
-				onchange={({ target }) => actor.update({ 'system.details.weight': target.value })}
-				disabled={!editingEnabled}
-			/>
-		</div>
-	</div>
-
 	<div class="nos-header__hitdie">
-		<label>Hit Die</label>
-		<span class="nos-hitdie-value">{hitDieLabel}</span>
+		<label>{localize('NWS.HitDie')}</label>
+		<span class="nos-header__hitdie-value">{hitDieLabel}</span>
 	</div>
+
 </header>

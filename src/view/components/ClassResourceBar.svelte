@@ -1,13 +1,13 @@
 <script>
+	import localize from '../../utils/localize.js';
+
 	let { hasMana, mana, updateCurrentMana, updateMaxMana, editingEnabled } = $props();
 </script>
 
 <div class="nos-resources">
-	<span class="nos-resources__label">Class Resources</span>
-
 	{#if hasMana}
 		<div class="nos-resources__mana">
-			<label>Mana</label>
+			<label>{localize('NWS.Mana')}</label>
 			<input
 				type="number"
 				value={mana.current}

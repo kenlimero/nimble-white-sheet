@@ -1,0 +1,81 @@
+{
+	"NWS": {
+		"CharacterName": "Character Name",
+		"AncestryClassLevel": "Ancestry, Class, & Level",
+		"EditMetadata": "Edit Metadata",
+		"HitDie": "Hit Die",
+
+		"Armor": "Armor",
+		"TempHP": "Temp HP",
+		"HitPoints": "Hit Points",
+		"Max": "MAX",
+		"Current": "CURRENT",
+		"ConfigureHitPoints": "Configure Hit Points",
+		"HitDice": "Hit Dice",
+		"ConfigureHitDice": "Configure Hit Dice",
+		"RollInitiative": "Roll Initiative",
+		"Initiative": "Initiative",
+		"Speed": "Speed",
+		"ConfigureMovement": "Configure Movement",
+
+		"RollCheck": "Roll {name} Check",
+		"RollSave": "Roll {name} Save",
+		"ConfigureAbilityScores": "Configure Ability Scores",
+		"ConfigureSavingThrows": "Configure Saving Throws",
+		"RollSkill": "Roll {name}",
+		"Exhaustion": "Exhaustion",
+		"ToggleWound": "Toggle Wound {n}",
+
+		"Actions": "Actions",
+
+		"DisableEditing": "Disable editing",
+		"EnableEditing": "Enable editing",
+		"EditingEnabled": "Editing Enabled",
+		"EditingLocked": "Editing Locked",
+		"LevelUp": "Level Up",
+		"RevertLastLevelUp": "Revert Last Level Up",
+		"FieldRest": "Field Rest",
+		"SafeRest": "Safe Rest",
+
+		"Mana": "Mana",
+
+		"Features": "Features",
+		"Spells": "Spells",
+		"Inventory": "Inventory",
+		"Bio": "Bio",
+		"Weapons": "Weapons",
+
+		"Ancestry": "Ancestry",
+		"Background": "Background",
+		"Class": "Class",
+		"Level": "Level",
+		"Boons": "Boons",
+		"DropFeaturesHere": "Drop features, ancestry, background, or class items here.",
+
+		"SearchSpells": "Search spells...",
+		"New": "New",
+		"Tier": "Tier {n}",
+		"Utility": "Utility",
+		"Concentration": "Concentration",
+		"DropSpellsHere": "Drop spell items here.",
+
+		"GP": "GP",
+		"SP": "SP",
+		"CP": "CP",
+		"SearchItems": "Search items...",
+		"DropInventoryHere": "Drop inventory items here.",
+		"NoWeapons": "No weapons",
+
+		"Age": "Age",
+		"Gender": "Gender",
+		"Height": "Height",
+		"Weight": "Weight",
+		"Languages": "Languages",
+		"ConfigureLanguages": "Configure Languages",
+		"ArmorProficiencies": "Armor Proficiencies",
+		"ConfigureArmorProficiencies": "Configure Armor Proficiencies",
+		"WeaponProficiencies": "Weapon Proficiencies",
+		"ConfigureWeaponProficiencies": "Configure Weapon Proficiencies",
+		"Notes": "Notes"
+	}
+}

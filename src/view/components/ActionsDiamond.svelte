@@ -1,10 +1,11 @@
 <script>
-	// Decorative action economy display matching the official sheet's diamond layout.
+	// Decorative action economy display matching the white sheet's diamond layout.
 	// The Nimble system currently does not track action economy per-turn, so this is visual-only.
+	import localize from '../../utils/localize.js';
 </script>
 
-<div class="nos-actions-diamond" data-tooltip="Actions">
-	<div class="nos-actions-diamond__label">Actions</div>
+<div class="nos-actions-diamond" data-tooltip={localize('NWS.Actions')}>
+	<div class="nos-actions-diamond__label">{localize('NWS.Actions')}</div>
 	<svg viewBox="0 0 80 70" width="80" height="70" xmlns="http://www.w3.org/2000/svg">
 		<!-- Diamond arrangement of action circles -->
 		<!-- Top row: 2 dots -->

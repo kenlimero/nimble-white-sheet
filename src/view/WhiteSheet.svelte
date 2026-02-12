@@ -1,5 +1,6 @@
 <script>
 	import { setContext } from 'svelte';
+	import { createSubscriber } from 'svelte/reactivity';
 	import { readable } from 'svelte/store';
 	import localize from '../utils/localize.js';
 	import HeaderRow from './sections/HeaderRow.svelte';
@@ -8,7 +9,50 @@
 	import ContentArea from './sections/ContentArea.svelte';
 	import SidebarControls from './components/SidebarControls.svelte';
 
-	let { actor, sheet } = $props();
+	let { actor: rawActor, sheet } = $props();
+
+	// --- Module-local reactivity ---
+	// The system's actor.reactive uses createSubscriber from the system's Svelte runtime.
+	// Since this module bundles its own Svelte runtime, the system's subscriptions don't
+	// notify our $derived values. We create our own subscription using the module's runtime,
+	// listening to the same Foundry hooks.
+	const subscribe = createSubscriber((update) => {
+		const hooks = {
+			updateActor: Hooks.on('updateActor', (doc, _, opts) => {
+				if (opts.diff === false) return;
+				if (doc._id === rawActor.id) update();
+			}),
+			createItem: Hooks.on('createItem', (doc) => {
+				if (doc?.actor?.id === rawActor.id) update();
+			}),
+			deleteItem: Hooks.on('deleteItem', (doc) => {
+				if (doc?.actor?.id === rawActor.id) update();
+			}),
+			updateItem: Hooks.on('updateItem', (doc, _, opts) => {
+				if (opts.diff === false) return;
+				if (doc?.actor?.id === rawActor.id) update();
+			}),
+		};
+		return () => {
+			Hooks.off('updateActor', hooks.updateActor);
+			Hooks.off('createItem', hooks.createItem);
+			Hooks.off('deleteItem', hooks.deleteItem);
+			Hooks.off('updateItem', hooks.updateItem);
+		};
+	});
+
+	// Proxy that intercepts .reactive to use our module-local subscription
+	const actor = new Proxy(rawActor, {
+		get(target, prop) {
+			if (prop === 'reactive') {
+				subscribe();
+				return target;
+			}
+			const value = target[prop];
+			if (typeof value === 'function') return value.bind(target);
+			return value;
+		},
+	});
 
 	const { sizeCategories, defaultSkillAbilities, abilityScoreAbbreviations } = CONFIG.NIMBLE;
 
@@ -39,15 +83,6 @@
 		const idx = dieSizes.indexOf(size);
 		if (idx === -1) return size;
 		return dieSizes[Math.min(idx + bonus, dieSizes.length - 1)];
-	}
-
-	// Wounds
-	let wounds = $derived(actor.reactive.system.attributes.wounds);
-
-	function toggleWounds(woundLevel) {
-		let newValue = woundLevel;
-		if (woundLevel <= wounds.value) newValue = woundLevel - 1;
-		actor.update({ 'system.attributes.wounds.value': newValue });
 	}
 
 	// HP
@@ -214,8 +249,6 @@
 
 	<SkillsRow
 		{actor}
-		{wounds}
-		{toggleWounds}
 	/>
 
 	<ContentArea

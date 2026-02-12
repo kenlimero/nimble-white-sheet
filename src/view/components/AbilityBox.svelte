@@ -1,46 +1,41 @@
 <script>
 	import localize from '../../utils/localize.js';
+	import { format } from '../../utils/localize.js';
 	import formatModifier from '../../utils/formatModifier.js';
 
-	let { abilityKey, ability, actor, editingEnabled } = $props();
+	let { abilityKey, ability, save, actor, editingEnabled } = $props();
 
 	const { abilityScoreAbbreviations } = CONFIG.NIMBLE;
 	let label = $derived(localize(abilityScoreAbbreviations[abilityKey]));
+	let rollTooltip = $derived(format('NWS.RollCheck', { name: label }));
+	let saveTooltip = $derived(format('NWS.RollSave', { name: label }));
 </script>
 
 <div class="nos-ability">
+	<!-- d20 Save button (top) -->
 	<button
-		class="nos-ability__roll nos-rollable"
+		class="nos-ability__roll"
+		class:nos-ability__roll--advantage={save.defaultRollMode > 0}
+		class:nos-ability__roll--disadvantage={save.defaultRollMode < 0}
 		type="button"
-		data-tooltip="Roll {label} Check"
-		aria-label="Roll {label} Check"
+		data-tooltip={saveTooltip}
+		aria-label={saveTooltip}
+		onclick={() => actor.rollSavingThrowToChat(abilityKey)}
+	>
+		<i class="fa-solid fa-dice-d20 nos-ability__d20"></i>
+	</button>
+
+	<!-- Main ability box (click = check roll) -->
+	<button
+		class="nos-ability__box nos-rollable"
+		type="button"
+		data-tooltip={rollTooltip}
+		aria-label={rollTooltip}
 		onclick={() => actor.rollAbilityCheckToChat(abilityKey)}
 	>
 		<span class="nos-ability__value">{formatModifier(ability.mod)}</span>
-		<span class="nos-ability__label nos-pentagon">{label}</span>
 	</button>
-	<button
-		class="nos-icon-btn"
-		type="button"
-		aria-label="Configure Ability Scores"
-		data-tooltip="Configure Ability Scores"
-		onclick={() => actor.configureAbilityScores()}
-		disabled={!editingEnabled}
-	>
-		<i class="fa-solid fa-gear"></i>
-	</button>
-</div>
 
-<style>
-	.nos-ability__roll {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		background: none;
-		border: none;
-		padding: 0;
-		cursor: pointer;
-		width: 100%;
-	}
-</style>
+	<!-- Label banner (same style as skills) -->
+	<span class="nos-ability__name nos-banner">{label}</span>
+</div>

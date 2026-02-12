@@ -1,22 +1,21 @@
 <script>
+	import localize from '../../utils/localize.js';
 	import FeaturesTab from '../tabs/FeaturesTab.svelte';
 	import SpellsTab from '../tabs/SpellsTab.svelte';
 	import InventoryTab from '../tabs/InventoryTab.svelte';
 	import BioTab from '../tabs/BioTab.svelte';
-	import SettingsTab from '../tabs/SettingsTab.svelte';
 	import InventorySlots from '../components/InventorySlots.svelte';
 
 	let { actor, editingEnabled, hasMana, mana, updateCurrentMana, updateMaxMana } = $props();
 
 	const tabs = [
-		{ name: 'features', label: 'Features', icon: 'fa-solid fa-table-list', component: FeaturesTab },
-		{ name: 'spells', label: 'Spells', icon: 'fa-solid fa-wand-sparkles', component: SpellsTab },
-		{ name: 'inventory', label: 'Inventory', icon: 'fa-solid fa-box-open', component: InventoryTab },
-		{ name: 'bio', label: 'Bio', icon: 'fa-solid fa-file-lines', component: BioTab },
-		{ name: 'settings', label: 'Settings', icon: 'fa-solid fa-cog', component: SettingsTab },
+		{ name: 'features', labelKey: 'NWS.Features', icon: 'fa-solid fa-table-list', component: FeaturesTab },
+		{ name: 'spells', labelKey: 'NWS.Spells', icon: 'fa-solid fa-wand-sparkles', component: SpellsTab },
+		{ name: 'inventory', labelKey: 'NWS.Inventory', icon: 'fa-solid fa-box-open', component: InventoryTab },
+		{ name: 'bio', labelKey: 'NWS.Bio', icon: 'fa-solid fa-file-lines', component: BioTab },
 	];
 
-	let currentTab = $state(tabs[0]);
+	let currentTab = $state('features');
 
 	// Inventory tracking
 	let trackSlots = $derived(actor.reactive.flags?.nimble?.trackInventorySlots ?? false);
@@ -28,22 +27,30 @@
 		{#each tabs as tab}
 			<button
 				class="nos-tab-btn"
-				class:nos-tab-btn--active={currentTab.name === tab.name}
+				class:nos-tab-btn--active={currentTab === tab.name}
 				type="button"
-				onclick={() => (currentTab = tab)}
+				onclick={() => (currentTab = tab.name)}
 			>
 				<i class="{tab.icon}" style="margin-right: 0.25rem;"></i>
-				{tab.label}
+				{localize(tab.labelKey)}
 			</button>
 		{/each}
 	</nav>
 
 	<div class="nos-content__body">
-		<currentTab.component {actor} {editingEnabled} />
+		{#if currentTab === 'features'}
+			<FeaturesTab {actor} {editingEnabled} />
+		{:else if currentTab === 'spells'}
+			<SpellsTab {actor} {editingEnabled} />
+		{:else if currentTab === 'inventory'}
+			<InventoryTab {actor} {editingEnabled} />
+		{:else if currentTab === 'bio'}
+			<BioTab {actor} {editingEnabled} />
+		{/if}
 	</div>
 
 	<div class="nos-content__sidebar-header">
-		<span>Inventory Slots</span>
+		<span>{localize('NWS.Weapons')}</span>
 	</div>
 
 	<div class="nos-content__sidebar">

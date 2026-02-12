@@ -1,9 +1,8 @@
 <script>
 	import localize from '../../utils/localize.js';
 	import SkillCell from '../components/SkillCell.svelte';
-	import ExhaustionTracker from '../components/ExhaustionTracker.svelte';
 
-	let { actor, wounds, toggleWounds } = $props();
+	let { actor } = $props();
 
 	const skillKeys = [
 		'arcana',
@@ -27,6 +26,4 @@
 			{actor}
 		/>
 	{/each}
-
-	<ExhaustionTracker {wounds} {toggleWounds} />
 </section>

@@ -1,5 +1,6 @@
 <script>
 	import localize from '../../utils/localize.js';
+	import { format } from '../../utils/localize.js';
 	import formatModifier from '../../utils/formatModifier.js';
 
 	let { skillKey, skill, actor } = $props();
@@ -14,7 +15,7 @@
 <button
 	class="nos-skill nos-rollable"
 	type="button"
-	data-tooltip="Roll {skillName}"
+	data-tooltip={format('NWS.RollSkill', { name: skillName })}
 	onclick={() => actor.rollSkillCheckToChat(skillKey)}
 >
 	<span class="nos-skill__ability">{abilityAbbrev}</span>

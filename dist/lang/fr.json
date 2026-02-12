@@ -1,0 +1,81 @@
+{
+	"NWS": {
+		"CharacterName": "Nom du personnage",
+		"AncestryClassLevel": "Ascendance, Classe & Niveau",
+		"EditMetadata": "Modifier les m\u00e9tadonn\u00e9es",
+		"HitDie": "D\u00e9 de vie",
+
+		"Armor": "Armure",
+		"TempHP": "PV Temp",
+		"HitPoints": "Points de vie",
+		"Max": "MAX",
+		"Current": "ACTUEL",
+		"ConfigureHitPoints": "Configurer les points de vie",
+		"HitDice": "D\u00e9s de vie",
+		"ConfigureHitDice": "Configurer les d\u00e9s de vie",
+		"RollInitiative": "Lancer l'initiative",
+		"Initiative": "Initiative",
+		"Speed": "Vitesse",
+		"ConfigureMovement": "Configurer le d\u00e9placement",
+
+		"RollCheck": "Lancer un test de {name}",
+		"RollSave": "Lancer un jet de sauvegarde de {name}",
+		"ConfigureAbilityScores": "Configurer les caract\u00e9ristiques",
+		"ConfigureSavingThrows": "Configurer les jets de sauvegarde",
+		"RollSkill": "Lancer {name}",
+		"Exhaustion": "\u00c9puisement",
+		"ToggleWound": "Basculer la blessure {n}",
+
+		"Actions": "Actions",
+
+		"DisableEditing": "D\u00e9sactiver l'\u00e9dition",
+		"EnableEditing": "Activer l'\u00e9dition",
+		"EditingEnabled": "\u00c9dition activ\u00e9e",
+		"EditingLocked": "\u00c9dition verrouill\u00e9e",
+		"LevelUp": "Monter de niveau",
+		"RevertLastLevelUp": "Annuler la derni\u00e8re mont\u00e9e de niveau",
+		"FieldRest": "Repos de campagne",
+		"SafeRest": "Repos s\u00fbr",
+
+		"Mana": "Mana",
+
+		"Features": "Capacit\u00e9s",
+		"Spells": "Sorts",
+		"Inventory": "Inventaire",
+		"Bio": "Bio",
+		"Weapons": "Armes",
+
+		"Ancestry": "Ascendance",
+		"Background": "Historique",
+		"Class": "Classe",
+		"Level": "Niveau",
+		"Boons": "Dons",
+		"DropFeaturesHere": "D\u00e9posez des capacit\u00e9s, ascendance, historique ou classe ici.",
+
+		"SearchSpells": "Rechercher des sorts...",
+		"New": "Nouveau",
+		"Tier": "Rang {n}",
+		"Utility": "Utilitaire",
+		"Concentration": "Concentration",
+		"DropSpellsHere": "D\u00e9posez des sorts ici.",
+
+		"GP": "PO",
+		"SP": "PA",
+		"CP": "PC",
+		"SearchItems": "Rechercher des objets...",
+		"DropInventoryHere": "D\u00e9posez des objets d'inventaire ici.",
+		"NoWeapons": "Pas d'armes",
+
+		"Age": "\u00c2ge",
+		"Gender": "Genre",
+		"Height": "Taille",
+		"Weight": "Poids",
+		"Languages": "Langues",
+		"ConfigureLanguages": "Configurer les langues",
+		"ArmorProficiencies": "Ma\u00eetrises d'armure",
+		"ConfigureArmorProficiencies": "Configurer les ma\u00eetrises d'armure",
+		"WeaponProficiencies": "Ma\u00eetrises d'armes",
+		"ConfigureWeaponProficiencies": "Configurer les ma\u00eetrises d'armes",
+		"Notes": "Notes"
+	}
+}

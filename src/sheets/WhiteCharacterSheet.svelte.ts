@@ -2,14 +2,14 @@ import {
 	SvelteApplicationMixin,
 	type SvelteApplicationRenderContext,
 } from '../lib/SvelteApplicationMixin.svelte.js';
-import OfficialSheetComponent from '../view/OfficialSheet.svelte';
+import WhiteSheetComponent from '../view/WhiteSheet.svelte';
 
-export default class OfficialCharacterSheet extends SvelteApplicationMixin(
+export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 	foundry.applications.sheets.ActorSheetV2,
 ) {
 	protected _actor: Actor;
 	protected root;
-	protected props: { actor: Actor; sheet: OfficialCharacterSheet };
+	protected props: { actor: Actor; sheet: WhiteCharacterSheet };
 
 	constructor(
 		actor: { document: Actor },
@@ -21,7 +21,7 @@ export default class OfficialCharacterSheet extends SvelteApplicationMixin(
 			}) as ConstructorParameters<typeof foundry.applications.sheets.ActorSheetV2>[0],
 		);
 
-		this.root = OfficialSheetComponent;
+		this.root = WhiteSheetComponent;
 		const resolvedActor = (actor.document as any).isToken
 			? (actor.document as any).parent?.actor
 			: actor.document;
@@ -38,13 +38,13 @@ export default class OfficialCharacterSheet extends SvelteApplicationMixin(
 	}
 
 	static override DEFAULT_OPTIONS = {
-		classes: ['nimble-official-sheet'],
+		classes: ['nimble-white-sheet'],
 		window: {
 			icon: 'fa-solid fa-scroll',
 			resizable: true,
 		},
 		position: {
-			width: 920,
+			width: 650,
 			height: 750,
 		},
 	};

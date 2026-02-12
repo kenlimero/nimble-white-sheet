@@ -1,4 +1,4 @@
-import OfficialCharacterSheet from './sheets/OfficialCharacterSheet.svelte.js';
+import WhiteCharacterSheet from './sheets/WhiteCharacterSheet.svelte.js';
 import './scss/main.scss';
 
 Hooks.once('init', () => {
@@ -7,12 +7,12 @@ Hooks.once('init', () => {
 	>[1];
 
 	foundry.documents.collections.Actors.registerSheet(
-		'nimble-official-sheet',
-		OfficialCharacterSheet as unknown as ActorSheetConstructor,
+		'nimble-white-sheet',
+		WhiteCharacterSheet as unknown as ActorSheetConstructor,
 		{
 			types: ['character'],
 			makeDefault: false,
-			label: 'Official Nimble Sheet',
+			label: 'Nimble White Sheet',
 		},
 	);
 });

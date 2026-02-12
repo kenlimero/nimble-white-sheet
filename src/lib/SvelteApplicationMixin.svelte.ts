@@ -29,7 +29,7 @@ function SvelteApplicationMixin<
 		}, [] as string[]);
 
 		static DEFAULT_OPTIONS = {
-			classes: ['nimble-official-sheet'],
+			classes: ['nimble-white-sheet'],
 		};
 
 		protected abstract root: svelte.Component<Record<string, never>>;

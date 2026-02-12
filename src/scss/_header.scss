@@ -3,12 +3,31 @@
 .nos-header {
 	grid-area: header;
 	display: grid;
-	grid-template-columns: 1.5fr 1.5fr auto 1fr auto;
-	grid-template-areas: 'name meta actions hwt hitdie';
-	align-items: end;
+	grid-template-columns: auto 1.5fr 2fr auto;
+	grid-template-areas: 'portrait name meta hitdie';
+	align-items: center;
 	gap: $nos-gap-md;
-	padding: $nos-gap-md $nos-gap-lg;
+	padding: $nos-gap-sm $nos-gap-lg;
 	border-bottom: $nos-border-thick;
+
+	&__portrait {
+		grid-area: portrait;
+		cursor: pointer;
+
+		img {
+			width: 6rem;
+			height: 6rem;
+			object-fit: cover;
+			border-radius: 3px;
+			border: $nos-border-thin;
+			transition: $nos-transition;
+		}
+
+		&:hover img {
+			border-color: $nos-accent;
+			opacity: 0.85;
+		}
+	}
 
 	&__name {
 		grid-area: name;
@@ -51,35 +70,9 @@
 		}
 	}
 
-	&__actions {
-		grid-area: actions;
-	}
-
-	&__hw {
-		grid-area: hwt;
-
-		label {
-			font-size: $nos-text-xxs;
-			text-transform: uppercase;
-			letter-spacing: 0.08em;
-			color: $nos-text-secondary;
-			display: block;
-			margin-bottom: $nos-gap-xs;
-		}
-
-		.nos-hw-fields {
-			display: flex;
-			gap: $nos-gap-sm;
-
-			input {
-				width: 4rem;
-				font-size: $nos-text-sm;
-			}
-		}
-	}
-
 	&__hitdie {
 		grid-area: hitdie;
+		text-align: center;
 
 		label {
 			font-size: $nos-text-xxs;
@@ -88,14 +81,12 @@
 			color: $nos-text-secondary;
 			display: block;
 			margin-bottom: $nos-gap-xs;
-			text-align: center;
-		}
-
-		.nos-hitdie-value {
-			font-size: $nos-text-lg;
-			font-weight: 700;
-			text-align: center;
-			display: block;
 		}
 	}
+
+	&__hitdie-value {
+		font-size: $nos-text-md;
+		font-weight: 700;
+	}
+
 }

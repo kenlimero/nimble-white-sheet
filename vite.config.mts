@@ -5,12 +5,12 @@ import { defineConfig } from 'vite';
 
 export default defineConfig({
 	root: 'src/',
-	base: '/modules/nimble-official-sheet/',
+	base: '/modules/nimble-white-sheet/',
 	publicDir: path.resolve(__dirname, 'public'),
 	server: {
 		port: 30002,
 		proxy: {
-			'^(?!/modules/nimble-official-sheet)': 'http://localhost:30000',
+			'^(?!/modules/nimble-white-sheet)': 'http://localhost:30000',
 			'/socket.io': { target: 'ws://localhost:30000', ws: true },
 		},
 	},
@@ -19,10 +19,10 @@ export default defineConfig({
 		emptyOutDir: true,
 		sourcemap: true,
 		lib: {
-			name: 'NimbleOfficialSheet',
+			name: 'NimbleWhiteSheet',
 			entry: path.resolve(__dirname, 'src/main.ts'),
 			formats: ['es'],
-			fileName: 'nimble-official-sheet',
+			fileName: 'nimble-white-sheet',
 		},
 	},
 	esbuild: {

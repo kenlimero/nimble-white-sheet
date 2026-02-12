@@ -1,4 +1,6 @@
 <script>
+	import localize from '../../utils/localize.js';
+
 	let { actor, editingEnabled } = $props();
 
 	let details = $derived(actor.reactive.system.details);
@@ -12,7 +14,7 @@
 
 <div class="nos-bio">
 	<div class="nos-bio__field">
-		<label>Age</label>
+		<label>{localize('NWS.Age')}</label>
 		<input
 			type="text"
 			value={details.age ?? ''}
@@ -22,7 +24,7 @@
 	</div>
 
 	<div class="nos-bio__field">
-		<label>Gender</label>
+		<label>{localize('NWS.Gender')}</label>
 		<input
 			type="text"
 			value={details.gender ?? ''}
@@ -32,12 +34,34 @@
 	</div>
 
 	<div class="nos-bio__field">
-		<label>Languages</label>
+		<label>{localize('NWS.Height')}</label>
+		<input
+			type="text"
+			value={details.height ?? ''}
+			placeholder={localize('NWS.Height')}
+			onchange={({ target }) => actor.update({ 'system.details.height': target.value })}
+			disabled={!editingEnabled}
+		/>
+	</div>
+
+	<div class="nos-bio__field">
+		<label>{localize('NWS.Weight')}</label>
+		<input
+			type="text"
+			value={details.weight ?? ''}
+			placeholder={localize('NWS.Weight')}
+			onchange={({ target }) => actor.update({ 'system.details.weight': target.value })}
+			disabled={!editingEnabled}
+		/>
+	</div>
+
+	<div class="nos-bio__field">
+		<label>{localize('NWS.Languages')}</label>
 		<span style="font-size: 0.833rem;">{languages || '—'}</span>
 		<button
 			class="nos-icon-btn"
 			type="button"
-			data-tooltip="Configure Languages"
+			data-tooltip={localize('NWS.ConfigureLanguages')}
 			onclick={() => actor.configureLanguageProficiencies()}
 			disabled={!editingEnabled}
 			style="opacity: 0.65;"
@@ -47,12 +71,12 @@
 	</div>
 
 	<div class="nos-bio__field">
-		<label>Armor Proficiencies</label>
+		<label>{localize('NWS.ArmorProficiencies')}</label>
 		<span style="font-size: 0.833rem;">{armorProf || '—'}</span>
 		<button
 			class="nos-icon-btn"
 			type="button"
-			data-tooltip="Configure Armor Proficiencies"
+			data-tooltip={localize('NWS.ConfigureArmorProficiencies')}
 			onclick={() => actor.configureArmorProficiencies()}
 			disabled={!editingEnabled}
 			style="opacity: 0.65;"
@@ -62,12 +86,12 @@
 	</div>
 
 	<div class="nos-bio__field" style="grid-column: 1 / -1;">
-		<label>Weapon Proficiencies</label>
+		<label>{localize('NWS.WeaponProficiencies')}</label>
 		<span style="font-size: 0.833rem;">{weaponProf || '—'}</span>
 		<button
 			class="nos-icon-btn"
 			type="button"
-			data-tooltip="Configure Weapon Proficiencies"
+			data-tooltip={localize('NWS.ConfigureWeaponProficiencies')}
 			onclick={() => actor.configureWeaponProficiencies()}
 			disabled={!editingEnabled}
 			style="opacity: 0.65;"
@@ -77,7 +101,7 @@
 	</div>
 
 	<div class="nos-bio__notes">
-		<label>Notes</label>
+		<label>{localize('NWS.Notes')}</label>
 		<div
 			contenteditable={editingEnabled ? 'true' : 'false'}
 			class="nos-bio__notes-editor"
