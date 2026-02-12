@@ -124,9 +124,8 @@
 	padding: 0 10%;
 	gap: $nos-gap-sm;
 	align-content: center;
-	align-items: center;
+	align-items: stretch;
 	justify-content: center;
-	max-height: 60%;
 
 	&__pair {
 		display: flex;
@@ -199,6 +198,12 @@
 	&__sub {
 		font-size: $nos-text-xxs;
 		color: $nos-text-secondary;
+	}
+
+	&__mana-inputs {
+		display: flex;
+		align-items: center;
+		gap: $nos-gap-xs;
 	}
 }
 

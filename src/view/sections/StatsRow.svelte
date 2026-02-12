@@ -2,7 +2,6 @@
 	import localize from '../../utils/localize.js';
 	import formatModifier from '../../utils/formatModifier.js';
 	import AbilityBox from '../components/AbilityBox.svelte';
-	import ClassResourceBar from '../components/ClassResourceBar.svelte';
 	import WoundTracker from '../components/WoundTracker.svelte';
 
 	let {
@@ -128,20 +127,46 @@
 				</button>
 			</div>
 
-			<!-- Hit Dice -->
-			<div class="nos-combat__stat nos-combat__stat--clickable" onclick={() => rollHitDice()}>
-				<span class="nos-combat__icon"><i class="fa-solid fa-dice-d20"></i></span>
-				<span class="nos-combat__label">{localize('NWS.HitDice')}</span>
-				<span class="nos-combat__value">{hitDiceData.value}/{hitDiceData.max}</span>
-				<button
-					class="nos-icon-btn"
-					type="button"
-					data-tooltip={localize('NWS.ConfigureHitDice')}
-					onclick={(e) => { e.stopPropagation(); actor.configureHitDice(); }}
-					disabled={!editingEnabled}
-				>
-					<i class="fa-solid fa-gear"></i>
-				</button>
+			<!-- Hit Dice + Mana (stacked) -->
+			<div class="nos-combat__pair">
+				<div class="nos-combat__stat nos-combat__stat--clickable" onclick={() => rollHitDice()}>
+					<span class="nos-combat__icon"><i class="fa-solid fa-dice-d20"></i></span>
+					<span class="nos-combat__label">{localize('NWS.HitDice')}</span>
+					<span class="nos-combat__value">{hitDiceData.value}/{hitDiceData.max}</span>
+					<button
+						class="nos-icon-btn"
+						type="button"
+						data-tooltip={localize('NWS.ConfigureHitDice')}
+						onclick={(e) => { e.stopPropagation(); actor.configureHitDice(); }}
+						disabled={!editingEnabled}
+					>
+						<i class="fa-solid fa-gear"></i>
+					</button>
+				</div>
+				{#if hasMana}
+					<div class="nos-combat__stat nos-combat__stat--mana">
+						<span class="nos-combat__icon"><i class="fa-solid fa-sparkles" style="color: {mana.color ?? '#6a5acd'};"></i></span>
+						<span class="nos-combat__label" style="color: {mana.color ?? '#6a5acd'};">{localize('NWS.Mana')}</span>
+						<div class="nos-combat__mana-inputs">
+							<input
+								class="nos-combat__input"
+								type="number"
+								value={mana.current}
+								onchange={({ target }) => updateCurrentMana(Number(target.value))}
+								style="color: {mana.color ?? '#6a5acd'};"
+							/>
+							<span class="nos-combat__sub">/</span>
+							<input
+								class="nos-combat__input"
+								type="number"
+								value={mana.max || mana.baseMax}
+								onchange={({ target }) => updateMaxMana(Number(target.value))}
+								disabled={!editingEnabled}
+								style="color: {mana.color ?? '#6a5acd'};"
+							/>
+						</div>
+					</div>
+				{/if}
 			</div>
 
 			<!-- Initiative + Speed (stacked) -->
@@ -172,13 +197,6 @@
 			</div>
 		</div>
 
-		<ClassResourceBar
-			{hasMana}
-			{mana}
-			{updateCurrentMana}
-			{updateMaxMana}
-			{editingEnabled}
-		/>
 	</div>
 
 	<WoundTracker {wounds} {toggleWounds} />

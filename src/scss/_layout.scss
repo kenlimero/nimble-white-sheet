@@ -21,4 +21,14 @@
 	font-family: $nos-font-family;
 	color: $nos-text-primary;
 	overflow: hidden;
+
+	// The content area (1fr) must shrink and scroll internally
+	> .nos-content {
+		min-height: 0;
+	}
+
+	// The stats row must not push other sections out of view
+	> .nos-stats {
+		overflow: hidden;
+	}
 }
