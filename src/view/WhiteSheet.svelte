@@ -249,6 +249,7 @@
 
 	<SkillsRow
 		{actor}
+		{editingEnabled}
 	/>
 
 	<ContentArea

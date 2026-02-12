@@ -42,6 +42,24 @@
 				{editingEnabled}
 			/>
 		{/each}
+		{#if editingEnabled}
+			<button
+				class="nos-icon-btn nos-abilities__config nos-abilities__config--saves"
+				type="button"
+				data-tooltip={localize('NWS.ConfigureSavingThrows')}
+				onclick={() => actor.configureSavingThrows()}
+			>
+				<i class="fa-solid fa-gear"></i>
+			</button>
+			<button
+				class="nos-icon-btn nos-abilities__config nos-abilities__config--abilities"
+				type="button"
+				data-tooltip={localize('NWS.ConfigureAbilityScores')}
+				onclick={() => actor.configureAbilityScores()}
+			>
+				<i class="fa-solid fa-gear"></i>
+			</button>
+		{/if}
 	</div>
 
 	<div class="nos-combat">

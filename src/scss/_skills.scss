@@ -6,6 +6,18 @@
 	grid-template-columns: repeat(10, 1fr);
 	border-bottom: $nos-border-thick;
 	padding-bottom: 1.5rem;
+	position: relative;
+
+	&__config {
+		position: absolute;
+		top: 2px;
+		right: 4px;
+		opacity: 0.5;
+
+		&:hover {
+			opacity: 1;
+		}
+	}
 }
 
 .nos-skill {

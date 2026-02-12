@@ -23,6 +23,7 @@
 		"ConfigureAbilityScores": "Configure Ability Scores",
 		"ConfigureSavingThrows": "Configure Saving Throws",
 		"RollSkill": "Roll {name}",
+		"ConfigureSkills": "Configure Skills",
 		"Exhaustion": "Exhaustion",
 		"ToggleWound": "Toggle Wound {n}",
 
