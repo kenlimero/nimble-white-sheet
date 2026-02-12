@@ -170,6 +170,23 @@
 			font-size: $nos-text-sm;
 		}
 	}
+
+	&__btn {
+		background: none;
+		border: 1px solid $nos-border-light;
+		border-radius: 2px;
+		cursor: pointer;
+		color: $nos-text-secondary;
+		font-size: $nos-text-xxs;
+		padding: 0.1rem 0.3rem;
+		line-height: 1;
+		transition: $nos-transition;
+
+		&:hover {
+			color: $nos-text-primary;
+			border-color: $nos-border-color;
+		}
+	}
 }
 
 // Bio tab

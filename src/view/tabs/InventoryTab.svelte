@@ -32,7 +32,12 @@
 	}
 
 	function updateCurrency(type, value) {
-		actor.update({ [`system.currency.${type}.value`]: Number(value) });
+		actor.update({ [`system.currency.${type}.value`]: Math.max(0, Math.round(Number(value))) });
+	}
+
+	function adjustCurrency(type, delta) {
+		const current = currency[type]?.value ?? 0;
+		actor.update({ [`system.currency.${type}.value`]: Math.max(0, current + delta) });
 	}
 
 	function updateQuantity(id, value) {
@@ -48,30 +53,24 @@
 
 <!-- Currency -->
 <div class="nos-currency">
-	<div class="nos-currency__coin">
-		<label>{localize('NWS.GP')}</label>
-		<input
-			type="number"
-			value={currency.gp?.value ?? 0}
-			onchange={({ target }) => updateCurrency('gp', target.value)}
-		/>
-	</div>
-	<div class="nos-currency__coin">
-		<label>{localize('NWS.SP')}</label>
-		<input
-			type="number"
-			value={currency.sp?.value ?? 0}
-			onchange={({ target }) => updateCurrency('sp', target.value)}
-		/>
-	</div>
-	<div class="nos-currency__coin">
-		<label>{localize('NWS.CP')}</label>
-		<input
-			type="number"
-			value={currency.cp?.value ?? 0}
-			onchange={({ target }) => updateCurrency('cp', target.value)}
-		/>
-	</div>
+	{#each [['gp', 'NWS.GP'], ['sp', 'NWS.SP'], ['cp', 'NWS.CP']] as [type, labelKey]}
+		<div class="nos-currency__coin">
+			<label for="currency-{type}">{localize(labelKey)}</label>
+			<button class="nos-currency__btn" type="button" aria-label="-1 {localize(labelKey)}" onclick={() => adjustCurrency(type, -1)}>
+				<i class="fa-solid fa-minus"></i>
+			</button>
+			<input
+				id="currency-{type}"
+				type="number"
+				value={currency[type]?.value ?? 0}
+				onchange={({ target }) => updateCurrency(type, target.value)}
+				min="0"
+			/>
+			<button class="nos-currency__btn" type="button" aria-label="+1 {localize(labelKey)}" onclick={() => adjustCurrency(type, 1)}>
+				<i class="fa-solid fa-plus"></i>
+			</button>
+		</div>
+	{/each}
 </div>
 
 <div class="nos-search">
