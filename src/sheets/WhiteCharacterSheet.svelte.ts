@@ -37,7 +37,7 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		return this._actor;
 	}
 
-	static MIN_WIDTH = 650;
+	static MIN_WIDTH = 670;
 	static MIN_HEIGHT = 400;
 
 	static override DEFAULT_OPTIONS = {

@@ -231,36 +231,38 @@
 </script>
 
 <div class="nos-sheet" style="position: relative;">
-	<HeaderRow
-		{actor}
-		{metaData}
-		{editingEnabled}
-		{hitDiceData}
-	/>
+	<div class="nos-top">
+		<HeaderRow
+			{actor}
+			{metaData}
+			{editingEnabled}
+			{hitDiceData}
+		/>
 
-	<StatsRow
-		{actor}
-		{editingEnabled}
-		{isBloodied}
-		{hitDiceData}
-		{hasMana}
-		{mana}
-		{wounds}
-		{toggleWounds}
-		{updateCurrentHP}
-		{updateMaxHP}
-		{updateTempHP}
-		{updateCurrentMana}
-		{updateMaxMana}
-		{updateCurrentHitDice}
-		{rollHitDice}
-		{editCurrentHitDice}
-	/>
+		<StatsRow
+			{actor}
+			{editingEnabled}
+			{isBloodied}
+			{hitDiceData}
+			{hasMana}
+			{mana}
+			{wounds}
+			{toggleWounds}
+			{updateCurrentHP}
+			{updateMaxHP}
+			{updateTempHP}
+			{updateCurrentMana}
+			{updateMaxMana}
+			{updateCurrentHitDice}
+			{rollHitDice}
+			{editCurrentHitDice}
+		/>
 
-	<SkillsRow
-		{actor}
-		{editingEnabled}
-	/>
+		<SkillsRow
+			{actor}
+			{editingEnabled}
+		/>
+	</div>
 
 	<ContentArea
 		{actor}

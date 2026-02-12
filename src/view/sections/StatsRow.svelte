@@ -85,88 +85,81 @@
 				</div>
 			</div>
 
-			<!-- Hit Points -->
-			<div class="nos-combat__stat" class:nos-hp--bloodied={isBloodied}>
-				<span class="nos-combat__icon">
-					{#if isBloodied}
-						<i class="fa-solid fa-heart-crack" style="color: #b01b19;"></i>
-					{:else}
-						<i class="fa-solid fa-heart"></i>
-					{/if}
-				</span>
-				<span class="nos-combat__label">{localize('NWS.HitPoints')}</span>
-				<div class="nos-hp">
-					<span class="nos-combat__sub">{localize('NWS.Max')}</span>
-					<div class="nos-hp__bar">
+			<!-- Hit Points + Mana (stacked) -->
+			<div class="nos-combat__pair" class:nos-hp--bloodied={isBloodied}>
+				<div class="nos-combat__stat nos-combat__stat--hp">
+					<span class="nos-combat__icon">
+						{#if isBloodied}
+							<i class="fa-solid fa-heart-crack" style="color: #b01b19;"></i>
+						{:else}
+							<i class="fa-solid fa-heart"></i>
+						{/if}
+					</span>
+					<span class="nos-combat__label">{localize('NWS.HitPoints')}</span>
+					<div class="nos-combat__hp-inputs">
 						<input
-							class="nos-hp__max"
+							class="nos-combat__input"
+							type="number"
+							value={hp.value}
+							onchange={({ target }) => updateCurrentHP(Number(target.value))}
+						/>
+						<span class="nos-combat__sub">/</span>
+						<input
+							class="nos-combat__input"
 							type="number"
 							value={hp.max}
 							onchange={({ target }) => updateMaxHP(Number(target.value))}
 							disabled={!editingEnabled}
 						/>
 					</div>
-					<div class="nos-hp__bar">
-						<input
-							class="nos-hp__current"
-							type="number"
-							value={hp.value}
-							onchange={({ target }) => updateCurrentHP(Number(target.value))}
-						/>
-					</div>
-					<span class="nos-combat__sub">{localize('NWS.Current')}</span>
-				</div>
-				<button
-					class="nos-icon-btn"
-					type="button"
-					data-tooltip={localize('NWS.ConfigureHitPoints')}
-					onclick={() => actor.configureHitPoints()}
-					disabled={!editingEnabled}
-				>
-					<i class="fa-solid fa-gear"></i>
-				</button>
-			</div>
-
-			<!-- Hit Dice + Mana (stacked) -->
-			<div class="nos-combat__pair">
-				<div class="nos-combat__stat nos-combat__stat--clickable" onclick={() => rollHitDice()}>
-					<span class="nos-combat__icon"><i class="fa-solid fa-dice-d20"></i></span>
-					<span class="nos-combat__label">{localize('NWS.HitDice')}</span>
-					<span class="nos-combat__value">{hitDiceData.value}/{hitDiceData.max}</span>
 					<button
 						class="nos-icon-btn"
 						type="button"
-						data-tooltip={localize('NWS.ConfigureHitDice')}
-						onclick={(e) => { e.stopPropagation(); actor.configureHitDice(); }}
+						data-tooltip={localize('NWS.ConfigureHitPoints')}
+						onclick={() => actor.configureHitPoints()}
 						disabled={!editingEnabled}
 					>
 						<i class="fa-solid fa-gear"></i>
 					</button>
 				</div>
-				{#if hasMana}
-					<div class="nos-combat__stat nos-combat__stat--mana">
-						<span class="nos-combat__icon"><i class="fa-solid fa-sparkles" style="color: {mana.color ?? '#6a5acd'};"></i></span>
-						<span class="nos-combat__label" style="color: {mana.color ?? '#6a5acd'};">{localize('NWS.Mana')}</span>
-						<div class="nos-combat__mana-inputs">
-							<input
-								class="nos-combat__input"
-								type="number"
-								value={mana.current}
-								onchange={({ target }) => updateCurrentMana(Number(target.value))}
-								style="color: {mana.color ?? '#6a5acd'};"
-							/>
-							<span class="nos-combat__sub">/</span>
-							<input
-								class="nos-combat__input"
-								type="number"
-								value={mana.max || mana.baseMax}
-								onchange={({ target }) => updateMaxMana(Number(target.value))}
-								disabled={!editingEnabled}
-								style="color: {mana.color ?? '#6a5acd'};"
-							/>
-						</div>
+				<div class="nos-combat__stat nos-combat__stat--mana">
+					<span class="nos-combat__icon"><i class="fa-solid fa-sparkles" style="color: {mana?.color ?? '#6a5acd'};"></i></span>
+					<span class="nos-combat__label" style="color: {mana?.color ?? '#6a5acd'};">{localize('NWS.Mana')}</span>
+					<div class="nos-combat__mana-inputs">
+						<input
+							class="nos-combat__input"
+							type="number"
+							value={mana?.current ?? 0}
+							onchange={({ target }) => updateCurrentMana(Number(target.value))}
+							style="color: {mana?.color ?? '#6a5acd'};"
+						/>
+						<span class="nos-combat__sub">/</span>
+						<input
+							class="nos-combat__input"
+							type="number"
+							value={mana?.max || mana?.baseMax || 0}
+							onchange={({ target }) => updateMaxMana(Number(target.value))}
+							disabled={!editingEnabled}
+							style="color: {mana?.color ?? '#6a5acd'};"
+						/>
 					</div>
-				{/if}
+				</div>
+			</div>
+
+			<!-- Hit Dice -->
+			<div class="nos-combat__stat nos-combat__stat--clickable" onclick={() => rollHitDice()}>
+				<span class="nos-combat__icon"><i class="fa-solid fa-dice-d20"></i></span>
+				<span class="nos-combat__label">{localize('NWS.HitDice')}</span>
+				<span class="nos-combat__value">{hitDiceData.value}/{hitDiceData.max}</span>
+				<button
+					class="nos-icon-btn"
+					type="button"
+					data-tooltip={localize('NWS.ConfigureHitDice')}
+					onclick={(e) => { e.stopPropagation(); actor.configureHitDice(); }}
+					disabled={!editingEnabled}
+				>
+					<i class="fa-solid fa-gear"></i>
+				</button>
 			</div>
 
 			<!-- Initiative + Speed (stacked) -->

@@ -1,4 +1,4 @@
-// Main grid layout for the white sheet (4-row layout)
+// Main grid layout for the white sheet (2-zone layout: top + bottom)
 
 .nimble-white-sheet {
 	.window-content {
@@ -9,26 +9,28 @@
 
 .nos-sheet {
 	display: grid;
-	grid-template-rows: auto auto auto 1fr;
+	grid-template-rows: auto minmax(0, 1fr);
 	grid-template-columns: 1fr;
 	grid-template-areas:
-		'header'
-		'stats'
-		'skills'
-		'content';
+		'top'
+		'bottom';
 	height: 100%;
 	background: $nos-bg-primary;
 	font-family: $nos-font-family;
 	color: $nos-text-primary;
 	overflow: hidden;
+}
 
-	// The content area (1fr) must shrink and scroll internally
-	> .nos-content {
-		min-height: 0;
-	}
-
-	// The stats row must not push other sections out of view
-	> .nos-stats {
-		overflow: hidden;
-	}
+// Top zone: header + stats + skills (each in its own row, contained)
+// auto row keeps its content height — bottom shrinks first on resize
+.nos-top {
+	grid-area: top;
+	display: grid;
+	grid-template-rows: auto auto 1fr;
+	grid-template-columns: 1fr;
+	grid-template-areas:
+		'header'
+		'stats'
+		'skills';
+	overflow: hidden;
 }

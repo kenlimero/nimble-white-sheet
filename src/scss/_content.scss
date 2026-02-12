@@ -1,9 +1,9 @@
 // Content area: tabbed content + inventory sidebar
 
 .nos-content {
-	grid-area: content;
+	grid-area: bottom;
 	display: grid;
-	grid-template-columns: 1fr 10rem;
+	grid-template-columns: 3fr 1fr;
 	grid-template-rows: auto 1fr;
 	grid-template-areas:
 		'tabs sidebar-header'

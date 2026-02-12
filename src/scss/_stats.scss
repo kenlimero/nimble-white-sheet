@@ -10,6 +10,8 @@
 		'wounds right';
 	align-items: start;
 	padding-top: $nos-gap-sm;
+	padding-bottom: 25px;
+	overflow: hidden;
 }
 
 .nos-right-col {
@@ -119,9 +121,9 @@
 // Combat stats section (right of abilities)
 .nos-combat {
 	display: grid;
-	grid-template-columns: repeat(4, 1fr);
+	grid-template-columns: 5.5rem 1fr 5.5rem 5.5rem;
 	grid-template-rows: 1fr;
-	padding: 0 10%;
+	padding: 0 20px 0 0;
 	gap: $nos-gap-sm;
 	align-content: center;
 	align-items: stretch;
@@ -200,10 +202,18 @@
 		color: $nos-text-secondary;
 	}
 
-	&__mana-inputs {
+	&__mana-inputs,
+	&__hp-inputs {
 		display: flex;
 		align-items: center;
 		gap: $nos-gap-xs;
+	}
+
+	// Ensure HP+Mana pair splits evenly at mid-height
+	&__pair:has(.nos-combat__stat--hp) {
+		.nos-combat__stat {
+			flex: 1 1 50%;
+		}
 	}
 }
 
