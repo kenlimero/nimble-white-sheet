@@ -1,7 +1,7 @@
 <script>
 	import localize from '../../utils/localize.js';
 
-	let { actor, editingEnabled } = $props();
+	let { actor } = $props();
 
 	let weapons = $derived(
 		actor.reactive.items

@@ -9,7 +9,6 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 ) {
 	protected _actor: Actor;
 	protected root;
-	protected props: { actor: Actor; sheet: WhiteCharacterSheet };
 
 	constructor(
 		actor: { document: Actor },
@@ -26,11 +25,6 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			? (actor.document as any).parent?.actor
 			: actor.document;
 		this._actor = resolvedActor ?? actor.document;
-
-		this.props = {
-			actor: this.document,
-			sheet: this,
-		};
 	}
 
 	override get actor(): Actor {
@@ -73,10 +67,6 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		} as object as Awaited<
 			ReturnType<foundry.applications.sheets.ActorSheetV2['_prepareContext']>
 		>;
-	}
-
-	protected override _attachFrameListeners() {
-		super._attachFrameListeners();
 	}
 
 	async _onDropItem(event: DragEvent, data: Record<string, unknown>) {

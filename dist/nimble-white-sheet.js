@@ -3895,9 +3895,6 @@ function al(e, t) {
   $o(y, {
     get actor() {
       return t.actor;
-    },
-    get editingEnabled() {
-      return t.editingEnabled;
     }
   });
   var O = m(y, 2);
@@ -4165,11 +4162,10 @@ r(ol, "WhiteSheet");
 const nt = class nt extends Qs(foundry.applications.sheets.ActorSheetV2) {
   _actor;
   root;
-  props;
   constructor(t, n = {}) {
     super(foundry.utils.mergeObject(n, { document: t.document })), this.root = ol;
     const a = t.document.isToken ? t.document.parent?.actor : t.document;
-    this._actor = a ?? t.document, this.props = { actor: this.document, sheet: this };
+    this._actor = a ?? t.document;
   }
   get actor() {
     return this._actor;
@@ -4179,9 +4175,6 @@ const nt = class nt extends Qs(foundry.applications.sheets.ActorSheetV2) {
   }
   async _prepareContext(t) {
     return { ...await super._prepareContext(t), actor: this._actor, sheet: this };
-  }
-  _attachFrameListeners() {
-    super._attachFrameListeners();
   }
   async _onDropItem(t, n) {
     t.preventDefault(), t.stopPropagation();

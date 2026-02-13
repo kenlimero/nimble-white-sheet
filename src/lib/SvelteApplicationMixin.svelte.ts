@@ -99,6 +99,4 @@ function SvelteApplicationMixin<
 	return SvelteApplication;
 }
 
-type SvelteApplication = InstanceType<ReturnType<typeof SvelteApplicationMixin>>;
-
-export { SvelteApplicationMixin, type SvelteApplicationRenderContext, type SvelteApplication };
+export { SvelteApplicationMixin, type SvelteApplicationRenderContext };

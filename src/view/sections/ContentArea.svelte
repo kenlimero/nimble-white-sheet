@@ -54,7 +54,7 @@
 	</div>
 
 	<div class="nos-content__sidebar">
-		<InventorySlots {actor} {editingEnabled} />
+		<InventorySlots {actor} />
 		{#if trackSlots}
 			<div class="nos-slot" style="font-weight: 600; justify-content: center; border-top: 2px solid #333;">
 				{inventory.usedSlots ?? 0} / {inventory.totalSlots ?? 0}
