@@ -224,9 +224,9 @@
 	}
 
 	// Dark mode
-	let darkMode = $state(false);
-	function toggleDarkMode() {
-		darkMode = !darkMode;
+	let darkMode = $derived(flags?.darkMode ?? false);
+	async function toggleDarkMode() {
+		await actor.setFlag('nimble', 'darkMode', !darkMode);
 	}
 
 	// Set contexts
