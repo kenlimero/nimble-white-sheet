@@ -11,12 +11,11 @@
 // Sidebar controls (edit toggle, level up/down, rest)
 .nos-sidebar-controls {
 	position: absolute;
-	top: $nos-gap-xs;
-	right: $nos-gap-xs;
+	top: $nos-gap-md;
+	right: $nos-gap-md;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	gap: $nos-gap-xs;
-	z-index: 10;
 
 	.nos-sidebar-btn {
 		width: 2rem;
