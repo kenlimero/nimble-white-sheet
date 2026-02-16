@@ -14,7 +14,7 @@
 	top: $nos-gap-md;
 	right: $nos-gap-md;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
 	gap: $nos-gap-xs;
 
 	.nos-sidebar-btn {
@@ -45,6 +45,15 @@
 			background: $nos-border-color;
 			color: $nos-label-text;
 		}
+	}
+}
+
+// Dark mode: invert all colors, then re-invert images to keep them normal
+.nos-sheet--dark {
+	filter: invert(1) hue-rotate(180deg);
+
+	img {
+		filter: invert(1) hue-rotate(180deg);
 	}
 }
 

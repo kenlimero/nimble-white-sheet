@@ -223,6 +223,12 @@
 		await actor.setFlag('nimble', 'editingEnabled', !editingEnabled);
 	}
 
+	// Dark mode
+	let darkMode = $state(false);
+	function toggleDarkMode() {
+		darkMode = !darkMode;
+	}
+
 	// Set contexts
 	setContext('actor', actor);
 	setContext('document', actor);
@@ -230,7 +236,7 @@
 	setContext('editingEnabled', editingEnabledStore);
 </script>
 
-<div class="nos-sheet" style="position: relative;">
+<div class="nos-sheet" class:nos-sheet--dark={darkMode} style="position: relative;">
 	<div class="nos-top">
 		<HeaderRow
 			{actor}
@@ -278,6 +284,8 @@
 		{editingEnabled}
 		{toggleEditingEnabled}
 		{classItem}
+		{darkMode}
+		{toggleDarkMode}
 	/>
 
 	<span class="nos-logo">Nimble</span>

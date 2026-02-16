@@ -1,7 +1,7 @@
 <script>
 	import localize from '../../utils/localize.js';
 
-	let { actor, editingEnabled, toggleEditingEnabled, classItem } = $props();
+	let { actor, editingEnabled, toggleEditingEnabled, classItem, darkMode, toggleDarkMode } = $props();
 </script>
 
 <aside class="nos-sidebar-controls">
@@ -37,6 +37,18 @@
 		disabled={actor.reactive.system.levelUpHistory.length === 0}
 	>
 		<i class="fa-solid fa-undo"></i>
+	</button>
+
+	<button
+		class="nos-sidebar-btn"
+		class:nos-sidebar-btn--active={darkMode}
+		type="button"
+		aria-pressed={darkMode}
+		aria-label={localize('NWS.DarkMode')}
+		data-tooltip={localize('NWS.DarkMode')}
+		onclick={toggleDarkMode}
+	>
+		<i class="fa-solid fa-circle-half-stroke"></i>
 	</button>
 
 	<button
