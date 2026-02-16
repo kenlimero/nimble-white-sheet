@@ -48,12 +48,260 @@
 	}
 }
 
-// Dark mode: invert all colors, then re-invert images to keep them normal
+// Dark mode: explicit color overrides
 .nos-sheet--dark {
-	filter: invert(1) hue-rotate(180deg);
+	background: #1a1a1e;
+	color: #e0e0e0;
 
-	img {
-		filter: invert(1) hue-rotate(180deg);
+	// Inputs
+	input[type='text'],
+	input[type='number'] {
+		color: #e0e0e0;
+
+		&:focus {
+			border-bottom-color: #aaa;
+			background: hsl(210, 40%, 25%);
+		}
+	}
+
+	// Boxes
+	.nos-box {
+		border-color: #aaa;
+		background: #1a1a1e;
+	}
+
+	// Labels (pentagons, banners)
+	.nos-pentagon,
+	.nos-banner {
+		background: #ccc;
+		color: #1a1a1e;
+	}
+
+	// Ability boxes
+	.nos-ability__box {
+		background: rgba(40, 40, 45, 0.9);
+		border-color: #aaa;
+
+		&:hover {
+			background: hsl(210, 40%, 25%);
+		}
+	}
+
+	.nos-ability__d20 {
+		color: #999;
+	}
+
+	// Combat stat boxes
+	.nos-combat__stat {
+		border-color: #aaa;
+		background: rgba(40, 40, 45, 0.9);
+
+		&--clickable:hover {
+			background: hsl(210, 40%, 25%);
+		}
+	}
+
+	.nos-combat__pair {
+		border-color: #aaa;
+		background: rgba(40, 40, 45, 0.9);
+
+		.nos-combat__stat {
+			border-color: #aaa;
+			background: none;
+		}
+	}
+
+	.nos-combat__label,
+	.nos-combat__icon,
+	.nos-combat__sub {
+		color: #999;
+	}
+
+	.nos-combat__value {
+		color: #e0e0e0;
+	}
+
+	.nos-combat__input {
+		color: #e0e0e0;
+	}
+
+	// Skills
+	.nos-skill {
+		border-right-color: #aaa;
+
+		&:hover {
+			background: hsl(210, 40%, 25%);
+		}
+	}
+
+	.nos-skill__ability {
+		color: #999;
+	}
+
+	.nos-skills-row {
+		border-bottom-color: #aaa;
+	}
+
+	// Wounds
+	.nos-wounds__label {
+		color: #999;
+	}
+
+	.nos-wounds__drop {
+		color: #444;
+		-webkit-text-stroke-color: #666;
+	}
+
+	// Diamonds
+	.nos-diamond {
+		border-color: #aaa;
+
+		&--active {
+			background: #aaa;
+		}
+	}
+
+	// Header
+	.nos-header__hitdie {
+		border-color: #aaa;
+		background: rgba(40, 40, 45, 0.9);
+	}
+
+	.nos-header__name label,
+	.nos-header__meta label,
+	.nos-header__hitdie label {
+		color: #999;
+	}
+
+	// Resources
+	.nos-resources__label {
+		color: #999;
+	}
+
+	// Content area
+	.nos-content__tabs {
+		border-bottom-color: #aaa;
+	}
+
+	.nos-content__sidebar-header {
+		border-left-color: #aaa;
+		border-bottom-color: #aaa;
+
+		span {
+			color: #999;
+		}
+	}
+
+	.nos-content__sidebar {
+		border-left-color: #aaa;
+	}
+
+	// Tab buttons
+	.nos-tab-btn {
+		color: #999;
+
+		&:hover {
+			color: #e0e0e0;
+		}
+
+		&--active {
+			color: #e0e0e0;
+			border-bottom-color: #aaa;
+		}
+	}
+
+	// Items
+	.nos-item {
+		border-bottom-color: #333;
+
+		&:hover {
+			background: hsl(210, 40%, 25%);
+		}
+	}
+
+	.nos-item__meta {
+		color: #999;
+	}
+
+	// Slots
+	.nos-slot {
+		border-bottom-color: #666;
+
+		&--empty {
+			color: #999;
+		}
+	}
+
+	// Rollable
+	.nos-rollable:hover {
+		background: hsl(210, 40%, 25%);
+	}
+
+	// Icon buttons
+	.nos-icon-btn {
+		color: #999;
+
+		&:hover {
+			color: #e0e0e0;
+		}
+	}
+
+	// Currency
+	.nos-currency {
+		border-bottom-color: #666;
+	}
+
+	.nos-currency__coin label {
+		color: #999;
+	}
+
+	.nos-currency__btn {
+		color: #999;
+		border-color: #666;
+
+		&:hover {
+			color: #e0e0e0;
+			border-color: #aaa;
+		}
+	}
+
+	// Bio
+	.nos-bio__field label {
+		color: #999;
+	}
+
+	// Spell tiers / Feature groups
+	.nos-spell-tier__heading,
+	.nos-feature-group__heading {
+		color: #999;
+		border-bottom-color: #aaa;
+	}
+
+	// Search
+	.nos-search input {
+		color: #e0e0e0;
+	}
+
+	// Sidebar buttons
+	.nos-sidebar-btn {
+		background: #252529;
+		border-color: #aaa;
+		color: #999;
+
+		&:hover {
+			background: hsl(210, 40%, 25%);
+			color: #e0e0e0;
+		}
+
+		&--active {
+			background: #ccc;
+			color: #1a1a1e;
+		}
+	}
+
+	// Logo
+	.nos-logo {
+		color: #666;
 	}
 }
 

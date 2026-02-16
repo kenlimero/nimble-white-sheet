@@ -1,6 +1,6 @@
 {
 	"name": "nimble-white-sheet",
-	"version": "0.4.0",
+	"version": "0.4.2",
 	"description": "Nimble white character sheet reskin for FoundryVTT",
 	"type": "module",
 	"private": true,
