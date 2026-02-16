@@ -48,6 +48,62 @@
 	}
 }
 
+// Color scheme menu
+.nos-color-scheme-wrapper {
+	position: relative;
+}
+
+.nos-color-scheme-backdrop {
+	position: fixed;
+	inset: 0;
+	z-index: 99;
+}
+
+.nos-color-scheme-menu {
+	position: absolute;
+	top: 100%;
+	right: 0;
+	margin-top: $nos-gap-xs;
+	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	background: $nos-bg-primary;
+	border: $nos-border-thin;
+	border-radius: 4px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	overflow: hidden;
+	min-width: 120px;
+
+	&__option {
+		display: flex;
+		align-items: center;
+		gap: $nos-gap-sm;
+		padding: $nos-gap-xs $nos-gap-sm;
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: $nos-text-sm;
+		color: $nos-text-secondary;
+		white-space: nowrap;
+		transition: $nos-transition;
+
+		&:hover {
+			background: $nos-highlight;
+			color: $nos-text-primary;
+		}
+
+		&--active {
+			color: $nos-text-primary;
+			font-weight: 600;
+		}
+
+		i {
+			width: 1rem;
+			text-align: center;
+		}
+	}
+}
+
 // Dark mode: explicit color overrides
 .nos-sheet--dark {
 	background: #1a1a1e;
@@ -290,9 +346,297 @@
 		}
 	}
 
+	// Color scheme menu
+	.nos-color-scheme-menu {
+		background: #252529;
+		border-color: #aaa;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+
+		&__option {
+			color: #999;
+
+			&:hover {
+				background: hsl(210, 40%, 25%);
+				color: #e0e0e0;
+			}
+
+			&--active {
+				color: #e0e0e0;
+			}
+		}
+	}
+
 	// Logo
 	.nos-logo {
 		color: #666;
+	}
+}
+
+// Nimble v2 color scheme: uses the system's CSS custom properties
+// These variables are set on :root by the Nimble system and overridden by .theme-dark
+.nos-sheet--nimble {
+	background: var(--nimble-sheet-background);
+	color: var(--nimble-dark-text-color);
+
+	// Inputs
+	input[type='text'],
+	input[type='number'] {
+		color: var(--nimble-dark-text-color);
+
+		&:focus {
+			border-bottom-color: var(--nimble-input-border-color);
+			background: var(--nimble-input-background-color);
+		}
+	}
+
+	// Boxes
+	.nos-box {
+		border-color: var(--nimble-box-color);
+		background: var(--nimble-box-background-color);
+	}
+
+	// Labels (pentagons, banners)
+	.nos-pentagon,
+	.nos-banner {
+		background: var(--nimble-navigation-background-color);
+		color: var(--nimble-navigation-text-color);
+	}
+
+	// Ability boxes
+	.nos-ability__box {
+		background: var(--nimble-box-background-color);
+		border-color: var(--nimble-box-color);
+
+		&:hover {
+			background: var(--nimble-input-background-color);
+		}
+	}
+
+	// Combat stat boxes
+	.nos-combat__stat {
+		border-color: var(--nimble-box-color);
+		background: var(--nimble-box-background-color);
+
+		&--clickable:hover {
+			background: var(--nimble-input-background-color);
+		}
+	}
+
+	.nos-combat__pair {
+		border-color: var(--nimble-box-color);
+		background: var(--nimble-box-background-color);
+
+		.nos-combat__stat {
+			border-color: var(--nimble-box-color);
+			background: none;
+		}
+	}
+
+	.nos-combat__label,
+	.nos-combat__icon,
+	.nos-combat__sub {
+		color: var(--nimble-medium-text-color);
+	}
+
+	.nos-combat__value {
+		color: var(--nimble-dark-text-color);
+	}
+
+	.nos-combat__input {
+		color: var(--nimble-dark-text-color);
+	}
+
+	// Skills
+	.nos-skill {
+		border-right-color: var(--nimble-box-color);
+
+		&:hover {
+			background: var(--nimble-input-background-color);
+		}
+	}
+
+	.nos-skill__ability {
+		color: var(--nimble-medium-text-color);
+	}
+
+	.nos-skills-row {
+		border-bottom-color: var(--nimble-box-color);
+	}
+
+	// Wounds
+	.nos-wounds__label {
+		color: var(--nimble-medium-text-color);
+	}
+
+	// Diamonds
+	.nos-diamond {
+		border-color: var(--nimble-box-color);
+
+		&--active {
+			background: var(--nimble-box-color);
+		}
+	}
+
+	// Header
+	.nos-header__hitdie {
+		border-color: var(--nimble-box-color);
+		background: var(--nimble-box-background-color);
+	}
+
+	.nos-header__name label,
+	.nos-header__meta label,
+	.nos-header__hitdie label {
+		color: var(--nimble-medium-text-color);
+	}
+
+	// Resources
+	.nos-resources__label {
+		color: var(--nimble-medium-text-color);
+	}
+
+	// Content area
+	.nos-content__tabs {
+		border-bottom-color: var(--nimble-box-color);
+	}
+
+	.nos-content__sidebar-header {
+		border-left-color: var(--nimble-box-color);
+		border-bottom-color: var(--nimble-box-color);
+
+		span {
+			color: var(--nimble-medium-text-color);
+		}
+	}
+
+	.nos-content__sidebar {
+		border-left-color: var(--nimble-box-color);
+	}
+
+	// Tab buttons
+	.nos-tab-btn {
+		color: var(--nimble-medium-text-color);
+
+		&:hover {
+			color: var(--nimble-dark-text-color);
+		}
+
+		&--active {
+			color: var(--nimble-dark-text-color);
+			border-bottom-color: var(--nimble-box-color);
+		}
+	}
+
+	// Items
+	.nos-item {
+		border-bottom-color: var(--nimble-card-border-color);
+
+		&:hover {
+			background: var(--nimble-input-background-color);
+		}
+	}
+
+	.nos-item__meta {
+		color: var(--nimble-medium-text-color);
+	}
+
+	// Slots
+	.nos-slot {
+		border-bottom-color: var(--nimble-card-border-color);
+
+		&--empty {
+			color: var(--nimble-medium-text-color);
+		}
+	}
+
+	// Rollable
+	.nos-rollable:hover {
+		background: var(--nimble-input-background-color);
+	}
+
+	// Icon buttons
+	.nos-icon-btn {
+		color: var(--nimble-medium-text-color);
+
+		&:hover {
+			color: var(--nimble-dark-text-color);
+		}
+	}
+
+	// Currency
+	.nos-currency {
+		border-bottom-color: var(--nimble-card-border-color);
+	}
+
+	.nos-currency__coin label {
+		color: var(--nimble-medium-text-color);
+	}
+
+	.nos-currency__btn {
+		color: var(--nimble-medium-text-color);
+		border-color: var(--nimble-card-border-color);
+
+		&:hover {
+			color: var(--nimble-dark-text-color);
+			border-color: var(--nimble-box-color);
+		}
+	}
+
+	// Bio
+	.nos-bio__field label {
+		color: var(--nimble-medium-text-color);
+	}
+
+	// Spell tiers / Feature groups
+	.nos-spell-tier__heading,
+	.nos-feature-group__heading {
+		color: var(--nimble-medium-text-color);
+		border-bottom-color: var(--nimble-box-color);
+	}
+
+	// Search
+	.nos-search input {
+		color: var(--nimble-dark-text-color);
+	}
+
+	// Sidebar buttons
+	.nos-sidebar-btn {
+		background: var(--nimble-box-background-color);
+		border-color: var(--nimble-box-color);
+		color: var(--nimble-medium-text-color);
+
+		&:hover {
+			background: var(--nimble-input-background-color);
+			color: var(--nimble-dark-text-color);
+		}
+
+		&--active {
+			background: var(--nimble-navigation-background-color);
+			color: var(--nimble-navigation-text-color);
+		}
+	}
+
+	// Color scheme menu
+	.nos-color-scheme-menu {
+		background: var(--nimble-box-background-color);
+		border-color: var(--nimble-box-color);
+
+		&__option {
+			color: var(--nimble-medium-text-color);
+
+			&:hover {
+				background: var(--nimble-input-background-color);
+				color: var(--nimble-dark-text-color);
+			}
+
+			&--active {
+				color: var(--nimble-dark-text-color);
+			}
+		}
+	}
+
+	// Logo
+	.nos-logo {
+		color: var(--nimble-medium-text-color);
 	}
 }
 

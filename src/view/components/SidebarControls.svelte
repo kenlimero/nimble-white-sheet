@@ -1,7 +1,10 @@
 <script>
 	import localize from '../../utils/localize.js';
+	import ColorSchemeMenu from './ColorSchemeMenu.svelte';
 
-	let { actor, editingEnabled, toggleEditingEnabled, classItem, darkMode, toggleDarkMode } = $props();
+	let { actor, editingEnabled, toggleEditingEnabled, classItem, darkMode, colorScheme, setColorScheme } = $props();
+
+	let menuOpen = $state(false);
 </script>
 
 <aside class="nos-sidebar-controls">
@@ -39,17 +42,25 @@
 		<i class="fa-solid fa-undo"></i>
 	</button>
 
-	<button
-		class="nos-sidebar-btn"
-		class:nos-sidebar-btn--active={darkMode}
-		type="button"
-		aria-pressed={darkMode}
-		aria-label={localize('NWS.DarkMode')}
-		data-tooltip={localize('NWS.DarkMode')}
-		onclick={toggleDarkMode}
-	>
-		<i class="fa-solid fa-circle-half-stroke"></i>
-	</button>
+	<div class="nos-color-scheme-wrapper">
+		<button
+			class="nos-sidebar-btn"
+			class:nos-sidebar-btn--active={darkMode}
+			type="button"
+			aria-pressed={darkMode}
+			aria-label={localize('NWS.ColorScheme')}
+			data-tooltip={localize('NWS.ColorScheme')}
+			aria-haspopup="true"
+			aria-expanded={menuOpen}
+			onclick={() => (menuOpen = !menuOpen)}
+		>
+			<i class="fa-solid fa-circle-half-stroke"></i>
+		</button>
+
+		{#if menuOpen}
+			<ColorSchemeMenu {colorScheme} {setColorScheme} onclose={() => (menuOpen = false)} />
+		{/if}
+	</div>
 
 	<button
 		class="nos-sidebar-btn"

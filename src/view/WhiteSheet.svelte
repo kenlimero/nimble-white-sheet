@@ -223,11 +223,21 @@
 		await actor.setFlag('nimble', 'editingEnabled', !editingEnabled);
 	}
 
-	// Dark mode
-	let darkMode = $derived(flags?.darkMode ?? false);
-	async function toggleDarkMode() {
-		await actor.setFlag('nimble', 'darkMode', !darkMode);
+	// Color scheme: 'white' | 'dark' | 'nimble'
+	let colorScheme = $derived.by(() => {
+		const scheme = flags?.colorScheme;
+		if (scheme) return scheme;
+		// Backward compatibility: convert old boolean darkMode flag
+		if (flags?.darkMode === true) return 'dark';
+		return 'white';
+	});
+
+	async function setColorScheme(value) {
+		await actor.setFlag('nimble', 'colorScheme', value);
 	}
+
+	let darkMode = $derived(colorScheme === 'dark');
+	let nimbleMode = $derived(colorScheme === 'nimble');
 
 	// Set contexts
 	setContext('actor', actor);
@@ -236,7 +246,7 @@
 	setContext('editingEnabled', editingEnabledStore);
 </script>
 
-<div class="nos-sheet" class:nos-sheet--dark={darkMode} style="position: relative;">
+<div class="nos-sheet" class:nos-sheet--dark={darkMode} class:nos-sheet--nimble={nimbleMode} style="position: relative;">
 	<div class="nos-top">
 		<HeaderRow
 			{actor}
@@ -285,7 +295,8 @@
 		{toggleEditingEnabled}
 		{classItem}
 		{darkMode}
-		{toggleDarkMode}
+		{colorScheme}
+		{setColorScheme}
 	/>
 
 	<span class="nos-logo">Nimble</span>
