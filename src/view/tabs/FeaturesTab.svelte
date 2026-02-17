@@ -34,7 +34,7 @@
 		{#if ancestry}
 			<div class="nos-feature-group">
 				<h4 class="nos-feature-group__heading">{localize('NWS.Ancestry')}</h4>
-				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, ancestry)}>
+				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, ancestry)} data-tooltip={ancestry.system?.description || ''}>
 					<img class="nos-item__img" src={ancestry.img} alt={ancestry.name} />
 					<span class="nos-item__name" onclick={() => configureItem(ancestry.id)}>
 						{ancestry.name}
@@ -55,7 +55,7 @@
 		{#if background}
 			<div class="nos-feature-group">
 				<h4 class="nos-feature-group__heading">{localize('NWS.Background')}</h4>
-				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, background)}>
+				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, background)} data-tooltip={background.system?.description || ''}>
 					<img class="nos-item__img" src={background.img} alt={background.name} />
 					<span class="nos-item__name" onclick={() => configureItem(background.id)}>
 						{background.name}
@@ -121,7 +121,7 @@
 		<h4 class="nos-feature-group__heading">{localize('NWS.Features')}</h4>
 		<div class="nos-item-grid">
 			{#each features as feature}
-				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, feature)}>
+				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, feature)} data-tooltip={feature.system?.description || ''}>
 					<img class="nos-item__img" src={feature.img} alt={feature.name} />
 					<span class="nos-item__name" onclick={() => useItem(feature.id)}>
 						{feature.name}
@@ -147,7 +147,7 @@
 		<h4 class="nos-feature-group__heading">{localize('NWS.Boons')}</h4>
 		<div class="nos-item-grid">
 			{#each boons as boon}
-				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, boon)}>
+				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, boon)} data-tooltip={boon.system?.description || ''}>
 					<img class="nos-item__img" src={boon.img} alt={boon.name} />
 					<span class="nos-item__name" onclick={() => useItem(boon.id)}>
 						{boon.name}

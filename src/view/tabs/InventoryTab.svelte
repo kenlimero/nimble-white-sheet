@@ -89,7 +89,7 @@
 
 <div class="nos-item-grid">
 	{#each filteredObjects as item}
-		<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, item)}>
+		<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, item)} data-tooltip={item.system?.description?.public || ''}>
 			<img
 				class="nos-item__img"
 				src={item.img}

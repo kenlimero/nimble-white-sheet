@@ -20,7 +20,7 @@
 		<span
 			class="nos-slot__name"
 			onclick={() => actor.activateItem(item.id)}
-			data-tooltip={item.name}
+			data-tooltip={item.system?.description?.public || item.name}
 		>
 			{item.name}
 		</span>

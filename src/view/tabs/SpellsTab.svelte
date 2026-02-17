@@ -81,7 +81,7 @@
 		<h4 class="nos-spell-tier__heading">{tier.label}</h4>
 		<div class="nos-item-grid">
 			{#each tier.spells as spell}
-				<div class="nos-item nos-item--castable" draggable="true" ondragstart={(e) => onDragStart(e, spell)}>
+				<div class="nos-item nos-item--castable" draggable="true" ondragstart={(e) => onDragStart(e, spell)} data-tooltip={spell.system?.description?.baseEffect || ''}>
 					<img class="nos-item__img" src={spell.img} alt={spell.name} />
 					<span class="nos-item__name" onclick={() => castSpell(spell.id)}>
 						{spell.name}
