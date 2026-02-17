@@ -9,7 +9,7 @@
 	let allSpells = $derived(
 		actor.reactive.items
 			.filter((i) => i.type === 'spell')
-			.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)),
+			.sort((a, b) => a.name.localeCompare(b.name)),
 	);
 
 	let filteredSpells = $derived(
