@@ -10,6 +10,10 @@
 	let classItem = $derived(actor.reactive.items.find((i) => i.type === 'class') ?? null);
 	let subclass = $derived(actor.reactive.items.find((i) => i.type === 'subclass') ?? null);
 
+	function useItem(id) {
+		actor.activateItem(id);
+	}
+
 	function configureItem(id) {
 		const item = actor.items.get(id);
 		item?.sheet?.render(true);
@@ -119,7 +123,7 @@
 			{#each features as feature}
 				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, feature)}>
 					<img class="nos-item__img" src={feature.img} alt={feature.name} />
-					<span class="nos-item__name" onclick={() => configureItem(feature.id)}>
+					<span class="nos-item__name" onclick={() => useItem(feature.id)}>
 						{feature.name}
 					</span>
 					{#if editingEnabled}
@@ -145,7 +149,7 @@
 			{#each boons as boon}
 				<div class="nos-item" draggable="true" ondragstart={(e) => onDragStart(e, boon)}>
 					<img class="nos-item__img" src={boon.img} alt={boon.name} />
-					<span class="nos-item__name" onclick={() => configureItem(boon.id)}>
+					<span class="nos-item__name" onclick={() => useItem(boon.id)}>
 						{boon.name}
 					</span>
 					{#if editingEnabled}
