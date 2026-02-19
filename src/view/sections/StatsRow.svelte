@@ -143,6 +143,15 @@
 							style="color: {mana?.color ?? '#6a5acd'};"
 						/>
 					</div>
+					<button
+						class="nos-icon-btn"
+						type="button"
+						data-tooltip={localize('NWS.ConfigureMana')}
+						onclick={() => actor.configureMana()}
+						disabled={!editingEnabled}
+					>
+						<i class="fa-solid fa-gear"></i>
+					</button>
 				</div>
 			</div>
 

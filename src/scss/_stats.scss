@@ -173,6 +173,13 @@
 
 		&--mana {
 			padding: $nos-gap-xs $nos-gap-sm;
+			position: relative;
+
+			> .nos-icon-btn {
+				position: absolute;
+				top: 1px;
+				right: 1px;
+			}
 		}
 
 		&--clickable {
