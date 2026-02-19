@@ -96,9 +96,6 @@
 	function updateCurrentHP(newValue) {
 		actor.update({ 'system.attributes.hp.value': newValue });
 	}
-	function updateMaxHP(newValue) {
-		actor.update({ 'system.attributes.hp.max': newValue });
-	}
 	function updateTempHP(newValue) {
 		actor.update({ 'system.attributes.hp.temp': newValue });
 	}
@@ -115,15 +112,6 @@
 	function updateCurrentMana(newValue) {
 		actor.update({ 'system.resources.mana.current': newValue });
 	}
-	function updateMaxMana(newValue) {
-		const manaData = actor.reactive.system.resources.mana;
-		const baseMax = manaData.baseMax ?? 0;
-		const max = manaData.max || baseMax;
-		const formulaBonus = max - baseMax;
-		const adjustedBaseMax = Math.max(0, newValue - formulaBonus);
-		actor.update({ 'system.resources.mana.baseMax': adjustedBaseMax });
-	}
-
 	// Hit Dice
 	let hitDiceData = $derived.by(() => {
 		const hitDiceAttr = actor.reactive.system.attributes.hitDice;
@@ -265,10 +253,8 @@
 			{wounds}
 			{toggleWounds}
 			{updateCurrentHP}
-			{updateMaxHP}
 			{updateTempHP}
 			{updateCurrentMana}
-			{updateMaxMana}
 			{updateCurrentHitDice}
 			{rollHitDice}
 			{editCurrentHitDice}
@@ -286,7 +272,6 @@
 		{hasMana}
 		{mana}
 		{updateCurrentMana}
-		{updateMaxMana}
 	/>
 
 	<SidebarControls

@@ -6,7 +6,7 @@
 	import BioTab from '../tabs/BioTab.svelte';
 	import InventorySlots from '../components/InventorySlots.svelte';
 
-	let { actor, editingEnabled, hasMana, mana, updateCurrentMana, updateMaxMana } = $props();
+	let { actor, editingEnabled, hasMana, mana, updateCurrentMana } = $props();
 
 	const tabs = [
 		{ name: 'features', labelKey: 'NWS.Features', icon: 'fa-solid fa-table-list', component: FeaturesTab },

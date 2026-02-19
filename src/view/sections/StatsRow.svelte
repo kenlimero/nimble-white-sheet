@@ -14,10 +14,8 @@
 		wounds,
 		toggleWounds,
 		updateCurrentHP,
-		updateMaxHP,
 		updateTempHP,
 		updateCurrentMana,
-		updateMaxMana,
 		updateCurrentHitDice,
 		rollHitDice,
 		editCurrentHitDice,
@@ -104,13 +102,7 @@
 							onchange={({ target }) => updateCurrentHP(Number(target.value))}
 						/>
 						<span class="nos-combat__sub">/</span>
-						<input
-							class="nos-combat__input"
-							type="number"
-							value={hp.max}
-							onchange={({ target }) => updateMaxHP(Number(target.value))}
-							disabled={!editingEnabled}
-						/>
+						<span class="nos-combat__value">{hp.max}</span>
 					</div>
 					<button
 						class="nos-icon-btn"
@@ -134,14 +126,7 @@
 							style="color: {mana?.color ?? '#6a5acd'};"
 						/>
 						<span class="nos-combat__sub">/</span>
-						<input
-							class="nos-combat__input"
-							type="number"
-							value={mana?.max || mana?.baseMax || 0}
-							onchange={({ target }) => updateMaxMana(Number(target.value))}
-							disabled={!editingEnabled}
-							style="color: {mana?.color ?? '#6a5acd'};"
-						/>
+						<span class="nos-combat__value" style="color: {mana?.color ?? '#6a5acd'};">{mana?.max || mana?.baseMax || 0}</span>
 					</div>
 					<button
 						class="nos-icon-btn"
