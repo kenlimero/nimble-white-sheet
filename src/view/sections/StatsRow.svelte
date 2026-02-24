@@ -13,6 +13,7 @@
 		mana,
 		wounds,
 		toggleWounds,
+		resetWounds,
 		updateCurrentHP,
 		updateTempHP,
 		updateCurrentMana,
@@ -186,5 +187,5 @@
 
 	</div>
 
-	<WoundTracker {wounds} {toggleWounds} />
+	<WoundTracker {wounds} {toggleWounds} {resetWounds} />
 </section>

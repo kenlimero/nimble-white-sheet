@@ -330,6 +330,16 @@
 		font-weight: 700;
 		color: $nos-text-secondary;
 		white-space: nowrap;
+		background: none;
+		border: none;
+		outline: none;
+		padding: 0;
+		cursor: pointer;
+		transition: $nos-transition;
+
+		&:hover {
+			color: $nos-text-primary;
+		}
 	}
 
 	&__drops {
@@ -344,6 +354,8 @@
 		justify-content: center;
 		background: none;
 		border: none;
+		outline: none;
+		box-shadow: none;
 		padding: 0.2rem;
 		cursor: pointer;
 		font-size: 1rem;
@@ -354,6 +366,11 @@
 		&:hover {
 			transform: scale(1.2);
 			color: #b01b19;
+		}
+
+		&:focus, &:focus-visible {
+			outline: none;
+			box-shadow: none;
 		}
 
 		&--active {

@@ -194,9 +194,11 @@
 	// Wounds
 	let wounds = $derived(actor.reactive.system.attributes.wounds);
 	function toggleWounds(woundLevel) {
-		let newWoundsValue = woundLevel;
-		if (woundLevel <= wounds.value) newWoundsValue = woundLevel - 1;
+		const newWoundsValue = woundLevel === wounds.value ? woundLevel - 1 : woundLevel;
 		actor.update({ 'system.attributes.wounds.value': newWoundsValue });
+	}
+	function resetWounds() {
+		actor.update({ 'system.attributes.wounds.value': 0 });
 	}
 
 	// Flags
@@ -252,6 +254,7 @@
 			{mana}
 			{wounds}
 			{toggleWounds}
+			{resetWounds}
 			{updateCurrentHP}
 			{updateTempHP}
 			{updateCurrentMana}

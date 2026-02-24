@@ -2,6 +2,7 @@ import WhiteCharacterSheet from './sheets/WhiteCharacterSheet.svelte.js';
 import './scss/main.scss';
 
 Hooks.once('init', () => {
+
 	type ActorSheetConstructor = Parameters<
 		typeof foundry.documents.collections.Actors.registerSheet
 	>[1];

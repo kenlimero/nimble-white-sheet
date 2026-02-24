@@ -217,6 +217,16 @@
 		grid-column: 1 / -1;
 		min-height: 8rem;
 	}
+
+	&__notes-editor {
+		border: 1px solid $nos-border-light;
+		padding: $nos-gap-md;
+		min-height: 6rem;
+		font-size: $nos-text-sm;
+		background: $nos-bg-input;
+		color: $nos-text-primary;
+		overflow-y: auto;
+	}
 }
 
 // Spells grouping

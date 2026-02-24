@@ -36,6 +36,9 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 
 	static override DEFAULT_OPTIONS = {
 		classes: ['nimble-white-sheet'],
+		form: {
+			submitOnChange: false,
+		},
 		window: {
 			icon: 'fa-solid fa-scroll',
 			resizable: true,

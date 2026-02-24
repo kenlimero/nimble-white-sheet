@@ -105,14 +105,6 @@
 		<div
 			contenteditable={editingEnabled ? 'true' : 'false'}
 			class="nos-bio__notes-editor"
-			style="
-				border: 1px solid #888;
-				padding: 0.5rem;
-				min-height: 6rem;
-				font-size: 0.833rem;
-				background: #fff;
-				overflow-y: auto;
-			"
 			onblur={({ target }) => actor.update({ 'system.details.notes': target.innerHTML })}
 		>
 			{@html details.notes ?? ''}

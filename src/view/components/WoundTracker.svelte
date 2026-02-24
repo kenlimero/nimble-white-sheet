@@ -2,11 +2,19 @@
 	import localize from '../../utils/localize.js';
 	import { format } from '../../utils/localize.js';
 
-	let { wounds, toggleWounds } = $props();
+	let { wounds, toggleWounds, resetWounds } = $props();
 </script>
 
 <div class="nos-wounds">
-	<span class="nos-wounds__label">{localize('NWS.Wounds')}</span>
+	<button
+		class="nos-wounds__label"
+		type="button"
+		data-tooltip={localize('NWS.ResetWounds')}
+		aria-label={localize('NWS.ResetWounds')}
+		onclick={resetWounds}
+	>
+		{localize('NWS.Wounds')}
+	</button>
 	<div class="nos-wounds__drops">
 		{#each { length: wounds.max }, i}
 			<button

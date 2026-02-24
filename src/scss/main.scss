@@ -317,6 +317,12 @@
 		color: #999;
 	}
 
+	.nos-bio__notes-editor {
+		border-color: #666;
+		background: #1a1a1e;
+		color: #e0e0e0;
+	}
+
 	// Spell tiers / Feature groups
 	.nos-spell-tier__heading,
 	.nos-feature-group__heading {
@@ -584,6 +590,12 @@
 	// Bio
 	.nos-bio__field label {
 		color: var(--nimble-medium-text-color);
+	}
+
+	.nos-bio__notes-editor {
+		border-color: var(--nimble-box-color);
+		background: var(--nimble-box-background-color);
+		color: var(--nimble-dark-text-color);
 	}
 
 	// Spell tiers / Feature groups
