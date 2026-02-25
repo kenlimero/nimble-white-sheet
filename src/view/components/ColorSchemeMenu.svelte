@@ -90,7 +90,7 @@
 								<input
 									type="color"
 									value={customColors[color.key]}
-									onchange={(e) => setCustomColor(color.key, e.target.value)}
+									oninput={(e) => setCustomColor(color.key, e.target.value)}
 								/>
 								<span>{localize(color.label)}</span>
 							</label>

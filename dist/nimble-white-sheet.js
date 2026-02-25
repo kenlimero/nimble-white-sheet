@@ -4016,7 +4016,7 @@ function vl(e, t) {
         var y = ul(), D = h(y), ae = h(D), S = b(D, 2);
         De(S, 21, () => l(W).colors, Ae, (I, H) => {
           var E = cl(), g = h(E);
-          g.__change = (O) => t.setCustomColor(l(H).key, O.target.value);
+          g.__input = (O) => t.setCustomColor(l(H).key, O.target.value);
           var x = b(g, 2), N = h(x);
           B(
             (O) => {
@@ -4034,7 +4034,7 @@ function vl(e, t) {
   L(e, o), xe();
 }
 r(vl, "ColorSchemeMenu");
-Me(["click", "keydown", "change"]);
+Me(["click", "keydown", "input"]);
 var _l = /* @__PURE__ */ R('<aside class="nos-sidebar-controls"><button type="button"><i></i></button> <button class="nos-sidebar-btn" type="button"><i class="fa-solid fa-arrow-up-right-dots"></i></button> <button class="nos-sidebar-btn" type="button"><i class="fa-solid fa-undo"></i></button> <div class="nos-color-scheme-wrapper"><button type="button" aria-haspopup="true"><i class="fa-solid fa-circle-half-stroke"></i></button> <!></div> <button class="nos-sidebar-btn" type="button"><i class="fa-regular fa-hourglass-half"></i></button> <button class="nos-sidebar-btn" type="button"><i class="fa-solid fa-moon"></i></button></aside>');
 function hl(e, t) {
   Ee(t, !0);
