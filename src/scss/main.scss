@@ -652,6 +652,344 @@
 	}
 }
 
+// Custom color scheme: uses inline CSS custom properties (--nos-*)
+.nos-sheet--custom {
+	background: var(--nos-bg-primary);
+	color: var(--nos-text-primary);
+
+	// Inputs
+	input[type='text'],
+	input[type='number'] {
+		color: var(--nos-text-primary);
+
+		&:focus {
+			border-bottom-color: var(--nos-border-light);
+			background: var(--nos-highlight);
+		}
+	}
+
+	// Boxes
+	.nos-box {
+		border-color: var(--nos-border-color);
+		background: var(--nos-bg-primary);
+	}
+
+	// Labels (pentagons, banners)
+	.nos-pentagon,
+	.nos-banner {
+		background: var(--nos-label-bg);
+		color: var(--nos-label-text);
+	}
+
+	// Ability boxes
+	.nos-ability__box {
+		background: var(--nos-bg-secondary);
+		border-color: var(--nos-border-color);
+
+		&:hover {
+			background: var(--nos-highlight);
+		}
+	}
+
+	// Combat stat boxes
+	.nos-combat__stat {
+		border-color: var(--nos-border-color);
+		background: var(--nos-bg-secondary);
+
+		&--clickable:hover {
+			background: var(--nos-highlight);
+		}
+	}
+
+	.nos-combat__pair {
+		border-color: var(--nos-border-color);
+		background: var(--nos-bg-secondary);
+
+		.nos-combat__stat {
+			border-color: var(--nos-border-color);
+			background: none;
+		}
+	}
+
+	.nos-combat__label,
+	.nos-combat__icon,
+	.nos-combat__sub {
+		color: var(--nos-text-secondary);
+	}
+
+	.nos-combat__value {
+		color: var(--nos-text-primary);
+	}
+
+	.nos-combat__input {
+		color: var(--nos-text-primary);
+	}
+
+	// Skills
+	.nos-skill {
+		border-right-color: var(--nos-border-color);
+
+		&:hover {
+			background: var(--nos-highlight);
+		}
+	}
+
+	.nos-skill__ability {
+		color: var(--nos-text-secondary);
+	}
+
+	.nos-skills-row {
+		border-bottom-color: var(--nos-border-color);
+	}
+
+	// Wounds
+	.nos-wounds__label {
+		color: var(--nos-text-secondary);
+	}
+
+	// Diamonds
+	.nos-diamond {
+		border-color: var(--nos-border-color);
+
+		&--active {
+			background: var(--nos-border-color);
+		}
+	}
+
+	// Header
+	.nos-header__hitdie {
+		border-color: var(--nos-border-color);
+		background: var(--nos-bg-secondary);
+	}
+
+	.nos-header__name label,
+	.nos-header__meta label,
+	.nos-header__hitdie label {
+		color: var(--nos-text-secondary);
+	}
+
+	// Resources
+	.nos-resources__label {
+		color: var(--nos-text-secondary);
+	}
+
+	// Content area
+	.nos-content__tabs {
+		border-bottom-color: var(--nos-border-color);
+	}
+
+	.nos-content__sidebar-header {
+		border-left-color: var(--nos-border-color);
+		border-bottom-color: var(--nos-border-color);
+
+		span {
+			color: var(--nos-text-secondary);
+		}
+	}
+
+	.nos-content__sidebar {
+		border-left-color: var(--nos-border-color);
+	}
+
+	// Tab buttons
+	.nos-tab-btn {
+		color: var(--nos-text-secondary);
+
+		&:hover {
+			color: var(--nos-text-primary);
+		}
+
+		&--active {
+			color: var(--nos-text-primary);
+			border-bottom-color: var(--nos-border-color);
+		}
+	}
+
+	// Items
+	.nos-item {
+		border-bottom-color: var(--nos-border-light);
+
+		&:hover {
+			background: var(--nos-highlight);
+		}
+	}
+
+	.nos-item__meta {
+		color: var(--nos-text-secondary);
+	}
+
+	// Slots
+	.nos-slot {
+		border-bottom-color: var(--nos-border-light);
+
+		&--empty {
+			color: var(--nos-text-secondary);
+		}
+	}
+
+	// Rollable
+	.nos-rollable:hover {
+		background: var(--nos-highlight);
+	}
+
+	// Icon buttons
+	.nos-icon-btn {
+		color: var(--nos-text-secondary);
+
+		&:hover {
+			color: var(--nos-text-primary);
+		}
+	}
+
+	// Currency
+	.nos-currency {
+		border-bottom-color: var(--nos-border-light);
+	}
+
+	.nos-currency__coin label {
+		color: var(--nos-text-secondary);
+	}
+
+	.nos-currency__btn {
+		color: var(--nos-text-secondary);
+		border-color: var(--nos-border-light);
+
+		&:hover {
+			color: var(--nos-text-primary);
+			border-color: var(--nos-border-color);
+		}
+	}
+
+	// Bio
+	.nos-bio__field label {
+		color: var(--nos-text-secondary);
+	}
+
+	.nos-bio__notes-editor {
+		border-color: var(--nos-border-light);
+		background: var(--nos-bg-input);
+		color: var(--nos-text-primary);
+	}
+
+	// Spell tiers / Feature groups
+	.nos-spell-tier__heading,
+	.nos-feature-group__heading {
+		color: var(--nos-text-secondary);
+		border-bottom-color: var(--nos-border-color);
+	}
+
+	// Search
+	.nos-search input {
+		color: var(--nos-text-primary);
+	}
+
+	// Sidebar buttons
+	.nos-sidebar-btn {
+		background: var(--nos-bg-secondary);
+		border-color: var(--nos-border-color);
+		color: var(--nos-text-secondary);
+
+		&:hover {
+			background: var(--nos-highlight);
+			color: var(--nos-text-primary);
+		}
+
+		&--active {
+			background: var(--nos-label-bg);
+			color: var(--nos-label-text);
+		}
+	}
+
+	// Color scheme menu
+	.nos-color-scheme-menu {
+		background: var(--nos-bg-primary);
+		border-color: var(--nos-border-color);
+
+		&__option {
+			color: var(--nos-text-secondary);
+
+			&:hover {
+				background: var(--nos-highlight);
+				color: var(--nos-text-primary);
+			}
+
+			&--active {
+				color: var(--nos-text-primary);
+			}
+		}
+	}
+
+	// Logo
+	.nos-logo {
+		color: var(--nos-border-light);
+	}
+}
+
+// Color picker panel inside color scheme menu
+.nos-color-picker-panel {
+	display: flex;
+	flex-direction: column;
+	gap: $nos-gap-xs;
+	padding: $nos-gap-sm;
+	border-top: $nos-border-light-thin;
+	max-height: 300px;
+	overflow-y: auto;
+}
+
+.nos-color-picker-group {
+	display: flex;
+	flex-direction: column;
+	gap: $nos-gap-xs;
+
+	&__label {
+		font-size: $nos-text-xs;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		opacity: 0.7;
+	}
+
+	&__colors {
+		display: flex;
+		flex-direction: column;
+		gap: 1px;
+	}
+}
+
+.nos-color-picker {
+	display: flex;
+	align-items: center;
+	gap: $nos-gap-sm;
+	cursor: pointer;
+	font-size: $nos-text-xs;
+	padding: 1px 0;
+
+	input[type='color'] {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 20px;
+		height: 20px;
+		border: 1px solid $nos-border-light;
+		border-radius: 3px;
+		padding: 1px;
+		cursor: pointer;
+		background: none;
+
+		&::-webkit-color-swatch-wrapper {
+			padding: 0;
+		}
+
+		&::-webkit-color-swatch {
+			border: none;
+			border-radius: 2px;
+		}
+	}
+
+	span {
+		white-space: nowrap;
+	}
+}
+
 // Nimble logo at bottom-right
 .nos-logo {
 	position: absolute;

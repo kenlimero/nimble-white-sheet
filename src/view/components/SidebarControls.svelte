@@ -2,7 +2,7 @@
 	import localize from '../../utils/localize.js';
 	import ColorSchemeMenu from './ColorSchemeMenu.svelte';
 
-	let { actor, editingEnabled, toggleEditingEnabled, classItem, darkMode, colorScheme, setColorScheme } = $props();
+	let { actor, editingEnabled, toggleEditingEnabled, classItem, darkMode, colorScheme, setColorScheme, customColors, setCustomColor } = $props();
 
 	let menuOpen = $state(false);
 </script>
@@ -58,7 +58,7 @@
 		</button>
 
 		{#if menuOpen}
-			<ColorSchemeMenu {colorScheme} {setColorScheme} onclose={() => (menuOpen = false)} />
+			<ColorSchemeMenu {colorScheme} {setColorScheme} {customColors} {setCustomColor} onclose={() => (menuOpen = false)} />
 		{/if}
 	</div>
 

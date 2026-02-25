@@ -213,7 +213,7 @@
 		await actor.setFlag('nimble', 'editingEnabled', !editingEnabled);
 	}
 
-	// Color scheme: 'white' | 'dark' | 'nimble'
+	// Color scheme: 'white' | 'dark' | 'nimble' | 'custom'
 	let colorScheme = $derived.by(() => {
 		const scheme = flags?.colorScheme;
 		if (scheme) return scheme;
@@ -228,6 +228,62 @@
 
 	let darkMode = $derived(colorScheme === 'dark');
 	let nimbleMode = $derived(colorScheme === 'nimble');
+	let customMode = $derived(colorScheme === 'custom');
+
+	// Custom colors
+	const COLOR_DEFAULTS = {
+		bgPrimary: '#fafafa',
+		bgSecondary: '#f0f0f0',
+		bgInput: '#ffffff',
+		textPrimary: '#222222',
+		textSecondary: '#555555',
+		textLabel: '#ffffff',
+		borderColor: '#333333',
+		borderLight: '#888888',
+		accent: '#444444',
+		highlight: '#c2dbf4',
+		labelBg: '#333333',
+		labelText: '#ffffff',
+		danger: '#b01b19',
+		success: '#3b8a57',
+		manaColor: '#3d7ab8',
+	};
+
+	let customColors = $derived.by(() => {
+		const saved = flags?.customColors;
+		if (!saved) return { ...COLOR_DEFAULTS };
+		return { ...COLOR_DEFAULTS, ...saved };
+	});
+
+	async function setCustomColor(key, value) {
+		const current = flags?.customColors ?? {};
+		await actor.setFlag('nimble', 'customColors', { ...current, [key]: value });
+	}
+
+	const CSS_VAR_MAP = {
+		bgPrimary: '--nos-bg-primary',
+		bgSecondary: '--nos-bg-secondary',
+		bgInput: '--nos-bg-input',
+		textPrimary: '--nos-text-primary',
+		textSecondary: '--nos-text-secondary',
+		textLabel: '--nos-text-label',
+		borderColor: '--nos-border-color',
+		borderLight: '--nos-border-light',
+		accent: '--nos-accent',
+		highlight: '--nos-highlight',
+		labelBg: '--nos-label-bg',
+		labelText: '--nos-label-text',
+		danger: '--nos-danger',
+		success: '--nos-success',
+		manaColor: '--nos-mana-color',
+	};
+
+	let customStyle = $derived.by(() => {
+		if (!customMode) return '';
+		return Object.entries(CSS_VAR_MAP)
+			.map(([key, varName]) => `${varName}: ${customColors[key]}`)
+			.join('; ');
+	});
 
 	// Set contexts
 	setContext('actor', actor);
@@ -236,7 +292,7 @@
 	setContext('editingEnabled', editingEnabledStore);
 </script>
 
-<div class="nos-sheet" class:nos-sheet--dark={darkMode} class:nos-sheet--nimble={nimbleMode} style="position: relative;">
+<div class="nos-sheet" class:nos-sheet--dark={darkMode} class:nos-sheet--nimble={nimbleMode} class:nos-sheet--custom={customMode} style="position: relative; {customStyle}">
 	<div class="nos-top">
 		<HeaderRow
 			{actor}
@@ -285,6 +341,8 @@
 		{darkMode}
 		{colorScheme}
 		{setColorScheme}
+		{customColors}
+		{setCustomColor}
 	/>
 
 	<span class="nos-logo">Nimble</span>
