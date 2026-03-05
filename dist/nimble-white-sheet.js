@@ -2590,22 +2590,22 @@ function De(e, t, n, a, s, i = null) {
       /** @type {Batch} */
       se
     ), I = Vr(), H = 0; H < D; H += 1) {
-      var E = d[H], g = a(E, H), x = p ? null : u.get(g);
-      x ? (x.v && pn(x.v, E), x.i && pn(x.i, H), I && S.unskip_effect(x.e)) : (x = qs(
+      var x = d[H], g = a(x, H), N = p ? null : u.get(g);
+      N ? (N.v && pn(N.v, x), N.i && pn(N.i, H), I && S.unskip_effect(N.e)) : (N = qs(
         u,
         p ? o : fr ??= Dt(),
-        E,
+        x,
         g,
         H,
         s,
         t,
         n
-      ), p || (x.e.f |= pt), u.set(g, x)), ae.add(g);
+      ), p || (N.e.f |= pt), u.set(g, N)), ae.add(g);
     }
     if (D === 0 && i && !v && (p ? v = Ke(() => i(o)) : (v = Ke(() => i(fr ??= Dt())), v.f |= pt)), D > ae.size && (M ? Gs(d, a) : xr("", "", "")), !p)
       if (I) {
-        for (const [N, O] of u)
-          ae.has(N) || S.skip_effect(O.e);
+        for (const [E, O] of u)
+          ae.has(E) || S.skip_effect(O.e);
         S.oncommit(w), S.ondiscard(() => {
         });
       } else
@@ -2645,12 +2645,12 @@ function Us(e, t, n, a, s) {
         if (d.length < p.length) {
           var S = p[0], I;
           v = S.prev;
-          var H = d[0], E = d[d.length - 1];
+          var H = d[0], x = d[d.length - 1];
           for (I = 0; I < d.length; I += 1)
             Nn(d[I], S, n);
           for (I = 0; I < p.length; I += 1)
             f.delete(p[I]);
-          kt(e, H.prev, E.next), kt(e, v, H), kt(e, E, S), c = S, v = E, D -= 1, d = [], p = [];
+          kt(e, H.prev, x.next), kt(e, v, H), kt(e, x, S), c = S, v = x, D -= 1, d = [], p = [];
         } else
           f.delete(y), Nn(y, c, n), kt(e, y.prev, y.next), kt(e, y, v === null ? e.effect.first : v.next), kt(e, v, y), v = y;
         continue;
@@ -2674,16 +2674,16 @@ function Us(e, t, n, a, s) {
         (y.f & Fe) === 0 && g.push(y);
     for (; c !== null; )
       (c.f & Fe) === 0 && c !== e.fallback && g.push(c), c = En(c.next);
-    var x = g.length;
-    if (x > 0) {
-      var N = (a & 4) !== 0 && o === 0 ? n : null;
+    var N = g.length;
+    if (N > 0) {
+      var E = (a & 4) !== 0 && o === 0 ? n : null;
       if (i) {
-        for (D = 0; D < x; D += 1)
+        for (D = 0; D < N; D += 1)
           g[D].nodes?.a?.measure();
-        for (D = 0; D < x; D += 1)
+        for (D = 0; D < N; D += 1)
           g[D].nodes?.a?.fix();
       }
-      Bs(e, g, N);
+      Bs(e, g, E);
     }
   }
   i && Wt(() => {
@@ -2999,40 +2999,45 @@ function io(e, t) {
   Ee(t, !0);
   let n = /* @__PURE__ */ F(() => t.actor.reactive.img);
   function a() {
+    const E = game.modules.get("vtta-tokenizer");
+    if (E?.active) {
+      E.api.tokenizeActor(t.actor);
+      return;
+    }
     new FilePicker({
       type: "image",
       current: t.actor.img,
-      callback: /* @__PURE__ */ r((N) => t.actor.update({ img: N }), "callback")
+      callback: /* @__PURE__ */ r((O) => t.actor.update({ img: O }), "callback")
     }).render(!0);
   }
   r(a, "pickPortrait");
   let s = /* @__PURE__ */ F(() => {
-    const N = Object.keys(t.hitDiceData.bySize);
-    return N.length === 0 ? "—" : N.length === 1 ? `d${N[0]}` : N.map((O) => `d${O}`).join("/");
+    const E = Object.keys(t.hitDiceData.bySize);
+    return E.length === 0 ? "—" : E.length === 1 ? `d${E[0]}` : E.map((O) => `d${O}`).join("/");
   });
   var i = ro(), o = h(i);
   o.__click = a;
   var u = h(o), c = b(o, 2), f = h(c), v = h(f), _ = b(f, 2);
-  _.__change = ({ target: N }) => t.actor.update({ name: N.value });
+  _.__change = ({ target: E }) => t.actor.update({ name: E.value });
   var d = b(c, 2), p = h(d), w = h(p), W = b(p, 2), y = h(W);
   {
-    var D = /* @__PURE__ */ r((N) => {
+    var D = /* @__PURE__ */ r((E) => {
       var O = no(), Z = h(O);
-      B(() => A(Z, t.metaData)), L(N, O);
-    }, "consequent"), ae = /* @__PURE__ */ r((N) => {
+      B(() => A(Z, t.metaData)), L(E, O);
+    }, "consequent"), ae = /* @__PURE__ */ r((E) => {
       var O = ao();
-      L(N, O);
+      L(E, O);
     }, "alternate");
-    Y(y, (N) => {
-      t.metaData ? N(D) : N(ae, !1);
+    Y(y, (E) => {
+      t.metaData ? E(D) : E(ae, !1);
     });
   }
   var S = b(y, 2);
   S.__click = () => t.actor.editMetadata();
-  var I = b(d, 2), H = h(I), E = h(H), g = b(H, 2), x = h(g);
+  var I = b(d, 2), H = h(I), x = h(H), g = b(H, 2), N = h(g);
   B(
-    (N, O, Z, j, P) => {
-      C(u, "src", l(n)), C(u, "alt", t.actor.reactive.name), A(v, N), tt(_, t.actor.reactive.name), _.disabled = !t.editingEnabled, A(w, O), C(S, "aria-label", Z), C(S, "data-tooltip", j), S.disabled = !t.editingEnabled, A(E, P), A(x, l(s));
+    (E, O, Z, j, P) => {
+      C(u, "src", l(n)), C(u, "alt", t.actor.reactive.name), A(v, E), tt(_, t.actor.reactive.name), _.disabled = !t.editingEnabled, A(w, O), C(S, "aria-label", Z), C(S, "data-tooltip", j), S.disabled = !t.editingEnabled, A(x, P), A(N, l(s));
     },
     [
       () => k("NWS.CharacterName"),
@@ -3150,11 +3155,11 @@ function bo(e, t) {
       t.editingEnabled && de(d);
     });
   }
-  var p = b(f, 2), w = h(p), W = h(w), y = h(W), D = b(h(y), 2), ae = h(D), S = b(D, 2), I = h(S), H = b(y, 2), E = b(h(H), 2), g = h(E), x = b(E, 2);
-  x.__change = ({ target: de }) => t.updateTempHP(Number(de.value));
-  var N = b(W, 2);
+  var p = b(f, 2), w = h(p), W = h(w), y = h(W), D = b(h(y), 2), ae = h(D), S = b(D, 2), I = h(S), H = b(y, 2), x = b(h(H), 2), g = h(x), N = b(x, 2);
+  N.__change = ({ target: de }) => t.updateTempHP(Number(de.value));
+  var E = b(W, 2);
   let O;
-  var Z = h(N), j = h(Z), P = h(j);
+  var Z = h(E), j = h(Z), P = h(j);
   {
     var K = /* @__PURE__ */ r((de) => {
       var ze = vo();
@@ -3175,7 +3180,7 @@ function bo(e, t) {
   Le.__change = ({ target: de }) => t.updateCurrentMana(Number(de.value));
   var Zt = b(Le, 4), T = h(Zt), $ = b(Qe, 2);
   $.__click = () => t.actor.configureMana();
-  var te = b(N, 2);
+  var te = b(E, 2);
   te.__click = () => t.rollHitDice();
   var _e = b(h(te), 2), ie = h(_e), Ot = b(_e, 2), Sn = h(Ot), St = b(Ot, 2);
   St.__click = (de) => {
@@ -3198,7 +3203,7 @@ function bo(e, t) {
     }
   }), B(
     (de, ze, kn, zn, ca, ua, pi, yi, wi, Si, ki, Ei, xi) => {
-      A(ae, de), A(I, l(i).value), A(g, ze), tt(x, l(s).temp ?? 0), O = at(N, 1, "nos-combat__pair", null, O, { "nos-hp--bloodied": t.isBloodied }), A(V, kn), tt(G, l(s).value), A(ce, l(s).max), C(ue, "data-tooltip", zn), ue.disabled = !t.editingEnabled, Cn(re, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), Cn(le, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), A(ge, ca), tt(Le, t.mana?.current ?? 0), Cn(Le, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), Cn(Zt, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), A(T, t.mana?.max || t.mana?.baseMax || 0), C($, "data-tooltip", ua), $.disabled = !t.editingEnabled, A(ie, pi), A(Sn, `${t.hitDiceData.value ?? ""}/${t.hitDiceData.max ?? ""}`), C(St, "data-tooltip", yi), St.disabled = !t.editingEnabled, C(fe, "data-tooltip", wi), A(st, Si), A(Fn, ki), A(bi, Ei), A(mi, l(u).walk), C(la, "data-tooltip", xi), la.disabled = !t.editingEnabled;
+      A(ae, de), A(I, l(i).value), A(g, ze), tt(N, l(s).temp ?? 0), O = at(E, 1, "nos-combat__pair", null, O, { "nos-hp--bloodied": t.isBloodied }), A(V, kn), tt(G, l(s).value), A(ce, l(s).max), C(ue, "data-tooltip", zn), ue.disabled = !t.editingEnabled, Cn(re, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), Cn(le, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), A(ge, ca), tt(Le, t.mana?.current ?? 0), Cn(Le, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), Cn(Zt, `color: ${t.mana?.color ?? "#6a5acd" ?? ""};`), A(T, t.mana?.max || t.mana?.baseMax || 0), C($, "data-tooltip", ua), $.disabled = !t.editingEnabled, A(ie, pi), A(Sn, `${t.hitDiceData.value ?? ""}/${t.hitDiceData.max ?? ""}`), C(St, "data-tooltip", yi), St.disabled = !t.editingEnabled, C(fe, "data-tooltip", wi), A(st, Si), A(Fn, ki), A(bi, Ei), A(mi, l(u).walk), C(la, "data-tooltip", xi), la.disabled = !t.editingEnabled;
     },
     [
       () => k("NWS.Armor"),
@@ -3302,15 +3307,15 @@ function _r(e, t) {
     t.actor.deleteEmbeddedDocuments("Item", [g]);
   }
   r(v, "deleteItem");
-  function _(g, x) {
-    const N = { type: "Item", uuid: x.uuid };
-    g.dataTransfer.setData("text/plain", JSON.stringify(N));
+  function _(g, N) {
+    const E = { type: "Item", uuid: N.uuid };
+    g.dataTransfer.setData("text/plain", JSON.stringify(E));
   }
   r(_, "onDragStart");
   var d = Ho(), p = yt(d);
   {
     var w = /* @__PURE__ */ r((g) => {
-      var x = No(), N = h(x);
+      var N = No(), E = h(N);
       {
         var O = /* @__PURE__ */ r((P) => {
           var K = ko(), z = h(K), ee = h(z), V = b(z, 2), oe = h(V), G = b(oe, 2);
@@ -3334,11 +3339,11 @@ function _r(e, t) {
             [() => k("NWS.Ancestry")]
           ), bt("dragstart", V, (X) => _(X, l(s))), L(P, K);
         }, "consequent_1");
-        Y(N, (P) => {
+        Y(E, (P) => {
           l(s) && P(O);
         });
       }
-      var Z = b(N, 2);
+      var Z = b(E, 2);
       {
         var j = /* @__PURE__ */ r((P) => {
           var K = xo(), z = h(K), ee = h(z), V = b(z, 2), oe = h(V), G = b(oe, 2);
@@ -3366,7 +3371,7 @@ function _r(e, t) {
           l(i) && P(j);
         });
       }
-      L(g, x);
+      L(g, N);
     }, "consequent_4");
     Y(p, (g) => {
       (l(s) || l(i)) && g(w);
@@ -3375,7 +3380,7 @@ function _r(e, t) {
   var W = b(p, 2);
   {
     var y = /* @__PURE__ */ r((g) => {
-      var x = Io(), N = h(x), O = h(N), Z = b(N, 2), j = h(Z), P = b(j, 2);
+      var N = Io(), E = h(N), O = h(E), Z = b(E, 2), j = h(Z), P = b(j, 2);
       P.__click = () => f(l(o).id);
       var K = h(P), z = b(P, 2);
       {
@@ -3419,7 +3424,7 @@ function _r(e, t) {
           A(O, G), C(j, "src", l(o).img), C(j, "alt", l(o).name), A(K, `${l(o).name ?? ""} (${Q ?? ""} ${l(o).system.classLevel ?? ""})`);
         },
         [() => k("NWS.Class"), () => k("NWS.Level")]
-      ), bt("dragstart", Z, (G) => _(G, l(o))), L(g, x);
+      ), bt("dragstart", Z, (G) => _(G, l(o))), L(g, N);
     }, "consequent_8");
     Y(W, (g) => {
       l(o) && g(y);
@@ -3428,7 +3433,7 @@ function _r(e, t) {
   var D = b(W, 2);
   {
     var ae = /* @__PURE__ */ r((g) => {
-      var x = Mo(), N = h(x), O = h(N), Z = b(N, 2);
+      var N = Mo(), E = h(N), O = h(E), Z = b(E, 2);
       De(Z, 21, () => l(n), Ae, (j, P) => {
         var K = Do(), z = h(K), ee = b(z, 2);
         ee.__click = () => c(l(P).id);
@@ -3447,7 +3452,7 @@ function _r(e, t) {
         B(() => {
           C(K, "data-tooltip", l(P).system?.description || ""), C(z, "src", l(P).img), C(z, "alt", l(P).name), A(V, l(P).name);
         }), bt("dragstart", K, (Q) => _(Q, l(P))), L(j, K);
-      }), B((j) => A(O, j), [() => k("NWS.Features")]), L(g, x);
+      }), B((j) => A(O, j), [() => k("NWS.Features")]), L(g, N);
     }, "consequent_10");
     Y(D, (g) => {
       l(n).length > 0 && g(ae);
@@ -3456,7 +3461,7 @@ function _r(e, t) {
   var S = b(D, 2);
   {
     var I = /* @__PURE__ */ r((g) => {
-      var x = Po(), N = h(x), O = h(N), Z = b(N, 2);
+      var N = Po(), E = h(N), O = h(E), Z = b(E, 2);
       De(Z, 21, () => l(a), Ae, (j, P) => {
         var K = Oo(), z = h(K), ee = b(z, 2);
         ee.__click = () => c(l(P).id);
@@ -3475,7 +3480,7 @@ function _r(e, t) {
         B(() => {
           C(K, "data-tooltip", l(P).system?.description || ""), C(z, "src", l(P).img), C(z, "alt", l(P).name), A(V, l(P).name);
         }), bt("dragstart", K, (Q) => _(Q, l(P))), L(j, K);
-      }), B((j) => A(O, j), [() => k("NWS.Boons")]), L(g, x);
+      }), B((j) => A(O, j), [() => k("NWS.Boons")]), L(g, N);
     }, "consequent_12");
     Y(S, (g) => {
       l(a).length > 0 && g(I);
@@ -3483,12 +3488,12 @@ function _r(e, t) {
   }
   var H = b(S, 2);
   {
-    var E = /* @__PURE__ */ r((g) => {
-      var x = Ro(), N = h(x);
-      B((O) => A(N, O), [() => k("NWS.DropFeaturesHere")]), L(g, x);
+    var x = /* @__PURE__ */ r((g) => {
+      var N = Ro(), E = h(N);
+      B((O) => A(E, O), [() => k("NWS.DropFeaturesHere")]), L(g, N);
     }, "consequent_13");
     Y(H, (g) => {
-      !l(s) && !l(i) && !l(o) && l(n).length === 0 && l(a).length === 0 && g(E);
+      !l(s) && !l(i) && !l(o) && l(n).length === 0 && l(a).length === 0 && g(x);
     });
   }
   L(e, d), xe();
@@ -3501,14 +3506,14 @@ function hr(e, t) {
   let n = /* @__PURE__ */ Re(""), a = /* @__PURE__ */ F(() => t.actor.reactive.items.filter((S) => S.type === "spell").sort((S, I) => S.name.localeCompare(I.name))), s = /* @__PURE__ */ F(() => l(n) ? l(a).filter((S) => S.name.toLowerCase().includes(l(n).toLowerCase())) : l(a)), i = /* @__PURE__ */ F(() => {
     const S = {};
     for (const I of l(s)) {
-      const H = I.system?.tier ?? 0, E = I.system?.isUtility ?? !1, g = E ? "_utility" : `_tier_${H}`, x = E ? k("NWS.Utility") : yn("NWS.Tier", { n: H });
-      S[g] ??= { label: x, spells: [] }, S[g].spells.push(I);
+      const H = I.system?.tier ?? 0, x = I.system?.isUtility ?? !1, g = x ? "_utility" : `_tier_${H}`, N = x ? k("NWS.Utility") : yn("NWS.Tier", { n: H });
+      S[g] ??= { label: N, spells: [] }, S[g].spells.push(I);
     }
     return Object.entries(S).sort(([I], [H]) => {
       if (I === "_utility") return 1;
       if (H === "_utility") return -1;
-      const E = parseInt(I.replace("_tier_", "")), g = parseInt(H.replace("_tier_", ""));
-      return E - g;
+      const x = parseInt(I.replace("_tier_", "")), g = parseInt(H.replace("_tier_", ""));
+      return x - g;
     });
   });
   function o(S) {
@@ -3538,7 +3543,7 @@ function hr(e, t) {
       var I = Fo();
       I.__click = c;
       var H = b(h(I));
-      B((E) => A(H, ` ${E ?? ""}`), [() => k("NWS.New")]), L(S, I);
+      B((x) => A(H, ` ${x ?? ""}`), [() => k("NWS.New")]), L(S, I);
     }, "consequent");
     Y(w, (S) => {
       t.editingEnabled && S(W);
@@ -3547,9 +3552,9 @@ function hr(e, t) {
   var y = b(d, 2);
   De(y, 17, () => l(i), Ae, (S, I) => {
     var H = /* @__PURE__ */ F(() => wr(l(I), 2));
-    let E = /* @__PURE__ */ r(() => l(H)[1], "tier");
-    var g = qo(), x = h(g), N = h(x), O = b(x, 2);
-    De(O, 21, () => E().spells, Ae, (Z, j) => {
+    let x = /* @__PURE__ */ r(() => l(H)[1], "tier");
+    var g = qo(), N = h(g), E = h(N), O = b(N, 2);
+    De(O, 21, () => x().spells, Ae, (Z, j) => {
       var P = Uo(), K = h(P), z = b(K, 2);
       z.__click = () => f(l(j).id);
       var ee = h(z), V = b(ee);
@@ -3587,13 +3592,13 @@ function hr(e, t) {
       B(() => {
         C(P, "data-tooltip", l(j).system?.description?.baseEffect || ""), C(K, "src", l(j).img), C(K, "alt", l(j).name), A(ee, `${l(j).name ?? ""} `), A(ue, l(j).system?.activationCost ?? "");
       }), bt("dragstart", P, (re) => v(re, l(j))), L(Z, P);
-    }), B(() => A(N, E().label)), L(S, g);
+    }), B(() => A(E, x().label)), L(S, g);
   });
   var D = b(y, 2);
   {
     var ae = /* @__PURE__ */ r((S) => {
       var I = Go(), H = h(I);
-      B((E) => A(H, E), [() => k("NWS.DropSpellsHere")]), L(S, I);
+      B((x) => A(H, x), [() => k("NWS.DropSpellsHere")]), L(S, I);
     }, "consequent_4");
     Y(D, (S) => {
       l(a).length === 0 && S(ae);
@@ -3606,76 +3611,76 @@ Me(["click"]);
 var Vo = /* @__PURE__ */ R('<div class="nos-currency__coin"><label> </label> <button class="nos-currency__btn" type="button"><i class="fa-solid fa-minus"></i></button> <input type="number" min="0"/> <button class="nos-currency__btn" type="button"><i class="fa-solid fa-plus"></i></button></div>'), Yo = /* @__PURE__ */ R('<button class="nos-tab-btn" type="button"><i class="fa-solid fa-plus"></i> </button>'), Jo = /* @__PURE__ */ R('<div class="nos-item__controls"><button class="nos-icon-btn" type="button"><i class="fa-solid fa-gear"></i></button> <button class="nos-icon-btn" type="button"><i class="fa-solid fa-trash"></i></button></div>'), Qo = /* @__PURE__ */ R('<div class="nos-item" draggable="true"><img class="nos-item__img"/> <span class="nos-item__name"> </span> <input class="nos-item__qty" type="number" min="0"/> <!></div>'), Xo = /* @__PURE__ */ R('<p style="color: #888; font-style: italic; text-align: center; padding: 2rem;"> </p>'), Zo = /* @__PURE__ */ R('<div class="nos-currency"></div> <div class="nos-search"><i class="fa-solid fa-search" style="color: #888;"></i> <input type="text"/> <!></div> <div class="nos-item-grid"></div> <!>', 1);
 function br(e, t) {
   Ee(t, !0);
-  let n = /* @__PURE__ */ Re(""), a = /* @__PURE__ */ F(() => t.actor.reactive.system.currency), s = /* @__PURE__ */ F(() => t.actor.reactive.items.filter((E) => E.type === "object").sort((E, g) => (E.sort ?? 0) - (g.sort ?? 0))), i = /* @__PURE__ */ F(() => l(n) ? l(s).filter((E) => E.name.toLowerCase().includes(l(n).toLowerCase())) : l(s));
-  function o(E) {
-    t.actor.items.get(E)?.sheet?.render(!0);
+  let n = /* @__PURE__ */ Re(""), a = /* @__PURE__ */ F(() => t.actor.reactive.system.currency), s = /* @__PURE__ */ F(() => t.actor.reactive.items.filter((x) => x.type === "object").sort((x, g) => (x.sort ?? 0) - (g.sort ?? 0))), i = /* @__PURE__ */ F(() => l(n) ? l(s).filter((x) => x.name.toLowerCase().includes(l(n).toLowerCase())) : l(s));
+  function o(x) {
+    t.actor.items.get(x)?.sheet?.render(!0);
   }
   r(o, "configureItem");
-  function u(E) {
-    t.actor.deleteEmbeddedDocuments("Item", [E]);
+  function u(x) {
+    t.actor.deleteEmbeddedDocuments("Item", [x]);
   }
   r(u, "deleteItem");
   function c() {
     t.actor.createEmbeddedDocuments("Item", [{ name: "New Object", type: "object" }]);
   }
   r(c, "createObject");
-  function f(E, g) {
+  function f(x, g) {
     t.actor.update({
-      [`system.currency.${E}.value`]: Math.max(0, Math.round(Number(g)))
+      [`system.currency.${x}.value`]: Math.max(0, Math.round(Number(g)))
     });
   }
   r(f, "updateCurrency");
-  function v(E, g) {
-    const x = l(a)[E]?.value ?? 0;
+  function v(x, g) {
+    const N = l(a)[x]?.value ?? 0;
     t.actor.update({
-      [`system.currency.${E}.value`]: Math.max(0, x + g)
+      [`system.currency.${x}.value`]: Math.max(0, N + g)
     });
   }
   r(v, "adjustCurrency");
-  function _(E, g) {
-    t.actor.items.get(E)?.update({ "system.quantity": Number(g) });
+  function _(x, g) {
+    t.actor.items.get(x)?.update({ "system.quantity": Number(g) });
   }
   r(_, "updateQuantity");
-  function d(E, g) {
-    const x = { type: "Item", uuid: g.uuid };
-    E.dataTransfer.setData("text/plain", JSON.stringify(x));
+  function d(x, g) {
+    const N = { type: "Item", uuid: g.uuid };
+    x.dataTransfer.setData("text/plain", JSON.stringify(N));
   }
   r(d, "onDragStart");
   var p = Zo(), w = yt(p);
-  De(w, 20, () => [["gp", "NWS.GP"], ["sp", "NWS.SP"], ["cp", "NWS.CP"]], Ae, (E, g) => {
-    var x = /* @__PURE__ */ F(() => wr(g, 2));
-    let N = /* @__PURE__ */ r(() => l(x)[0], "type"), O = /* @__PURE__ */ r(() => l(x)[1], "labelKey");
+  De(w, 20, () => [["gp", "NWS.GP"], ["sp", "NWS.SP"], ["cp", "NWS.CP"]], Ae, (x, g) => {
+    var N = /* @__PURE__ */ F(() => wr(g, 2));
+    let E = /* @__PURE__ */ r(() => l(N)[0], "type"), O = /* @__PURE__ */ r(() => l(N)[1], "labelKey");
     var Z = Vo(), j = h(Z), P = h(j), K = b(j, 2);
-    K.__click = () => v(N(), -1);
+    K.__click = () => v(E(), -1);
     var z = b(K, 2);
-    z.__change = ({ target: V }) => f(N(), V.value);
+    z.__change = ({ target: V }) => f(E(), V.value);
     var ee = b(z, 2);
-    ee.__click = () => v(N(), 1), B(
+    ee.__click = () => v(E(), 1), B(
       (V, oe, G) => {
-        C(j, "for", `currency-${N() ?? ""}`), A(P, V), C(K, "aria-label", `-1 ${oe ?? ""}`), C(z, "id", `currency-${N() ?? ""}`), tt(z, l(a)[N()]?.value ?? 0), C(ee, "aria-label", `+1 ${G ?? ""}`);
+        C(j, "for", `currency-${E() ?? ""}`), A(P, V), C(K, "aria-label", `-1 ${oe ?? ""}`), C(z, "id", `currency-${E() ?? ""}`), tt(z, l(a)[E()]?.value ?? 0), C(ee, "aria-label", `+1 ${G ?? ""}`);
       },
       [
         () => k(O()),
         () => k(O()),
         () => k(O())
       ]
-    ), L(E, Z);
+    ), L(x, Z);
   });
   var W = b(w, 2), y = b(h(W), 2), D = b(y, 2);
   {
-    var ae = /* @__PURE__ */ r((E) => {
+    var ae = /* @__PURE__ */ r((x) => {
       var g = Yo();
       g.__click = c;
-      var x = b(h(g));
-      B((N) => A(x, ` ${N ?? ""}`), [() => k("NWS.New")]), L(E, g);
+      var N = b(h(g));
+      B((E) => A(N, ` ${E ?? ""}`), [() => k("NWS.New")]), L(x, g);
     }, "consequent");
-    Y(D, (E) => {
-      t.editingEnabled && E(ae);
+    Y(D, (x) => {
+      t.editingEnabled && x(ae);
     });
   }
   var S = b(W, 2);
-  De(S, 21, () => l(i), Ae, (E, g) => {
-    var x = Qo(), N = h(x), O = b(N, 2);
+  De(S, 21, () => l(i), Ae, (x, g) => {
+    var N = Qo(), E = h(N), O = b(E, 2);
     O.__click = () => o(l(g).id);
     var Z = h(O), j = b(O, 2);
     j.__change = ({ target: z }) => _(l(g).id, z.value);
@@ -3692,20 +3697,20 @@ function br(e, t) {
       });
     }
     B(() => {
-      C(x, "data-tooltip", l(g).system?.description?.public || ""), C(N, "src", l(g).img), C(N, "alt", l(g).name), A(Z, l(g).name), tt(j, l(g).system?.quantity ?? 1);
-    }), bt("dragstart", x, (z) => d(z, l(g))), L(E, x);
+      C(N, "data-tooltip", l(g).system?.description?.public || ""), C(E, "src", l(g).img), C(E, "alt", l(g).name), A(Z, l(g).name), tt(j, l(g).system?.quantity ?? 1);
+    }), bt("dragstart", N, (z) => d(z, l(g))), L(x, N);
   });
   var I = b(S, 2);
   {
-    var H = /* @__PURE__ */ r((E) => {
-      var g = Xo(), x = h(g);
-      B((N) => A(x, N), [() => k("NWS.DropInventoryHere")]), L(E, g);
+    var H = /* @__PURE__ */ r((x) => {
+      var g = Xo(), N = h(g);
+      B((E) => A(N, E), [() => k("NWS.DropInventoryHere")]), L(x, g);
     }, "consequent_2");
-    Y(I, (E) => {
-      l(s).length === 0 && E(H);
+    Y(I, (x) => {
+      l(s).length === 0 && x(H);
     });
   }
-  B((E) => C(y, "placeholder", E), [() => k("NWS.SearchItems")]), hi(y, () => l(n), (E) => He(n, E)), L(e, p), xe();
+  B((x) => C(y, "placeholder", x), [() => k("NWS.SearchItems")]), hi(y, () => l(n), (x) => He(n, x)), L(e, p), xe();
 }
 r(br, "InventoryTab");
 Me(["click", "change"]);
@@ -3719,18 +3724,18 @@ function mr(e, t) {
   W.__change = ({ target: T }) => t.actor.update({ "system.details.gender": T.value });
   var y = b(d, 2), D = h(y), ae = h(D), S = b(D, 2);
   S.__change = ({ target: T }) => t.actor.update({ "system.details.height": T.value });
-  var I = b(y, 2), H = h(I), E = h(H), g = b(H, 2);
+  var I = b(y, 2), H = h(I), x = h(H), g = b(H, 2);
   g.__change = ({ target: T }) => t.actor.update({ "system.details.weight": T.value });
-  var x = b(I, 2), N = h(x), O = h(N), Z = b(N, 2), j = h(Z), P = b(Z, 2);
+  var N = b(I, 2), E = h(N), O = h(E), Z = b(E, 2), j = h(Z), P = b(Z, 2);
   P.__click = () => t.actor.configureLanguageProficiencies();
-  var K = b(x, 2), z = h(K), ee = h(z), V = b(z, 2), oe = h(V), G = b(V, 2);
+  var K = b(N, 2), z = h(K), ee = h(z), V = b(z, 2), oe = h(V), G = b(V, 2);
   G.__click = () => t.actor.configureArmorProficiencies();
   var Q = b(K, 2), ce = h(Q), ue = h(ce), X = b(ce, 2), me = h(X), re = b(X, 2);
   re.__click = () => t.actor.configureWeaponProficiencies();
   var le = b(Q, 2), ge = h(le), Qe = h(ge), Le = b(ge, 2), Zt = h(Le);
   Ks(Zt, () => l(n).notes ?? ""), B(
     (T, $, te, _e, ie, Ot, Sn, St, $t, fe, Ne, st, je) => {
-      A(v, T), tt(_, l(n).age ?? ""), _.disabled = !t.editingEnabled, A(w, $), tt(W, l(n).gender ?? ""), W.disabled = !t.editingEnabled, A(ae, te), tt(S, l(n).height ?? ""), C(S, "placeholder", _e), S.disabled = !t.editingEnabled, A(E, ie), tt(g, l(n).weight ?? ""), C(g, "placeholder", Ot), g.disabled = !t.editingEnabled, A(O, Sn), A(j, l(s) || "—"), C(P, "data-tooltip", St), P.disabled = !t.editingEnabled, A(ee, $t), A(oe, l(i) || "—"), C(G, "data-tooltip", fe), G.disabled = !t.editingEnabled, A(ue, Ne), A(me, l(o) || "—"), C(re, "data-tooltip", st), re.disabled = !t.editingEnabled, A(Qe, je), C(Le, "contenteditable", t.editingEnabled ? "true" : "false");
+      A(v, T), tt(_, l(n).age ?? ""), _.disabled = !t.editingEnabled, A(w, $), tt(W, l(n).gender ?? ""), W.disabled = !t.editingEnabled, A(ae, te), tt(S, l(n).height ?? ""), C(S, "placeholder", _e), S.disabled = !t.editingEnabled, A(x, ie), tt(g, l(n).weight ?? ""), C(g, "placeholder", Ot), g.disabled = !t.editingEnabled, A(O, Sn), A(j, l(s) || "—"), C(P, "data-tooltip", St), P.disabled = !t.editingEnabled, A(ee, $t), A(oe, l(i) || "—"), C(G, "data-tooltip", fe), G.disabled = !t.editingEnabled, A(ue, Ne), A(me, l(o) || "—"), C(re, "data-tooltip", st), re.disabled = !t.editingEnabled, A(Qe, je), C(Le, "contenteditable", t.editingEnabled ? "true" : "false");
     },
     [
       () => k("NWS.Age"),
@@ -3811,12 +3816,12 @@ function ol(e, t) {
   var o = sl(), u = h(o);
   De(u, 21, () => n, Ae, (S, I) => {
     var H = rl();
-    let E;
+    let x;
     H.__click = () => He(a, l(I).name, !0);
-    var g = h(H), x = b(g);
+    var g = h(H), N = b(g);
     B(
-      (N) => {
-        E = at(H, 1, "nos-tab-btn", null, E, { "nos-tab-btn--active": l(a) === l(I).name }), at(g, 1, l(I).icon), A(x, ` ${N ?? ""}`);
+      (E) => {
+        x = at(H, 1, "nos-tab-btn", null, x, { "nos-tab-btn--active": l(a) === l(I).name }), at(g, 1, l(I).icon), A(N, ` ${E ?? ""}`);
       },
       [() => k(l(I).labelKey)]
     ), L(S, H);
@@ -3835,8 +3840,8 @@ function ol(e, t) {
     }, "consequent"), _ = /* @__PURE__ */ r((S) => {
       var I = ba(), H = yt(I);
       {
-        var E = /* @__PURE__ */ r((x) => {
-          hr(x, {
+        var x = /* @__PURE__ */ r((N) => {
+          hr(N, {
             get actor() {
               return t.actor;
             },
@@ -3844,8 +3849,8 @@ function ol(e, t) {
               return t.editingEnabled;
             }
           });
-        }, "consequent_1"), g = /* @__PURE__ */ r((x) => {
-          var N = ba(), O = yt(N);
+        }, "consequent_1"), g = /* @__PURE__ */ r((N) => {
+          var E = ba(), O = yt(E);
           {
             var Z = /* @__PURE__ */ r((P) => {
               br(P, {
@@ -3887,12 +3892,12 @@ function ol(e, t) {
               !0
             );
           }
-          L(x, N);
+          L(N, E);
         }, "alternate_1");
         Y(
           H,
-          (x) => {
-            l(a) === "spells" ? x(E) : x(g, !1);
+          (N) => {
+            l(a) === "spells" ? N(x) : N(g, !1);
           },
           !0
         );
@@ -4015,15 +4020,15 @@ function vl(e, t) {
       De(p, 21, () => a, Ae, (w, W) => {
         var y = ul(), D = h(y), ae = h(D), S = b(D, 2);
         De(S, 21, () => l(W).colors, Ae, (I, H) => {
-          var E = cl(), g = h(E);
+          var x = cl(), g = h(x);
           g.__input = (O) => t.setCustomColor(l(H).key, O.target.value);
-          var x = b(g, 2), N = h(x);
+          var N = b(g, 2), E = h(N);
           B(
             (O) => {
-              tt(g, t.customColors[l(H).key]), A(N, O);
+              tt(g, t.customColors[l(H).key]), A(E, O);
             },
             [() => k(l(H).label)]
-          ), L(I, E);
+          ), L(I, x);
         }), B((I) => A(ae, I), [() => k(l(W).label)]), L(w, y);
       }), L(d, p);
     }, "consequent");
@@ -4078,8 +4083,8 @@ function hl(e, t) {
   w.__click = () => t.actor.triggerRest({ restType: "field" });
   var W = b(w, 2);
   W.__click = () => t.actor.triggerRest({ restType: "safe" }), B(
-    (y, D, ae, S, I, H, E, g, x, N, O, Z) => {
-      i = at(s, 1, "nos-sidebar-btn", null, i, { "nos-sidebar-btn--active": t.editingEnabled }), C(s, "aria-pressed", t.editingEnabled), C(s, "aria-label", y), C(s, "data-tooltip", D), at(o, 1, `fa-solid ${t.editingEnabled ? "fa-pen" : "fa-lock"}`), C(u, "aria-label", ae), C(u, "data-tooltip", S), u.disabled = !t.classItem || t.classItem?.system?.classLevel >= 20, C(c, "aria-label", I), C(c, "data-tooltip", H), c.disabled = t.actor.reactive.system.levelUpHistory.length === 0, _ = at(v, 1, "nos-sidebar-btn", null, _, { "nos-sidebar-btn--active": t.darkMode }), C(v, "aria-pressed", t.darkMode), C(v, "aria-label", E), C(v, "data-tooltip", g), C(v, "aria-expanded", l(n)), C(w, "aria-label", x), C(w, "data-tooltip", N), C(W, "aria-label", O), C(W, "data-tooltip", Z);
+    (y, D, ae, S, I, H, x, g, N, E, O, Z) => {
+      i = at(s, 1, "nos-sidebar-btn", null, i, { "nos-sidebar-btn--active": t.editingEnabled }), C(s, "aria-pressed", t.editingEnabled), C(s, "aria-label", y), C(s, "data-tooltip", D), at(o, 1, `fa-solid ${t.editingEnabled ? "fa-pen" : "fa-lock"}`), C(u, "aria-label", ae), C(u, "data-tooltip", S), u.disabled = !t.classItem || t.classItem?.system?.classLevel >= 20, C(c, "aria-label", I), C(c, "data-tooltip", H), c.disabled = t.actor.reactive.system.levelUpHistory.length === 0, _ = at(v, 1, "nos-sidebar-btn", null, _, { "nos-sidebar-btn--active": t.darkMode }), C(v, "aria-pressed", t.darkMode), C(v, "aria-label", x), C(v, "data-tooltip", g), C(v, "aria-expanded", l(n)), C(w, "aria-label", N), C(w, "data-tooltip", E), C(W, "aria-label", O), C(W, "data-tooltip", Z);
     },
     [
       () => t.editingEnabled ? k("NWS.DisableEditing") : k("NWS.EnableEditing"),
@@ -4201,17 +4206,17 @@ function ml(e, t) {
   let I = /* @__PURE__ */ F(() => a.reactive.items.find((T) => T.type === "class") ?? null), H = /* @__PURE__ */ F(() => {
     const T = a.reactive.items.find((ie) => ie.type === "class") ?? null, $ = a.reactive.items.find((ie) => ie.type === "subclass") ?? null, te = a.reactive.items.find((ie) => ie.type === "ancestry") ?? null, _e = a.reactive.system.attributes.sizeCategory;
     return c(T, $, te, _e);
-  }), E = /* @__PURE__ */ F(() => a.reactive.system.attributes.wounds);
+  }), x = /* @__PURE__ */ F(() => a.reactive.system.attributes.wounds);
   function g(T) {
-    const $ = T === l(E).value ? T - 1 : T;
+    const $ = T === l(x).value ? T - 1 : T;
     a.update({ "system.attributes.wounds.value": $ });
   }
   r(g, "toggleWounds");
-  function x() {
+  function N() {
     a.update({ "system.attributes.wounds.value": 0 });
   }
-  r(x, "resetWounds");
-  let N = /* @__PURE__ */ F(() => a.reactive.flags.nimble), O = /* @__PURE__ */ F(() => l(N)?.editingEnabled ?? !0);
+  r(N, "resetWounds");
+  let E = /* @__PURE__ */ F(() => a.reactive.flags.nimble), O = /* @__PURE__ */ F(() => l(E)?.editingEnabled ?? !0);
   const Z = Zs(!1, (T) => (Ws(() => T(l(O))), () => {
   }));
   async function j() {
@@ -4219,8 +4224,8 @@ function ml(e, t) {
   }
   r(j, "toggleEditingEnabled");
   let P = /* @__PURE__ */ F(() => {
-    const T = l(N)?.colorScheme;
-    return T || (l(N)?.darkMode === !0 ? "dark" : "white");
+    const T = l(E)?.colorScheme;
+    return T || (l(E)?.darkMode === !0 ? "dark" : "white");
   });
   async function K(T) {
     await a.setFlag("nimble", "colorScheme", T);
@@ -4245,11 +4250,11 @@ function ml(e, t) {
     manaColor: "#3d7ab8"
   };
   let G = /* @__PURE__ */ F(() => {
-    const T = l(N)?.customColors;
+    const T = l(E)?.customColors;
     return T ? { ...oe, ...T } : { ...oe };
   });
   async function Q(T, $) {
-    const te = l(N)?.customColors ?? {};
+    const te = l(E)?.customColors ?? {};
     await a.setFlag("nimble", "customColors", { ...te, [T]: $ });
   }
   r(Q, "setCustomColor");
@@ -4310,10 +4315,10 @@ function ml(e, t) {
       return l(p);
     },
     get wounds() {
-      return l(E);
+      return l(x);
     },
     toggleWounds: g,
-    resetWounds: x,
+    resetWounds: N,
     updateCurrentHP: _,
     updateTempHP: d,
     updateCurrentMana: W,

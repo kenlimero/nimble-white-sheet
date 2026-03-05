@@ -7,6 +7,12 @@
 	let actorImg = $derived(actor.reactive.img);
 
 	function pickPortrait() {
+		const tokenizer = game.modules.get('vtta-tokenizer');
+		if (tokenizer?.active) {
+			tokenizer.api.tokenizeActor(actor);
+			return;
+		}
+
 		new FilePicker({
 			type: 'image',
 			current: actor.img,
