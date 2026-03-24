@@ -219,7 +219,7 @@
 		if (scheme) return scheme;
 		// Backward compatibility: convert old boolean darkMode flag
 		if (flags?.darkMode === true) return 'dark';
-		return 'white';
+		return 'nimble';
 	});
 
 	async function setColorScheme(value) {
