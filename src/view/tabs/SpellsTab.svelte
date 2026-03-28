@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import localize from '../../utils/localize.js';
 	import { format } from '../../utils/localize.js';
 
@@ -20,7 +20,7 @@
 
 	// Group spells by tier, sorted by tier number (Utility last)
 	let sortedTiers = $derived.by(() => {
-		const groups = {};
+		const groups: Record<string, { label: string; spells: typeof filteredSpells }> = {};
 		for (const spell of filteredSpells) {
 			const tier = spell.system?.tier ?? 0;
 			const isUtility = spell.system?.isUtility ?? false;
@@ -29,36 +29,41 @@
 			groups[key] ??= { label, spells: [] };
 			groups[key].spells.push(spell);
 		}
-		// Sort tiers: Tier 0, Tier 1, ..., Utility last
 		return Object.entries(groups).sort(([a], [b]) => {
 			if (a === '_utility') return 1;
 			if (b === '_utility') return -1;
-			const tierA = parseInt(a.replace('_tier_', ''));
-			const tierB = parseInt(b.replace('_tier_', ''));
-			return tierA - tierB;
+			return Number.parseInt(a.replace('_tier_', '')) - Number.parseInt(b.replace('_tier_', ''));
 		});
 	});
 
-	function configureItem(id) {
+	function configureItem(id: string): void {
 		const item = actor.items.get(id);
 		item?.sheet?.render(true);
 	}
 
-	function deleteItem(id) {
-		actor.deleteEmbeddedDocuments('Item', [id]);
+	async function deleteItem(id: string): Promise<void> {
+		try {
+			await actor.deleteEmbeddedDocuments('Item', [id]);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to delete spell:', err);
+		}
 	}
 
-	function createSpell() {
-		actor.createEmbeddedDocuments('Item', [{ name: 'New Spell', type: 'spell' }]);
+	async function createSpell(): Promise<void> {
+		try {
+			await actor.createEmbeddedDocuments('Item', [{ name: 'New Spell', type: 'spell' }]);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to create spell:', err);
+		}
 	}
 
-	function castSpell(id) {
+	function castSpell(id: string): void {
 		actor.activateItem(id);
 	}
 
-	function onDragStart(event, item) {
+	function onDragStart(event: DragEvent, item: { uuid: string }): void {
 		const dragData = { type: 'Item', uuid: item.uuid };
-		event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+		event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
 	}
 </script>
 

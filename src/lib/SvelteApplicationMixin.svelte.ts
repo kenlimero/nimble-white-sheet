@@ -8,6 +8,19 @@ interface SvelteApplicationRenderContext {
 	foundryApp: SvelteApplication;
 }
 
+interface FoundryCustomElement {
+	tagName?: string;
+}
+
+interface DocumentHolder {
+	document?: { update(data: Record<string, unknown>): void };
+}
+
+interface FormTarget extends HTMLElement {
+	name: string;
+	_getValue(): unknown;
+}
+
 /**
  * Augment an Application class with Svelte template rendering behavior.
  * Note: TypeScript requires mixin classes to have constructors with `...args: any[]`
@@ -20,13 +33,14 @@ function SvelteApplicationMixin<
 	) => foundry.applications.api.ApplicationV2,
 >(Base: T) {
 	abstract class SvelteApplication extends Base {
-		#customHTMLTags = Object.values(foundry.applications.elements).reduce((acc, E) => {
-			const element = E as { tagName?: string };
-			const { tagName } = element;
-			if (!tagName) return acc;
-			acc.push(tagName.toUpperCase());
-			return acc;
-		}, [] as string[]);
+		#customHTMLTags: string[] = Object.values(foundry.applications.elements).reduce(
+			(acc: string[], E: unknown) => {
+				const tagName = (E as FoundryCustomElement).tagName;
+				if (tagName) acc.push(tagName.toUpperCase());
+				return acc;
+			},
+			[],
+		);
 
 		static DEFAULT_OPTIONS = {
 			classes: ['nimble-white-sheet'],
@@ -70,23 +84,16 @@ function SvelteApplicationMixin<
 			super._onChangeForm(formConfig, event);
 
 			if (event.type !== 'change') return;
-			if (!(this as object as { document?: { update(data: object): void } }).document) return;
 
-			const { target } = event;
+			const holder = this as unknown as DocumentHolder;
+			if (!holder.document) return;
+
+			const target = event.target as FormTarget | null;
 			if (!target) return;
+			if (!this.#customHTMLTags.includes(target.tagName)) return;
 
-			const htmlTarget = target as HTMLElement & {
-				tagName: string;
-				name: string;
-				_getValue(): unknown;
-			};
-			if (!this.#customHTMLTags.includes(htmlTarget.tagName)) return;
-
-			const value = htmlTarget._getValue();
-
-			(this as object as { document: { update(data: object): void } }).document.update({
-				[htmlTarget.name]: value,
-			});
+			const value = target._getValue();
+			holder.document.update({ [target.name]: value });
 		}
 
 		override close(

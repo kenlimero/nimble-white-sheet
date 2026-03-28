@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import localize from '../../utils/localize.js';
 
 	let { actor, editingEnabled } = $props();
@@ -10,6 +10,10 @@
 	let languages = $derived([...(proficiencies.languages ?? [])].join(', '));
 	let armorProf = $derived([...(proficiencies.armor ?? [])].join(', '));
 	let weaponProf = $derived((proficiencies.weapons ?? []).join(', '));
+
+	function updateDetail(path: string, value: string): void {
+		actor.update({ [`system.details.${path}`]: value });
+	}
 </script>
 
 <div class="nos-bio">
@@ -18,7 +22,7 @@
 		<input
 			type="text"
 			value={details.age ?? ''}
-			onchange={({ target }) => actor.update({ 'system.details.age': target.value })}
+			onchange={({ target }) => updateDetail('age', target.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -28,7 +32,7 @@
 		<input
 			type="text"
 			value={details.gender ?? ''}
-			onchange={({ target }) => actor.update({ 'system.details.gender': target.value })}
+			onchange={({ target }) => updateDetail('gender', target.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -39,7 +43,7 @@
 			type="text"
 			value={details.height ?? ''}
 			placeholder={localize('NWS.Height')}
-			onchange={({ target }) => actor.update({ 'system.details.height': target.value })}
+			onchange={({ target }) => updateDetail('height', target.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -50,7 +54,7 @@
 			type="text"
 			value={details.weight ?? ''}
 			placeholder={localize('NWS.Weight')}
-			onchange={({ target }) => actor.update({ 'system.details.weight': target.value })}
+			onchange={({ target }) => updateDetail('weight', target.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -105,7 +109,7 @@
 		<div
 			contenteditable={editingEnabled ? 'true' : 'false'}
 			class="nos-bio__notes-editor"
-			onblur={({ target }) => actor.update({ 'system.details.notes': target.innerHTML })}
+			onblur={({ target }) => updateDetail('notes', target.innerHTML)}
 		>
 			{@html details.notes ?? ''}
 		</div>

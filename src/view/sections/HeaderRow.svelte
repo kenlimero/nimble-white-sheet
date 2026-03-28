@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import localize from '../../utils/localize.js';
 
 	let { actor, metaData, editingEnabled, hitDiceData } = $props();
@@ -6,17 +6,17 @@
 	let details = $derived(actor.reactive.system.details);
 	let actorImg = $derived(actor.reactive.img);
 
-	function pickPortrait() {
-		const tokenizer = game.modules.get('vtta-tokenizer');
+	function pickPortrait(): void {
+		const tokenizer = game.modules.get('vtta-tokenizer') as { active?: boolean; api?: { tokenizeActor(actor: unknown): void } } | undefined;
 		if (tokenizer?.active) {
-			tokenizer.api.tokenizeActor(actor);
+			tokenizer.api?.tokenizeActor(actor);
 			return;
 		}
 
 		new FilePicker({
 			type: 'image',
 			current: actor.img,
-			callback: (path) => actor.update({ img: path }),
+			callback: (path: string) => actor.update({ img: path }),
 		}).render(true);
 	}
 
@@ -24,7 +24,7 @@
 		const sizes = Object.keys(hitDiceData.bySize);
 		if (sizes.length === 0) return '—';
 		if (sizes.length === 1) return `d${sizes[0]}`;
-		return sizes.map((s) => `d${s}`).join('/');
+		return sizes.map((s: string) => `d${s}`).join('/');
 	});
 </script>
 

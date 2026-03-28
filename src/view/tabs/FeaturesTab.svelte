@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import localize from '../../utils/localize.js';
 
 	let { actor, editingEnabled } = $props();
@@ -10,22 +10,26 @@
 	let classItem = $derived(actor.reactive.items.find((i) => i.type === 'class') ?? null);
 	let subclass = $derived(actor.reactive.items.find((i) => i.type === 'subclass') ?? null);
 
-	function useItem(id) {
+	function useItem(id: string): void {
 		actor.activateItem(id);
 	}
 
-	function configureItem(id) {
+	function configureItem(id: string): void {
 		const item = actor.items.get(id);
 		item?.sheet?.render(true);
 	}
 
-	function deleteItem(id) {
-		actor.deleteEmbeddedDocuments('Item', [id]);
+	async function deleteItem(id: string): Promise<void> {
+		try {
+			await actor.deleteEmbeddedDocuments('Item', [id]);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to delete item:', err);
+		}
 	}
 
-	function onDragStart(event, item) {
+	function onDragStart(event: DragEvent, item: { uuid: string }): void {
 		const dragData = { type: 'Item', uuid: item.uuid };
-		event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+		event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
 	}
 </script>
 

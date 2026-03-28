@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import localize from '../../utils/localize.js';
 
 	let { colorScheme, setColorScheme, customColors, setCustomColor, onclose } = $props();
@@ -53,12 +53,12 @@
 		},
 	];
 
-	function select(value) {
+	function select(value: string): void {
 		setColorScheme(value);
 		if (value !== 'custom') onclose();
 	}
 
-	function handleKeydown(event) {
+	function handleKeydown(event: KeyboardEvent): void {
 		if (event.key === 'Escape') onclose();
 	}
 </script>

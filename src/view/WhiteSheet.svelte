@@ -3,6 +3,7 @@
 	import { createSubscriber } from 'svelte/reactivity';
 	import { readable } from 'svelte/store';
 	import localize from '../utils/localize.js';
+	import { computeHitDiceData, COLOR_DEFAULTS, CSS_VAR_MAP } from '../types.js';
 	import HeaderRow from './sections/HeaderRow.svelte';
 	import StatsRow from './sections/StatsRow.svelte';
 	import SkillsRow from './sections/SkillsRow.svelte';
@@ -54,11 +55,12 @@
 		},
 	});
 
-	const { sizeCategories, defaultSkillAbilities, abilityScoreAbbreviations } = CONFIG.NIMBLE;
+	const { sizeCategories } = CONFIG.NIMBLE;
 
-	// --- Derived data (mirrored from system's PlayerCharacterSheet.svelte) ---
+	// --- Pure helper functions ---
 
 	function getHitPointPercentage(currentHP, maxHP) {
+		if (maxHP <= 0) return 0;
 		return Math.clamp(0, Math.round((currentHP / maxHP) * 100), 100);
 	}
 
@@ -68,24 +70,22 @@
 			origins.push(`${ancestry.name} (${sizeCategories[sizeCategory] ?? sizeCategory})`);
 		}
 		if (characterClass) {
-			if (subclass) {
-				origins.push(`${characterClass.name} (${subclass.name}, ${characterClass.system.classLevel})`);
-			} else {
-				origins.push(`${characterClass.name} (${characterClass.system.classLevel})`);
-			}
+			const level = characterClass.system.classLevel;
+			origins.push(
+				subclass
+					? `${characterClass.name} (${subclass.name}, ${level})`
+					: `${characterClass.name} (${level})`,
+			);
 		}
-		return origins.filter(Boolean).join(' ⟡ ');
+		return origins.join(' ⟡ ');
 	}
 
-	function incrementDieSize(size, bonus) {
-		if (!bonus) return size;
-		const dieSizes = [4, 6, 8, 10, 12, 20];
-		const idx = dieSizes.indexOf(size);
-		if (idx === -1) return size;
-		return dieSizes[Math.min(idx + bonus, dieSizes.length - 1)];
-	}
+	// --- Derived: items looked up once ---
+	let classItem = $derived(actor.reactive.items.find((item) => item.type === 'class') ?? null);
+	let subclassItem = $derived(actor.reactive.items.find((item) => item.type === 'subclass') ?? null);
+	let ancestryItem = $derived(actor.reactive.items.find((item) => item.type === 'ancestry') ?? null);
 
-	// HP
+	// --- HP ---
 	let isBloodied = $derived.by(() =>
 		getHitPointPercentage(
 			actor.reactive.system.attributes.hp.value,
@@ -100,7 +100,7 @@
 		actor.update({ 'system.attributes.hp.temp': newValue });
 	}
 
-	// Mana
+	// --- Mana ---
 	let mana = $derived(actor.reactive.system.resources.mana);
 	let hasMana = $derived.by(() => {
 		if ((mana.max ?? 0) > 0 || (mana.baseMax ?? 0) > 0) return true;
@@ -112,63 +112,17 @@
 	function updateCurrentMana(newValue) {
 		actor.update({ 'system.resources.mana.current': newValue });
 	}
-	// Hit Dice
+
+	// --- Hit Dice (extracted to pure function) ---
 	let hitDiceData = $derived.by(() => {
-		const hitDiceAttr = actor.reactive.system.attributes.hitDice;
-		const bonusHitDice = actor.reactive.system.attributes.bonusHitDice ?? [];
+		const attrs = actor.reactive.system.attributes;
 		const classes = actor.reactive.items.filter((i) => i.type === 'class');
-		const hitDiceSizeBonus = actor.reactive.system.attributes.hitDiceSizeBonus ?? 0;
-
-		const bySize = {};
-		for (const cls of classes) {
-			const baseSize = cls.system.hitDieSize;
-			const size = incrementDieSize(baseSize, hitDiceSizeBonus);
-			const classLevel = cls.system.classLevel;
-			bySize[size] ??= { current: 0, total: 0 };
-			bySize[size].total += classLevel;
-			bySize[size].current = hitDiceAttr[size]?.current ?? 0;
-		}
-
-		const effectiveClassSizes = classes.map((cls) =>
-			incrementDieSize(cls.system.hitDieSize, hitDiceSizeBonus),
+		return computeHitDiceData(
+			attrs.hitDice,
+			attrs.bonusHitDice ?? [],
+			classes,
+			attrs.hitDiceSizeBonus ?? 0,
 		);
-
-		for (const entry of bonusHitDice) {
-			const size = incrementDieSize(entry.size, hitDiceSizeBonus);
-			bySize[size] ??= { current: hitDiceAttr[size]?.current ?? 0, total: 0 };
-			bySize[size].total += entry.value;
-			if (!effectiveClassSizes.includes(size)) {
-				bySize[size].current = hitDiceAttr[size]?.current ?? 0;
-			}
-		}
-
-		const effectiveBonusArraySizes = bonusHitDice.map((entry) =>
-			incrementDieSize(entry.size, hitDiceSizeBonus),
-		);
-
-		for (const [sizeStr, hitDieData] of Object.entries(hitDiceAttr ?? {})) {
-			const baseSize = Number(sizeStr);
-			const size = incrementDieSize(baseSize, hitDiceSizeBonus);
-			const bonus = hitDieData?.bonus ?? 0;
-			if (bonus > 0) {
-				bySize[size] ??= { current: 0, total: 0 };
-				bySize[size].total += bonus;
-				const fromClass = effectiveClassSizes.includes(size);
-				const fromBonusArray = effectiveBonusArraySizes.includes(size);
-				if (!fromClass && !fromBonusArray) {
-					bySize[size].current = hitDiceAttr[size]?.current ?? 0;
-				}
-			}
-		}
-
-		let value = 0;
-		let max = 0;
-		for (const data of Object.values(bySize)) {
-			value += data.current;
-			max += data.total;
-		}
-
-		return { bySize, value, max };
 	});
 
 	async function updateCurrentHitDice(newValue) {
@@ -181,17 +135,13 @@
 		await actor.editCurrentHitDice();
 	}
 
-	// Metadata
-	let classItem = $derived(actor.reactive.items.find((item) => item.type === 'class') ?? null);
+	// --- Metadata (reuses already-derived items) ---
 	let metaData = $derived.by(() => {
-		const c = actor.reactive.items.find((i) => i.type === 'class') ?? null;
-		const sub = actor.reactive.items.find((i) => i.type === 'subclass') ?? null;
-		const anc = actor.reactive.items.find((i) => i.type === 'ancestry') ?? null;
 		const size = actor.reactive.system.attributes.sizeCategory;
-		return prepareCharacterMetadata(c, sub, anc, size);
+		return prepareCharacterMetadata(classItem, subclassItem, ancestryItem, size);
 	});
 
-	// Wounds
+	// --- Wounds ---
 	let wounds = $derived(actor.reactive.system.attributes.wounds);
 	function toggleWounds(woundLevel) {
 		const newWoundsValue = woundLevel === wounds.value ? woundLevel - 1 : woundLevel;
@@ -201,7 +151,7 @@
 		actor.update({ 'system.attributes.wounds.value': 0 });
 	}
 
-	// Flags
+	// --- Flags & editing ---
 	let flags = $derived(actor.reactive.flags.nimble);
 	let editingEnabled = $derived(flags?.editingEnabled ?? true);
 	const editingEnabledStore = readable(false, (set) => {
@@ -213,11 +163,10 @@
 		await actor.setFlag('nimble', 'editingEnabled', !editingEnabled);
 	}
 
-	// Color scheme: 'white' | 'dark' | 'nimble' | 'custom'
+	// --- Color scheme ---
 	let colorScheme = $derived.by(() => {
 		const scheme = flags?.colorScheme;
 		if (scheme) return scheme;
-		// Backward compatibility: convert old boolean darkMode flag
 		if (flags?.darkMode === true) return 'dark';
 		return 'nimble';
 	});
@@ -230,25 +179,7 @@
 	let nimbleMode = $derived(colorScheme === 'nimble');
 	let customMode = $derived(colorScheme === 'custom');
 
-	// Custom colors
-	const COLOR_DEFAULTS = {
-		bgPrimary: '#fafafa',
-		bgSecondary: '#f0f0f0',
-		bgInput: '#ffffff',
-		textPrimary: '#222222',
-		textSecondary: '#555555',
-		textLabel: '#ffffff',
-		borderColor: '#333333',
-		borderLight: '#888888',
-		accent: '#444444',
-		highlight: '#c2dbf4',
-		labelBg: '#333333',
-		labelText: '#ffffff',
-		danger: '#b01b19',
-		success: '#3b8a57',
-		manaColor: '#3d7ab8',
-	};
-
+	// --- Custom colors ---
 	let customColors = $derived.by(() => {
 		const saved = flags?.customColors;
 		if (!saved) return { ...COLOR_DEFAULTS };
@@ -260,24 +191,6 @@
 		await actor.setFlag('nimble', 'customColors', { ...current, [key]: value });
 	}
 
-	const CSS_VAR_MAP = {
-		bgPrimary: '--nos-bg-primary',
-		bgSecondary: '--nos-bg-secondary',
-		bgInput: '--nos-bg-input',
-		textPrimary: '--nos-text-primary',
-		textSecondary: '--nos-text-secondary',
-		textLabel: '--nos-text-label',
-		borderColor: '--nos-border-color',
-		borderLight: '--nos-border-light',
-		accent: '--nos-accent',
-		highlight: '--nos-highlight',
-		labelBg: '--nos-label-bg',
-		labelText: '--nos-label-text',
-		danger: '--nos-danger',
-		success: '--nos-success',
-		manaColor: '--nos-mana-color',
-	};
-
 	let customStyle = $derived.by(() => {
 		if (!customMode) return '';
 		return Object.entries(CSS_VAR_MAP)
@@ -285,7 +198,7 @@
 			.join('; ');
 	});
 
-	// Set contexts
+	// --- Contexts ---
 	setContext('actor', actor);
 	setContext('document', actor);
 	setContext('application', sheet);

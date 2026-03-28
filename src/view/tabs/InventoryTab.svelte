@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import localize from '../../utils/localize.js';
 
 	let { actor, editingEnabled } = $props();
@@ -18,36 +18,48 @@
 			: allObjects,
 	);
 
-	function configureItem(id) {
+	function configureItem(id: string): void {
 		const item = actor.items.get(id);
 		item?.sheet?.render(true);
 	}
 
-	function deleteItem(id) {
-		actor.deleteEmbeddedDocuments('Item', [id]);
+	async function deleteItem(id: string): Promise<void> {
+		try {
+			await actor.deleteEmbeddedDocuments('Item', [id]);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to delete item:', err);
+		}
 	}
 
-	function createObject() {
-		actor.createEmbeddedDocuments('Item', [{ name: 'New Object', type: 'object' }]);
+	async function createObject(): Promise<void> {
+		try {
+			await actor.createEmbeddedDocuments('Item', [{ name: 'New Object', type: 'object' }]);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to create object:', err);
+		}
 	}
 
-	function updateCurrency(type, value) {
-		actor.update({ [`system.currency.${type}.value`]: Math.max(0, Math.round(Number(value))) });
+	function updateCurrency(type: string, value: string): void {
+		const parsed = Math.max(0, Math.round(Number(value)));
+		if (Number.isNaN(parsed)) return;
+		actor.update({ [`system.currency.${type}.value`]: parsed });
 	}
 
-	function adjustCurrency(type, delta) {
+	function adjustCurrency(type: string, delta: number): void {
 		const current = currency[type]?.value ?? 0;
 		actor.update({ [`system.currency.${type}.value`]: Math.max(0, current + delta) });
 	}
 
-	function updateQuantity(id, value) {
+	function updateQuantity(id: string, value: string): void {
+		const parsed = Number(value);
+		if (Number.isNaN(parsed)) return;
 		const item = actor.items.get(id);
-		item?.update({ 'system.quantity': Number(value) });
+		item?.update({ 'system.quantity': parsed });
 	}
 
-	function onDragStart(event, item) {
+	function onDragStart(event: DragEvent, item: { uuid: string }): void {
 		const dragData = { type: 'Item', uuid: item.uuid };
-		event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+		event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
 	}
 </script>
 

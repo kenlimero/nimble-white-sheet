@@ -2,12 +2,13 @@ import {
 	SvelteApplicationMixin,
 	type SvelteApplicationRenderContext,
 } from '../lib/SvelteApplicationMixin.svelte.js';
+import type { NimbleActor, NimbleConfig, SubclassItemSystem, TokenDocument } from '../types.js';
 import WhiteSheetComponent from '../view/WhiteSheet.svelte';
 
 export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 	foundry.applications.sheets.ActorSheetV2,
 ) {
-	protected _actor: Actor;
+	protected _actor: NimbleActor;
 	protected root;
 
 	constructor(
@@ -21,14 +22,14 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		);
 
 		this.root = WhiteSheetComponent;
-		const resolvedActor = (actor.document as any).isToken
-			? (actor.document as any).parent?.actor
-			: actor.document;
-		this._actor = resolvedActor ?? actor.document;
+
+		const doc = actor.document as unknown as TokenDocument;
+		const resolvedActor = doc.isToken ? doc.parent?.actor : actor.document;
+		this._actor = (resolvedActor ?? actor.document) as unknown as NimbleActor;
 	}
 
 	override get actor(): Actor {
-		return this._actor;
+		return this._actor as unknown as Actor;
 	}
 
 	static MIN_WIDTH = 670;
@@ -73,30 +74,35 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		>;
 	}
 
-	async _onDropItem(event: DragEvent, data: Record<string, unknown>) {
+	async _onDropItem(event: DragEvent, data: Record<string, unknown>): Promise<false | Item[] | undefined> {
 		event.preventDefault();
 		event.stopPropagation();
 
-		const actor = this.document as any;
-
 		const allowed = Hooks.call(
 			'dropActorSheetData',
-			actor,
+			this.document,
 			this as unknown as foundry.applications.sheets.ActorSheetV2.Any,
 			data as foundry.appv1.sheets.ActorSheet.DropData,
 		);
 		if (allowed === false) return false;
-
 		if (!this.document.isOwner) return false;
 
-		const item = await Item.implementation.fromDropData(data);
+		let item: Item.Implementation | null;
+		try {
+			item = await Item.implementation.fromDropData(data);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to resolve dropped item:', err);
+			ui.notifications?.error('Failed to resolve the dropped item.');
+			return false;
+		}
+
 		if (!item) return false;
+
 		const itemData = item.toObject() as ReturnType<Item.Implementation['toObject']> & {
 			uuid?: string;
 			id?: typeof item.id;
 		};
 		itemData.id = item.id;
-
 		if (item.uuid && !itemData.uuid) {
 			itemData.uuid = item.uuid;
 		}
@@ -106,86 +112,109 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			return (this as object as { _onSortItem(e: DragEvent, d: object): void })._onSortItem(
 				event,
 				itemData,
-			);
+			) as undefined;
 		}
 
 		const items = Array.isArray(itemData) ? itemData : [itemData];
-		const hasSubclass = items.some((item: any) => item.type === 'subclass');
+		const hasSubclass = items.some(
+			(i: { type?: string }) => i.type === 'subclass',
+		);
 
-		if (hasSubclass) {
-			return this._onDropSubclassCreate(items);
-		} else {
-			return this._actor.createEmbeddedDocuments('Item', items);
+		try {
+			if (hasSubclass) {
+				return await this._onDropSubclassCreate(items);
+			}
+			return await this._actor.createEmbeddedDocuments('Item', items);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to create item(s):', err);
+			ui.notifications?.error('Failed to add the item to this character.');
+			return [];
 		}
 	}
 
-	async _onDropSubclassCreate(itemData: any) {
+	async _onDropSubclassCreate(
+		itemData: Record<string, unknown> | Record<string, unknown>[],
+	): Promise<Item[]> {
 		const items = Array.isArray(itemData) ? itemData : [itemData];
-		const actor = this.document as any;
+		const nimbleConfig = (CONFIG as { NIMBLE?: NimbleConfig }).NIMBLE;
 
-		const validatedItems: any[] = [];
+		const validatedItems: Record<string, unknown>[] = [];
 
 		for (const item of items) {
-			if (item.type === 'subclass') {
-				const subclass = item;
-				const parentClass = subclass.system?.parentClass;
+			if (item.type !== 'subclass') {
+				validatedItems.push(item);
+				continue;
+			}
 
-				const characterLevel = actor.levels?.character ?? 0;
-				if (characterLevel < 3) {
-					ui.notifications?.warn(
-						`You must be at least level 3 to select a subclass. You are currently level ${characterLevel}.`,
-					);
+			const subclass = item as { name?: string; system?: SubclassItemSystem };
+			const parentClass = subclass.system?.parentClass;
+
+			// Level check
+			const characterLevel = this._actor.levels?.character ?? 0;
+			if (characterLevel < 3) {
+				ui.notifications?.warn(
+					`You must be at least level 3 to select a subclass. You are currently level ${characterLevel}.`,
+				);
+				continue;
+			}
+
+			// Class requirement check
+			const hasMatchingClass = Object.values(this._actor.classes ?? {}).some(
+				(cls) => cls.identifier === parentClass,
+			);
+
+			if (!hasMatchingClass) {
+				const className = nimbleConfig?.classes?.[parentClass ?? ''] ?? parentClass;
+				ui.notifications?.warn(
+					`The subclass "${subclass.name}" requires the ${className} class.`,
+				);
+				continue;
+			}
+
+			// Duplicate subclass check
+			const existingSubclass = this._actor.items.find(
+				(i: { type: string; system: unknown }) =>
+					i.type === 'subclass' &&
+					(i.system as SubclassItemSystem)?.parentClass === parentClass,
+			);
+
+			if (existingSubclass) {
+				const existingSystem = existingSubclass.system as unknown as SubclassItemSystem;
+				const newIdentifier = subclass.system?.identifier;
+
+				if (existingSystem?.identifier && newIdentifier && existingSystem.identifier === newIdentifier) {
+					ui.notifications?.warn(`You already have the "${existingSubclass.name}" subclass.`);
 					continue;
 				}
 
-				const hasMatchingClass = Object.values(actor.classes ?? {}).some(
-					(cls: any) => cls.identifier === parentClass,
-				);
+				const confirmed = await foundry.applications.api.DialogV2.confirm({
+					content: `<p>You already have the <strong>${existingSubclass.name}</strong> subclass.<br />Do you want to replace it with <strong>${subclass.name}</strong>?</p>`,
+					rejectClose: false,
+					modal: true,
+				});
 
-				if (!hasMatchingClass) {
-					const className = (CONFIG as any).NIMBLE?.classes?.[parentClass] ?? parentClass;
-					ui.notifications?.warn(
-						`The subclass "${subclass.name}" requires the ${className} class.`,
-					);
+				if (!confirmed) continue;
+
+				try {
+					await this._actor.deleteEmbeddedDocuments('Item', [existingSubclass.id!]);
+				} catch (err) {
+					console.error('nimble-white-sheet | Failed to remove existing subclass:', err);
+					ui.notifications?.error('Failed to remove the existing subclass.');
 					continue;
-				}
-
-				type SubclassSystem = { parentClass?: string; identifier?: string };
-				const existingSubclass = actor.items.find(
-					(i: any) =>
-						i.type === 'subclass' &&
-						(i.system as unknown as SubclassSystem)?.parentClass === parentClass,
-				);
-
-				if (existingSubclass) {
-					const existingIdentifier = (existingSubclass.system as unknown as SubclassSystem)
-						?.identifier;
-					const newIdentifier = subclass.system?.identifier;
-
-					if (existingIdentifier && newIdentifier && existingIdentifier === newIdentifier) {
-						ui.notifications?.warn(`You already have the "${existingSubclass.name}" subclass.`);
-						continue;
-					}
-
-					const confirmed = await foundry.applications.api.DialogV2.confirm({
-						content: `<p>You already have the <strong>${existingSubclass.name}</strong> subclass.<br />Do you want to replace it with <strong>${subclass.name}</strong>?</p>`,
-						rejectClose: false,
-						modal: true,
-					});
-
-					if (!confirmed) continue;
-
-					await actor.deleteEmbeddedDocuments('Item', [existingSubclass.id!]);
 				}
 			}
 
 			validatedItems.push(item);
 		}
 
-		if (validatedItems.length > 0) {
-			return actor.createEmbeddedDocuments('Item', validatedItems);
-		}
+		if (validatedItems.length === 0) return [];
 
-		return [];
+		try {
+			return await this._actor.createEmbeddedDocuments('Item', validatedItems);
+		} catch (err) {
+			console.error('nimble-white-sheet | Failed to create subclass item(s):', err);
+			ui.notifications?.error('Failed to add the subclass to this character.');
+			return [];
+		}
 	}
 }
