@@ -49,7 +49,8 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		},
 	};
 
-	override setPosition(position: { width?: number; height?: number; [key: string]: unknown }) {
+	override setPosition(position?: { width?: number; height?: number; [key: string]: unknown }) {
+		if (!position) return super.setPosition(position);
 		if (position.width !== undefined && position.width < WhiteCharacterSheet.MIN_WIDTH) {
 			position.width = WhiteCharacterSheet.MIN_WIDTH;
 		}

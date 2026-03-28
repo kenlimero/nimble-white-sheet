@@ -20,27 +20,29 @@
 		<i class="fa-solid {editingEnabled ? 'fa-pen' : 'fa-lock'}"></i>
 	</button>
 
-	<button
-		class="nos-sidebar-btn"
-		type="button"
-		aria-label={localize('NWS.LevelUp')}
-		data-tooltip={localize('NWS.LevelUp')}
-		onclick={() => actor.triggerLevelUp()}
-		disabled={!classItem || classItem?.system?.classLevel >= 20}
-	>
-		<i class="fa-solid fa-arrow-up-right-dots"></i>
-	</button>
+	{#if editingEnabled}
+		<button
+			class="nos-sidebar-btn"
+			type="button"
+			aria-label={localize('NWS.LevelUp')}
+			data-tooltip={localize('NWS.LevelUp')}
+			onclick={() => actor.triggerLevelUp()}
+			disabled={!classItem || classItem?.system?.classLevel >= 20}
+		>
+			<i class="fa-solid fa-arrow-up-right-dots"></i>
+		</button>
 
-	<button
-		class="nos-sidebar-btn"
-		type="button"
-		aria-label={localize('NWS.RevertLastLevelUp')}
-		data-tooltip={localize('NWS.RevertLastLevelUp')}
-		onclick={() => actor.triggerLevelDown()}
-		disabled={actor.reactive.system.levelUpHistory.length === 0}
-	>
-		<i class="fa-solid fa-undo"></i>
-	</button>
+		<button
+			class="nos-sidebar-btn"
+			type="button"
+			aria-label={localize('NWS.RevertLastLevelUp')}
+			data-tooltip={localize('NWS.RevertLastLevelUp')}
+			onclick={() => actor.triggerLevelDown()}
+			disabled={actor.reactive.system.levelUpHistory.length === 0}
+		>
+			<i class="fa-solid fa-undo"></i>
+		</button>
+	{/if}
 
 	<div class="nos-color-scheme-wrapper">
 		<button
