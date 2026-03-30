@@ -7,6 +7,7 @@
 	let actorImg = $derived(actor.reactive.img);
 
 	function pickPortrait(): void {
+		if (!editingEnabled) return;
 		const tokenizer = game.modules.get('vtta-tokenizer') as { active?: boolean; api?: { tokenizeActor(actor: unknown): void } } | undefined;
 		if (tokenizer?.active) {
 			tokenizer.api?.tokenizeActor(actor);
@@ -29,7 +30,7 @@
 </script>
 
 <header class="nos-header">
-	<div class="nos-header__portrait" onclick={pickPortrait}>
+	<div class="nos-header__portrait" style="cursor: {editingEnabled ? 'pointer' : 'default'}" onclick={pickPortrait}>
 		<img
 			src={actorImg}
 			alt={actor.reactive.name}
