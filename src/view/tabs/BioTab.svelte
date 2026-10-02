@@ -1,7 +1,8 @@
 <script lang="ts">
+	import type { NimbleActor } from '../../types.js';
 	import localize from '../../utils/localize.js';
 
-	let { actor, editingEnabled } = $props();
+	let { actor, editingEnabled }: { actor: NimbleActor; editingEnabled: boolean } = $props();
 
 	let details = $derived(actor.reactive.system.details);
 
@@ -14,6 +15,16 @@
 	function updateDetail(path: string, value: string): void {
 		actor.update({ [`system.details.${path}`]: value });
 	}
+
+	// Notes are user-authored HTML rendered with {@html}: strip scripts and event handlers
+	// both on save and on display (covers notes stored before this fix).
+	let notesHTML = $derived(foundry.utils.cleanHTML(details.notes ?? ''));
+
+	function updateNotes(html: string): void {
+		const clean = foundry.utils.cleanHTML(html);
+		if (clean === notesHTML) return;
+		updateDetail('notes', clean);
+	}
 </script>
 
 <div class="nos-bio">
@@ -22,7 +33,7 @@
 		<input
 			type="text"
 			value={details.age ?? ''}
-			onchange={({ target }) => updateDetail('age', target.value)}
+			onchange={(e) => updateDetail('age', e.currentTarget.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -32,7 +43,7 @@
 		<input
 			type="text"
 			value={details.gender ?? ''}
-			onchange={({ target }) => updateDetail('gender', target.value)}
+			onchange={(e) => updateDetail('gender', e.currentTarget.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -43,7 +54,7 @@
 			type="text"
 			value={details.height ?? ''}
 			placeholder={localize('NWS.Height')}
-			onchange={({ target }) => updateDetail('height', target.value)}
+			onchange={(e) => updateDetail('height', e.currentTarget.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -54,7 +65,7 @@
 			type="text"
 			value={details.weight ?? ''}
 			placeholder={localize('NWS.Weight')}
-			onchange={({ target }) => updateDetail('weight', target.value)}
+			onchange={(e) => updateDetail('weight', e.currentTarget.value)}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -109,9 +120,9 @@
 		<div
 			contenteditable={editingEnabled ? 'true' : 'false'}
 			class="nos-bio__notes-editor"
-			onblur={({ target }) => updateDetail('notes', target.innerHTML)}
+			onblur={(e) => updateNotes(e.currentTarget.innerHTML)}
 		>
-			{@html details.notes ?? ''}
+			{@html notesHTML}
 		</div>
 	</div>
 </div>

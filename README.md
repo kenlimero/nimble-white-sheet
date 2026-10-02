@@ -68,8 +68,8 @@ The sheet organizes detailed character information into **4 tabs** with a **weap
 
 | Requirement | Version |
 |---|---|
-| Foundry VTT | v13 |
-| Nimble system | >= 0.6.0 |
+| Foundry VTT | v14 |
+| Nimble system | >= 0.9.0 |
 
 ### Installation
 
@@ -208,8 +208,8 @@ La feuille organise les informations détaillées du personnage en **4 onglets**
 
 | Prérequis | Version |
 |---|---|
-| Foundry VTT | v13 |
-| Système Nimble | >= 0.6.0 |
+| Foundry VTT | v14 |
+| Système Nimble | >= 0.9.0 |
 
 ### Installation
 

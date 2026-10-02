@@ -2,10 +2,10 @@
 // Nimble White Sheet – shared type definitions
 // ──────────────────────────────────────────────
 
-/** Subset of FoundryVTT Actor used throughout this module. */
-export interface NimbleActor extends Actor {
+/** Members added or retyped by the Nimble system on top of the core Actor. */
+interface NimbleActorMembers {
 	readonly id: string;
-	readonly items: foundry.abstract.EmbeddedCollection<Item.Implementation>;
+	readonly items: NimbleItemCollection;
 	readonly system: NimbleActorSystem;
 	readonly flags: { nimble?: NimbleFlags };
 	readonly levels: { character: number };
@@ -40,9 +40,12 @@ export interface NimbleActor extends Actor {
 	editCurrentHitDice(): Promise<void>;
 	setFlag(scope: string, key: string, value: unknown): Promise<void>;
 	update(data: Record<string, unknown>): Promise<void>;
-	createEmbeddedDocuments(type: string, data: object[]): Promise<Item[]>;
+	createEmbeddedDocuments(type: string, data: object[], options?: { keepId?: boolean }): Promise<Item[]>;
 	deleteEmbeddedDocuments(type: string, ids: string[]): Promise<Item[]>;
 }
+
+/** FoundryVTT Actor as seen by this module: core Actor with the Nimble members overriding it. */
+export interface NimbleActor extends NimbleActorMembers, Omit<Actor, keyof NimbleActorMembers> {}
 
 export interface NimbleActorSystem {
 	attributes: {
@@ -134,8 +137,20 @@ export interface NimbleItem {
 	readonly img: string;
 	readonly type: NimbleItemType;
 	readonly sort: number;
-	readonly system: Record<string, unknown>;
-	readonly sheet?: { render(force: boolean): void };
+	/** Data model of the Nimble system, which fvtt-types does not describe. */
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	readonly system: Record<string, any>;
+	readonly sheet?: { render(force: boolean): void } | null;
+	update(data: Record<string, unknown>): Promise<unknown>;
+}
+
+/** The subset of the actor's embedded item collection used by the sheet. */
+export interface NimbleItemCollection extends Iterable<NimbleItem> {
+	get(id: string): NimbleItem | undefined;
+	has(id: string): boolean;
+	filter(predicate: (item: NimbleItem) => boolean): NimbleItem[];
+	find(predicate: (item: NimbleItem) => boolean): NimbleItem | undefined;
+	some(predicate: (item: NimbleItem) => boolean): boolean;
 }
 
 export interface ClassItemSystem {
@@ -330,4 +345,14 @@ export interface NimbleConfig {
 export interface TokenDocument {
 	isToken: boolean;
 	parent?: { actor: Actor };
+}
+
+// The Nimble system registers the `character` actor type; declare it so Actors.registerSheet
+// accepts it. Its data model lives in the system, so it is typed loosely here.
+declare global {
+	interface DataModelConfig {
+		Actor: {
+			character: typeof foundry.abstract.TypeDataModel;
+		};
+	}
 }

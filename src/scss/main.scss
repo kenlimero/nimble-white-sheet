@@ -1,12 +1,13 @@
 @use 'variables' as *;
 
-@import 'layout';
-@import 'shapes';
-@import 'form-aesthetic';
-@import 'header';
-@import 'stats';
-@import 'skills';
-@import 'content';
+@use 'layout';
+@use 'shapes';
+@use 'form-aesthetic';
+@use 'header';
+@use 'stats';
+@use 'skills';
+@use 'content';
+@use 'tokens';
 
 // Sidebar controls (edit toggle, level up/down, rest)
 .nos-sidebar-controls {
@@ -104,557 +105,11 @@
 	}
 }
 
-// Dark mode: explicit color overrides
-.nos-sheet--dark {
-	background: #1a1a1e;
-	color: #e0e0e0;
-
-	// Inputs
-	input[type='text'],
-	input[type='number'] {
-		color: #e0e0e0;
-
-		&:focus {
-			border-bottom-color: #aaa;
-			background: hsl(210, 40%, 25%);
-		}
-	}
-
-	// Boxes
-	.nos-box {
-		border-color: #aaa;
-		background: #1a1a1e;
-	}
-
-	// Labels (pentagons, banners)
-	.nos-pentagon,
-	.nos-banner {
-		background: #ccc;
-		color: #1a1a1e;
-	}
-
-	// Ability boxes
-	.nos-ability__box {
-		background: rgba(40, 40, 45, 0.9);
-		border-color: #aaa;
-
-		&:hover {
-			background: hsl(210, 40%, 25%);
-		}
-	}
-
-	// Combat stat boxes
-	.nos-combat__stat {
-		border-color: #aaa;
-		background: rgba(40, 40, 45, 0.9);
-
-		&--clickable:hover {
-			background: hsl(210, 40%, 25%);
-		}
-	}
-
-	.nos-combat__pair {
-		border-color: #aaa;
-		background: rgba(40, 40, 45, 0.9);
-
-		.nos-combat__stat {
-			border-color: #aaa;
-			background: none;
-		}
-	}
-
-	.nos-combat__label,
-	.nos-combat__icon,
-	.nos-combat__sub {
-		color: #999;
-	}
-
-	.nos-combat__value {
-		color: #e0e0e0;
-	}
-
-	.nos-combat__input {
-		color: #e0e0e0;
-	}
-
-	// Skills
-	.nos-skill {
-		border-right-color: #aaa;
-
-		&:hover {
-			background: hsl(210, 40%, 25%);
-		}
-	}
-
-	.nos-skill__ability {
-		color: #999;
-	}
-
-	.nos-skills-row {
-		border-bottom-color: #aaa;
-	}
-
-	// Wounds
-	.nos-wounds__label {
-		color: #999;
-	}
-
-	// Diamonds
-	.nos-diamond {
-		border-color: #aaa;
-
-		&--active {
-			background: #aaa;
-		}
-	}
-
-	// Header
-	.nos-header__hitdie {
-		border-color: #aaa;
-		background: rgba(40, 40, 45, 0.9);
-	}
-
-	.nos-header__name label,
-	.nos-header__meta label,
-	.nos-header__hitdie label {
-		color: #999;
-	}
-
-	// Resources
-	.nos-resources__label {
-		color: #999;
-	}
-
-	// Content area
-	.nos-content__tabs {
-		border-bottom-color: #aaa;
-	}
-
-	.nos-content__sidebar-header {
-		border-left-color: #aaa;
-		border-bottom-color: #aaa;
-
-		span {
-			color: #999;
-		}
-	}
-
-	.nos-content__sidebar {
-		border-left-color: #aaa;
-	}
-
-	// Tab buttons
-	.nos-tab-btn {
-		color: #999;
-
-		&:hover {
-			color: #e0e0e0;
-		}
-
-		&--active {
-			color: #e0e0e0;
-			border-bottom-color: #aaa;
-		}
-	}
-
-	// Items
-	.nos-item {
-		border-bottom-color: #333;
-
-		&:hover {
-			background: hsl(210, 40%, 25%);
-		}
-	}
-
-	.nos-item__meta {
-		color: #999;
-	}
-
-	// Slots
-	.nos-slot {
-		border-bottom-color: #666;
-
-		&--empty {
-			color: #999;
-		}
-	}
-
-	// Rollable
-	.nos-rollable:hover {
-		background: hsl(210, 40%, 25%);
-	}
-
-	// Icon buttons
-	.nos-icon-btn {
-		color: #999;
-
-		&:hover {
-			color: #e0e0e0;
-		}
-	}
-
-	// Currency
-	.nos-currency {
-		border-bottom-color: #666;
-	}
-
-	.nos-currency__coin label {
-		color: #999;
-	}
-
-	.nos-currency__btn {
-		color: #999;
-		border-color: #666;
-
-		&:hover {
-			color: #e0e0e0;
-			border-color: #aaa;
-		}
-	}
-
-	// Bio
-	.nos-bio__field label {
-		color: #999;
-	}
-
-	.nos-bio__notes-editor {
-		border-color: #666;
-		background: #1a1a1e;
-		color: #e0e0e0;
-	}
-
-	// Spell tiers / Feature groups
-	.nos-spell-tier__heading,
-	.nos-feature-group__heading {
-		color: #999;
-		border-bottom-color: #aaa;
-	}
-
-	// Search
-	.nos-search input {
-		color: #e0e0e0;
-	}
-
-	// Sidebar buttons
-	.nos-sidebar-btn {
-		background: #252529;
-		border-color: #aaa;
-		color: #999;
-
-		&:hover {
-			background: hsl(210, 40%, 25%);
-			color: #e0e0e0;
-		}
-
-		&--active {
-			background: #ccc;
-			color: #1a1a1e;
-		}
-	}
-
-	// Color scheme menu
-	.nos-color-scheme-menu {
-		background: #252529;
-		border-color: #aaa;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
-
-		&__option {
-			color: #999;
-
-			&:hover {
-				background: hsl(210, 40%, 25%);
-				color: #e0e0e0;
-			}
-
-			&--active {
-				color: #e0e0e0;
-			}
-		}
-	}
-
-	// Logo
-	.nos-logo {
-		color: #666;
-	}
-}
-
-// Nimble v2 color scheme: uses the system's CSS custom properties
-// These variables are set on :root by the Nimble system and overridden by .theme-dark
-.nos-sheet--nimble {
-	background: var(--nimble-sheet-background);
-	color: var(--nimble-dark-text-color);
-
-	// Inputs
-	input[type='text'],
-	input[type='number'] {
-		color: var(--nimble-dark-text-color);
-
-		&:focus {
-			border-bottom-color: var(--nimble-input-border-color);
-			background: var(--nimble-input-background-color);
-		}
-	}
-
-	// Boxes
-	.nos-box {
-		border-color: var(--nimble-box-color);
-		background: var(--nimble-box-background-color);
-	}
-
-	// Labels (pentagons, banners)
-	.nos-pentagon,
-	.nos-banner {
-		background: var(--nimble-navigation-background-color);
-		color: var(--nimble-navigation-text-color);
-	}
-
-	// Ability boxes
-	.nos-ability__box {
-		background: var(--nimble-box-background-color);
-		border-color: var(--nimble-box-color);
-
-		&:hover {
-			background: var(--nimble-input-background-color);
-		}
-	}
-
-	// Combat stat boxes
-	.nos-combat__stat {
-		border-color: var(--nimble-box-color);
-		background: var(--nimble-box-background-color);
-
-		&--clickable:hover {
-			background: var(--nimble-input-background-color);
-		}
-	}
-
-	.nos-combat__pair {
-		border-color: var(--nimble-box-color);
-		background: var(--nimble-box-background-color);
-
-		.nos-combat__stat {
-			border-color: var(--nimble-box-color);
-			background: none;
-		}
-	}
-
-	.nos-combat__label,
-	.nos-combat__icon,
-	.nos-combat__sub {
-		color: var(--nimble-medium-text-color);
-	}
-
-	.nos-combat__value {
-		color: var(--nimble-dark-text-color);
-	}
-
-	.nos-combat__input {
-		color: var(--nimble-dark-text-color);
-	}
-
-	// Skills
-	.nos-skill {
-		border-right-color: var(--nimble-box-color);
-
-		&:hover {
-			background: var(--nimble-input-background-color);
-		}
-	}
-
-	.nos-skill__ability {
-		color: var(--nimble-medium-text-color);
-	}
-
-	.nos-skills-row {
-		border-bottom-color: var(--nimble-box-color);
-	}
-
-	// Wounds
-	.nos-wounds__label {
-		color: var(--nimble-medium-text-color);
-	}
-
-	// Diamonds
-	.nos-diamond {
-		border-color: var(--nimble-box-color);
-
-		&--active {
-			background: var(--nimble-box-color);
-		}
-	}
-
-	// Header
-	.nos-header__hitdie {
-		border-color: var(--nimble-box-color);
-		background: var(--nimble-box-background-color);
-	}
-
-	.nos-header__name label,
-	.nos-header__meta label,
-	.nos-header__hitdie label {
-		color: var(--nimble-medium-text-color);
-	}
-
-	// Resources
-	.nos-resources__label {
-		color: var(--nimble-medium-text-color);
-	}
-
-	// Content area
-	.nos-content__tabs {
-		border-bottom-color: var(--nimble-box-color);
-	}
-
-	.nos-content__sidebar-header {
-		border-left-color: var(--nimble-box-color);
-		border-bottom-color: var(--nimble-box-color);
-
-		span {
-			color: var(--nimble-medium-text-color);
-		}
-	}
-
-	.nos-content__sidebar {
-		border-left-color: var(--nimble-box-color);
-	}
-
-	// Tab buttons
-	.nos-tab-btn {
-		color: var(--nimble-medium-text-color);
-
-		&:hover {
-			color: var(--nimble-dark-text-color);
-		}
-
-		&--active {
-			color: var(--nimble-dark-text-color);
-			border-bottom-color: var(--nimble-box-color);
-		}
-	}
-
-	// Items
-	.nos-item {
-		border-bottom-color: var(--nimble-card-border-color);
-
-		&:hover {
-			background: var(--nimble-input-background-color);
-		}
-	}
-
-	.nos-item__meta {
-		color: var(--nimble-medium-text-color);
-	}
-
-	// Slots
-	.nos-slot {
-		border-bottom-color: var(--nimble-card-border-color);
-
-		&--empty {
-			color: var(--nimble-medium-text-color);
-		}
-	}
-
-	// Rollable
-	.nos-rollable:hover {
-		background: var(--nimble-input-background-color);
-	}
-
-	// Icon buttons
-	.nos-icon-btn {
-		color: var(--nimble-medium-text-color);
-
-		&:hover {
-			color: var(--nimble-dark-text-color);
-		}
-	}
-
-	// Currency
-	.nos-currency {
-		border-bottom-color: var(--nimble-card-border-color);
-	}
-
-	.nos-currency__coin label {
-		color: var(--nimble-medium-text-color);
-	}
-
-	.nos-currency__btn {
-		color: var(--nimble-medium-text-color);
-		border-color: var(--nimble-card-border-color);
-
-		&:hover {
-			color: var(--nimble-dark-text-color);
-			border-color: var(--nimble-box-color);
-		}
-	}
-
-	// Bio
-	.nos-bio__field label {
-		color: var(--nimble-medium-text-color);
-	}
-
-	.nos-bio__notes-editor {
-		border-color: var(--nimble-box-color);
-		background: var(--nimble-box-background-color);
-		color: var(--nimble-dark-text-color);
-	}
-
-	// Spell tiers / Feature groups
-	.nos-spell-tier__heading,
-	.nos-feature-group__heading {
-		color: var(--nimble-medium-text-color);
-		border-bottom-color: var(--nimble-box-color);
-	}
-
-	// Search
-	.nos-search input {
-		color: var(--nimble-dark-text-color);
-	}
-
-	// Sidebar buttons
-	.nos-sidebar-btn {
-		background: var(--nimble-box-background-color);
-		border-color: var(--nimble-box-color);
-		color: var(--nimble-medium-text-color);
-
-		&:hover {
-			background: var(--nimble-input-background-color);
-			color: var(--nimble-dark-text-color);
-		}
-
-		&--active {
-			background: var(--nimble-navigation-background-color);
-			color: var(--nimble-navigation-text-color);
-		}
-	}
-
-	// Color scheme menu
-	.nos-color-scheme-menu {
-		background: var(--nimble-box-background-color);
-		border-color: var(--nimble-box-color);
-
-		&__option {
-			color: var(--nimble-medium-text-color);
-
-			&:hover {
-				background: var(--nimble-input-background-color);
-				color: var(--nimble-dark-text-color);
-			}
-
-			&--active {
-				color: var(--nimble-dark-text-color);
-			}
-		}
-	}
-
-	// Logo
-	.nos-logo {
-		color: var(--nimble-medium-text-color);
-	}
-}
-
-// Custom color scheme: uses inline CSS custom properties (--nos-*)
-.nos-sheet--custom {
-	background: var(--nos-bg-primary);
+// Dark, Nimble and Custom schemes share one set of rules written with theme variables; each
+// scheme only sets the variables (see _tokens.scss). The white scheme is the plain styles of
+// the partials. :where() keeps the specificity of the former per-scheme blocks.
+.nos-sheet:where(.nos-sheet--dark, .nos-sheet--nimble, .nos-sheet--custom) {
+	background: var(--nos-sheet-bg);
 	color: var(--nos-text-primary);
 
 	// Inputs
@@ -663,7 +118,7 @@
 		color: var(--nos-text-primary);
 
 		&:focus {
-			border-bottom-color: var(--nos-border-light);
+			border-bottom-color: var(--nos-focus-line);
 			background: var(--nos-highlight);
 		}
 	}
@@ -671,7 +126,7 @@
 	// Boxes
 	.nos-box {
 		border-color: var(--nos-border-color);
-		background: var(--nos-bg-primary);
+		background: var(--nos-box-bg);
 	}
 
 	// Labels (pentagons, banners)
@@ -683,7 +138,7 @@
 
 	// Ability boxes
 	.nos-ability__box {
-		background: var(--nos-bg-secondary);
+		background: var(--nos-stat-bg);
 		border-color: var(--nos-border-color);
 
 		&:hover {
@@ -694,7 +149,7 @@
 	// Combat stat boxes
 	.nos-combat__stat {
 		border-color: var(--nos-border-color);
-		background: var(--nos-bg-secondary);
+		background: var(--nos-stat-bg);
 
 		&--clickable:hover {
 			background: var(--nos-highlight);
@@ -703,7 +158,7 @@
 
 	.nos-combat__pair {
 		border-color: var(--nos-border-color);
-		background: var(--nos-bg-secondary);
+		background: var(--nos-stat-bg);
 
 		.nos-combat__stat {
 			border-color: var(--nos-border-color);
@@ -759,7 +214,7 @@
 	// Header
 	.nos-header__hitdie {
 		border-color: var(--nos-border-color);
-		background: var(--nos-bg-secondary);
+		background: var(--nos-stat-bg);
 	}
 
 	.nos-header__name label,
@@ -807,7 +262,7 @@
 
 	// Items
 	.nos-item {
-		border-bottom-color: var(--nos-border-light);
+		border-bottom-color: var(--nos-item-line);
 
 		&:hover {
 			background: var(--nos-highlight);
@@ -820,7 +275,7 @@
 
 	// Slots
 	.nos-slot {
-		border-bottom-color: var(--nos-border-light);
+		border-bottom-color: var(--nos-faint-line);
 
 		&--empty {
 			color: var(--nos-text-secondary);
@@ -843,7 +298,7 @@
 
 	// Currency
 	.nos-currency {
-		border-bottom-color: var(--nos-border-light);
+		border-bottom-color: var(--nos-faint-line);
 	}
 
 	.nos-currency__coin label {
@@ -852,7 +307,7 @@
 
 	.nos-currency__btn {
 		color: var(--nos-text-secondary);
-		border-color: var(--nos-border-light);
+		border-color: var(--nos-faint-line);
 
 		&:hover {
 			color: var(--nos-text-primary);
@@ -866,8 +321,8 @@
 	}
 
 	.nos-bio__notes-editor {
-		border-color: var(--nos-border-light);
-		background: var(--nos-bg-input);
+		border-color: var(--nos-notes-line);
+		background: var(--nos-notes-bg);
 		color: var(--nos-text-primary);
 	}
 
@@ -885,7 +340,7 @@
 
 	// Sidebar buttons
 	.nos-sidebar-btn {
-		background: var(--nos-bg-secondary);
+		background: var(--nos-button-bg);
 		border-color: var(--nos-border-color);
 		color: var(--nos-text-secondary);
 
@@ -902,7 +357,7 @@
 
 	// Color scheme menu
 	.nos-color-scheme-menu {
-		background: var(--nos-bg-primary);
+		background: var(--nos-menu-bg);
 		border-color: var(--nos-border-color);
 
 		&__option {
@@ -921,8 +376,13 @@
 
 	// Logo
 	.nos-logo {
-		color: var(--nos-border-light);
+		color: var(--nos-logo-color);
 	}
+}
+
+// Dark menu needs a stronger shadow on its dark background
+.nos-sheet--dark .nos-color-scheme-menu {
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 // Color picker panel inside color scheme menu

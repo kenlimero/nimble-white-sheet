@@ -34,12 +34,6 @@ export default defineConfig({
 			preprocess: sveltePreprocess({
 				typescript: { tsconfigFile: './tsconfig.json' },
 			}),
-			onwarn: (warning, handler) => {
-				// Suppress a11y warnings (Foundry doesn't follow accessibility rules)
-				if (warning.code?.startsWith('a11y')) return;
-				if (warning.code === 'state_referenced_locally') return;
-				handler?.(warning);
-			},
 		}),
 	],
 	resolve: {

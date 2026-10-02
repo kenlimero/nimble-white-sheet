@@ -3,6 +3,10 @@
 
 	let { actor } = $props();
 
+	function onDragStart(event, item) {
+		event.dataTransfer?.setData('text/plain', JSON.stringify({ type: 'Item', uuid: item.uuid }));
+	}
+
 	let weapons = $derived(
 		actor.reactive.items
 			.filter((i) => i.type === 'object' && i.system?.objectType === 'weapon')
@@ -11,7 +15,7 @@
 </script>
 
 {#each weapons as item}
-	<div class="nos-slot" draggable="true">
+	<div class="nos-slot" data-item-id={item.id} draggable="true" ondragstart={(e) => onDragStart(e, item)}>
 		<img
 			class="nos-slot__img"
 			src={item.img}

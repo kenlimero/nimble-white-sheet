@@ -5,7 +5,7 @@ interface SvelteApplicationRenderContext {
 	/** State data tracked by the root component: objects herein must be plain object. */
 	state: object;
 	/** This application instance */
-	foundryApp: SvelteApplication;
+	foundryApp: foundry.applications.api.ApplicationV2;
 }
 
 interface FoundryCustomElement {
@@ -46,7 +46,9 @@ function SvelteApplicationMixin<
 			classes: ['nimble-white-sheet'],
 		};
 
-		protected abstract root: svelte.Component<Record<string, never>>;
+		/** Root component; it receives the render context from _prepareContext as props. */
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		protected abstract root: svelte.Component<any>;
 
 		protected $state = $state({});
 
@@ -65,7 +67,7 @@ function SvelteApplicationMixin<
 			if (options.isFirstRender) {
 				this.#mount = svelte.mount(this.root, {
 					target: content,
-					props: { ...result, state: this.$state } as object as Record<string, never>,
+					props: { ...result, state: this.$state },
 				});
 			}
 		}

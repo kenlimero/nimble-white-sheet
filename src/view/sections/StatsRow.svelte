@@ -79,7 +79,7 @@
 						class="nos-combat__input"
 						type="number"
 						value={hp.temp ?? 0}
-						onchange={({ target }) => updateTempHP(Number(target.value))}
+						onchange={(e) => updateTempHP(Number(e.currentTarget.value))}
 					/>
 				</div>
 			</div>
@@ -89,7 +89,7 @@
 				<div class="nos-combat__stat nos-combat__stat--hp">
 					<span class="nos-combat__icon">
 						{#if isBloodied}
-							<i class="fa-solid fa-heart-crack" style="color: #b01b19;"></i>
+							<i class="fa-solid fa-heart-crack" style="color: var(--nos-danger, #b01b19);"></i>
 						{:else}
 							<i class="fa-solid fa-heart"></i>
 						{/if}
@@ -100,7 +100,7 @@
 							class="nos-combat__input"
 							type="number"
 							value={hp.value}
-							onchange={({ target }) => updateCurrentHP(Number(target.value))}
+							onchange={(e) => updateCurrentHP(Number(e.currentTarget.value))}
 						/>
 						<span class="nos-combat__sub">/</span>
 						<span class="nos-combat__value">{hp.max}</span>
@@ -116,18 +116,18 @@
 					</button>
 				</div>
 				<div class="nos-combat__stat nos-combat__stat--mana">
-					<span class="nos-combat__icon"><i class="fa-solid fa-sparkles" style="color: {mana?.color ?? '#6a5acd'};"></i></span>
-					<span class="nos-combat__label" style="color: {mana?.color ?? '#6a5acd'};">{localize('NWS.Mana')}</span>
+					<span class="nos-combat__icon"><i class="fa-solid fa-sparkles" style="color: {mana?.color ?? 'var(--nos-mana-color, #6a5acd)'};"></i></span>
+					<span class="nos-combat__label" style="color: {mana?.color ?? 'var(--nos-mana-color, #6a5acd)'};">{localize('NWS.Mana')}</span>
 					<div class="nos-combat__mana-inputs">
 						<input
 							class="nos-combat__input"
 							type="number"
 							value={mana?.current ?? 0}
-							onchange={({ target }) => updateCurrentMana(Number(target.value))}
-							style="color: {mana?.color ?? '#6a5acd'};"
+							onchange={(e) => updateCurrentMana(Number(e.currentTarget.value))}
+							style="color: {mana?.color ?? 'var(--nos-mana-color, #6a5acd)'};"
 						/>
 						<span class="nos-combat__sub">/</span>
-						<span class="nos-combat__value" style="color: {mana?.color ?? '#6a5acd'};">{mana?.max || mana?.baseMax || 0}</span>
+						<span class="nos-combat__value" style="color: {mana?.color ?? 'var(--nos-mana-color, #6a5acd)'};">{mana?.max || mana?.baseMax || 0}</span>
 					</div>
 					<button
 						class="nos-icon-btn"
