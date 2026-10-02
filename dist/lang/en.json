@@ -105,6 +105,20 @@
 		"ConfigureArmorProficiencies": "Configure Armor Proficiencies",
 		"WeaponProficiencies": "Weapon Proficiencies",
 		"ConfigureWeaponProficiencies": "Configure Weapon Proficiencies",
-		"Notes": "Notes"
+		"Notes": "Notes",
+
+		"NewObject": "New Object",
+		"NewSpell": "New Spell",
+		"DeleteItemTitle": "Delete {name}",
+		"DeleteItemContent": "Delete <strong>{name}</strong> from this character? This cannot be undone.",
+		"DeleteItemFailed": "Failed to delete the item.",
+		"ItemResolveFailed": "Failed to resolve the dropped item.",
+		"ItemAddFailed": "Failed to add the item to this character.",
+		"SubclassLevelRequired": "You must be at least level 3 to select a subclass. You are currently level {level}.",
+		"SubclassClassRequired": "The subclass \"{name}\" requires the {className} class.",
+		"SubclassAlreadyOwned": "You already have the \"{name}\" subclass.",
+		"SubclassReplace": "You already have the <strong>{current}</strong> subclass.<br />Do you want to replace it with <strong>{name}</strong>?",
+		"SubclassRemoveFailed": "Failed to remove the existing subclass.",
+		"SubclassAddFailed": "Failed to add the subclass to this character."
 	}
 }

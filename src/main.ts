@@ -1,5 +1,6 @@
 import WhiteCharacterSheet from './sheets/WhiteCharacterSheet.svelte.js';
 import './scss/main.scss';
+import { MODULE_ID, RELEASE_ID } from './utils/moduleId.js';
 
 Hooks.once('init', () => {
 
@@ -8,12 +9,12 @@ Hooks.once('init', () => {
 	>[1];
 
 	foundry.documents.collections.Actors.registerSheet(
-		'nimble-white-sheet',
+		MODULE_ID,
 		WhiteCharacterSheet as unknown as ActorSheetConstructor,
 		{
 			types: ['character'],
 			makeDefault: false,
-			label: 'Nimble White Sheet',
+			label: MODULE_ID === RELEASE_ID ? 'Nimble White Sheet' : `Nimble White Sheet (${MODULE_ID})`,
 		},
 	);
 });

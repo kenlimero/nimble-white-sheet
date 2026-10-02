@@ -5,6 +5,7 @@
 		"moduleResolution": "bundler",
 		"moduleDetection": "force",
 		"isolatedModules": true,
+		"allowJs": true,
 		"lib": ["DOM", "DOM.Iterable", "ESNext"],
 		"target": "ESNext",
 		"types": ["fvtt-types", "vite/client"],

@@ -105,6 +105,20 @@
 		"ConfigureArmorProficiencies": "Configurer les ma\u00eetrises d'armure",
 		"WeaponProficiencies": "Ma\u00eetrises d'armes",
 		"ConfigureWeaponProficiencies": "Configurer les ma\u00eetrises d'armes",
-		"Notes": "Notes"
+		"Notes": "Notes",
+
+		"NewObject": "Nouvel objet",
+		"NewSpell": "Nouveau sort",
+		"DeleteItemTitle": "Supprimer {name}",
+		"DeleteItemContent": "Supprimer <strong>{name}</strong> de ce personnage ? Cette action est irr\u00e9versible.",
+		"DeleteItemFailed": "Impossible de supprimer l'objet.",
+		"ItemResolveFailed": "Impossible de r\u00e9cup\u00e9rer l'objet d\u00e9pos\u00e9.",
+		"ItemAddFailed": "Impossible d'ajouter l'objet \u00e0 ce personnage.",
+		"SubclassLevelRequired": "Vous devez \u00eatre au moins niveau 3 pour choisir une sous-classe. Vous \u00eates actuellement niveau {level}.",
+		"SubclassClassRequired": "La sous-classe \u00ab {name} \u00bb n\u00e9cessite la classe {className}.",
+		"SubclassAlreadyOwned": "Vous avez d\u00e9j\u00e0 la sous-classe \u00ab {name} \u00bb.",
+		"SubclassReplace": "Vous avez d\u00e9j\u00e0 la sous-classe <strong>{current}</strong>.<br />Voulez-vous la remplacer par <strong>{name}</strong> ?",
+		"SubclassRemoveFailed": "Impossible de retirer la sous-classe existante.",
+		"SubclassAddFailed": "Impossible d'ajouter la sous-classe \u00e0 ce personnage."
 	}
 }

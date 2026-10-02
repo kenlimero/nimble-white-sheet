@@ -1,0 +1,85 @@
+// Theme tokens read as CSS custom properties instead of hardcoded colors.
+// The custom scheme sets its palette (--nos-bg-primary…) inline on .nos-sheet, which wins over these.
+.nos-sheet {
+	--nos-text-muted: #888;
+	--nos-border-color: #333;
+}
+
+// Theme variables. White sets only the two read by components; Dark and Nimble also set the
+// custom scheme's palette variables and role variables used by the shared rules in main.scss.
+// Custom gets its palette inline (CSS_VAR_MAP) and derives the role variables from it.
+.nos-sheet:where(.nos-sheet--dark, .nos-sheet--nimble, .nos-sheet--custom) {
+	--nos-text-muted: var(--nos-text-secondary);
+}
+
+.nos-sheet--dark {
+	--nos-text-primary: #e0e0e0;
+	--nos-text-secondary: #999;
+	--nos-border-color: #aaa;
+	--nos-highlight: hsl(210, 40%, 25%);
+	--nos-label-bg: #ccc;
+	--nos-label-text: #1a1a1e;
+	--nos-sheet-bg: #1a1a1e;
+	--nos-box-bg: #1a1a1e;
+	--nos-menu-bg: #252529;
+	--nos-notes-bg: #1a1a1e;
+	--nos-stat-bg: rgba(40, 40, 45, 0.9);
+	--nos-button-bg: #252529;
+	--nos-focus-line: #aaa;
+	--nos-item-line: #333;
+	--nos-faint-line: #666;
+	--nos-notes-line: #666;
+	--nos-logo-color: #666;
+}
+
+.nos-sheet--nimble {
+	--nos-text-primary: var(--nimble-dark-text-color);
+	--nos-text-secondary: var(--nimble-medium-text-color);
+	--nos-border-color: var(--nimble-box-color);
+	--nos-highlight: var(--nimble-input-background-color);
+	--nos-label-bg: var(--nimble-navigation-background-color);
+	--nos-label-text: var(--nimble-navigation-text-color);
+	--nos-sheet-bg: var(--nimble-sheet-background);
+	--nos-box-bg: var(--nimble-box-background-color);
+	--nos-menu-bg: var(--nimble-box-background-color);
+	--nos-notes-bg: var(--nimble-box-background-color);
+	--nos-stat-bg: var(--nimble-box-background-color);
+	--nos-button-bg: var(--nimble-box-background-color);
+	--nos-focus-line: var(--nimble-input-border-color);
+	--nos-item-line: var(--nimble-card-border-color);
+	--nos-faint-line: var(--nimble-card-border-color);
+	--nos-notes-line: var(--nimble-box-color);
+	--nos-logo-color: var(--nimble-medium-text-color);
+}
+
+.nos-sheet--custom {
+	--nos-sheet-bg: var(--nos-bg-primary);
+	--nos-box-bg: var(--nos-bg-primary);
+	--nos-menu-bg: var(--nos-bg-primary);
+	--nos-notes-bg: var(--nos-bg-input);
+	--nos-stat-bg: var(--nos-bg-secondary);
+	--nos-button-bg: var(--nos-bg-secondary);
+	--nos-focus-line: var(--nos-border-light);
+	--nos-item-line: var(--nos-border-light);
+	--nos-faint-line: var(--nos-border-light);
+	--nos-notes-line: var(--nos-border-light);
+	--nos-logo-color: var(--nos-border-light);
+}
+
+// Secondary text: placeholders, search icons, spell tags
+.nos-muted {
+	color: var(--nos-text-muted);
+}
+
+.nos-tag {
+	color: var(--nos-text-muted);
+	font-size: 0.7rem;
+}
+
+// Empty-list hint
+.nos-empty {
+	color: var(--nos-text-muted);
+	font-style: italic;
+	text-align: center;
+	padding: 2rem;
+}

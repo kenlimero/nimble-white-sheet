@@ -8,7 +8,7 @@
 
 	function pickPortrait(): void {
 		if (!editingEnabled) return;
-		const tokenizer = game.modules.get('vtta-tokenizer') as { active?: boolean; api?: { tokenizeActor(actor: unknown): void } } | undefined;
+		const tokenizer = game.modules?.get('vtta-tokenizer') as { active?: boolean; api?: { tokenizeActor(actor: unknown): void } } | undefined;
 		if (tokenizer?.active) {
 			tokenizer.api?.tokenizeActor(actor);
 			return;
@@ -44,7 +44,7 @@
 			value={actor.reactive.name}
 			autocomplete="off"
 			spellcheck="false"
-			onchange={({ target }) => actor.update({ name: target.value })}
+			onchange={(e) => actor.update({ name: e.currentTarget.value })}
 			disabled={!editingEnabled}
 		/>
 	</div>
@@ -55,7 +55,7 @@
 			{#if metaData}
 				<span>{metaData}</span>
 			{:else}
-				<span style="color: var(--nos-text-secondary, #888)">—</span>
+				<span class="nos-muted">—</span>
 			{/if}
 			<button
 				class="nos-icon-btn"

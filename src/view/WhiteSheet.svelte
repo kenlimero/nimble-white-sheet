@@ -1,8 +1,9 @@
 <script>
-	import { setContext } from 'svelte';
+	import { onDestroy, setContext } from 'svelte';
 	import { createSubscriber } from 'svelte/reactivity';
 	import { readable } from 'svelte/store';
 	import localize from '../utils/localize.js';
+	import { MODULE_ID } from '../utils/moduleId.js';
 	import { computeHitDiceData, COLOR_DEFAULTS, CSS_VAR_MAP } from '../types.js';
 	import HeaderRow from './sections/HeaderRow.svelte';
 	import StatsRow from './sections/StatsRow.svelte';
@@ -12,12 +13,19 @@
 
 	let { actor: rawActor, sheet } = $props();
 
+	// Active effects live on the actor or on one of its items (transferred effects).
+	const effectActorId = (effect) =>
+		(effect?.parent?.documentName === 'Actor' ? effect.parent : effect?.parent?.parent)?.id;
+
 	// --- Module-local reactivity ---
 	// The system's actor.reactive uses createSubscriber from the system's Svelte runtime.
 	// Since this module bundles its own Svelte runtime, the system's subscriptions don't
 	// notify our $derived values. We create our own subscription using the module's runtime,
 	// listening to the same Foundry hooks.
 	const subscribe = createSubscriber((update) => {
+		const onEffect = (effect) => {
+			if (effectActorId(effect) === rawActor.id) update();
+		};
 		const hooks = {
 			updateActor: Hooks.on('updateActor', (doc, _, opts) => {
 				if (opts.diff === false) return;
@@ -33,12 +41,18 @@
 				if (opts.diff === false) return;
 				if (doc?.actor?.id === rawActor.id) update();
 			}),
+			createActiveEffect: Hooks.on('createActiveEffect', onEffect),
+			updateActiveEffect: Hooks.on('updateActiveEffect', onEffect),
+			deleteActiveEffect: Hooks.on('deleteActiveEffect', onEffect),
 		};
 		return () => {
 			Hooks.off('updateActor', hooks.updateActor);
 			Hooks.off('createItem', hooks.createItem);
 			Hooks.off('deleteItem', hooks.deleteItem);
 			Hooks.off('updateItem', hooks.updateItem);
+			Hooks.off('createActiveEffect', hooks.createActiveEffect);
+			Hooks.off('updateActiveEffect', hooks.updateActiveEffect);
+			Hooks.off('deleteActiveEffect', hooks.deleteActiveEffect);
 		};
 	});
 
@@ -164,15 +178,19 @@
 	}
 
 	// --- Color scheme ---
+	// Theme flags live in this module's scope. Sheets themed before that stored them in the
+	// system's `nimble` scope, which is still read as a fallback.
+	let themeFlags = $derived(actor.reactive.flags[MODULE_ID]);
+
 	let colorScheme = $derived.by(() => {
-		const scheme = flags?.colorScheme;
+		const scheme = themeFlags?.colorScheme ?? flags?.colorScheme;
 		if (scheme) return scheme;
 		if (flags?.darkMode === true) return 'dark';
 		return 'nimble';
 	});
 
 	async function setColorScheme(value) {
-		await actor.setFlag('nimble', 'colorScheme', value);
+		await actor.setFlag(MODULE_ID, 'colorScheme', value);
 	}
 
 	let darkMode = $derived(colorScheme === 'dark');
@@ -180,16 +198,34 @@
 	let customMode = $derived(colorScheme === 'custom');
 
 	// --- Custom colors ---
-	let customColors = $derived.by(() => {
-		const saved = flags?.customColors;
-		if (!saved) return { ...COLOR_DEFAULTS };
-		return { ...COLOR_DEFAULTS, ...saved };
-	});
+	// The color picker fires on every pointer move: preview locally at once, save once it settles.
+	const COLOR_SAVE_DELAY = 300;
+	let savedColors = $derived({ ...flags?.customColors, ...themeFlags?.customColors });
+	let pendingColors = $state({});
+	let colorSaveTimer;
 
-	async function setCustomColor(key, value) {
-		const current = flags?.customColors ?? {};
-		await actor.setFlag('nimble', 'customColors', { ...current, [key]: value });
+	let customColors = $derived({ ...COLOR_DEFAULTS, ...savedColors, ...pendingColors });
+
+	function setCustomColor(key, value) {
+		pendingColors = { ...pendingColors, [key]: value };
+		clearTimeout(colorSaveTimer);
+		colorSaveTimer = setTimeout(saveCustomColors, COLOR_SAVE_DELAY);
 	}
+
+	async function saveCustomColors() {
+		const pending = pendingColors;
+		if (Object.keys(pending).length === 0) return;
+		await actor.setFlag(MODULE_ID, 'customColors', { ...savedColors, ...pending });
+		// Keep only the colors changed again while saving.
+		pendingColors = Object.fromEntries(
+			Object.entries(pendingColors).filter(([key, value]) => pending[key] !== value),
+		);
+	}
+
+	onDestroy(() => {
+		clearTimeout(colorSaveTimer);
+		saveCustomColors();
+	});
 
 	let customStyle = $derived.by(() => {
 		if (!customMode) return '';

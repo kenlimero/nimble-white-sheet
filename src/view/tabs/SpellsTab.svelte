@@ -1,8 +1,10 @@
 <script lang="ts">
+	import type { NimbleActor } from '../../types.js';
 	import localize from '../../utils/localize.js';
+	import ItemRow from '../components/ItemRow.svelte';
 	import { format } from '../../utils/localize.js';
 
-	let { actor, editingEnabled } = $props();
+	let { actor, editingEnabled }: { actor: NimbleActor; editingEnabled: boolean } = $props();
 
 	let searchQuery = $state('');
 
@@ -36,39 +38,18 @@
 		});
 	});
 
-	function configureItem(id: string): void {
-		const item = actor.items.get(id);
-		item?.sheet?.render(true);
-	}
-
-	async function deleteItem(id: string): Promise<void> {
-		try {
-			await actor.deleteEmbeddedDocuments('Item', [id]);
-		} catch (err) {
-			console.error('nimble-white-sheet | Failed to delete spell:', err);
-		}
-	}
-
 	async function createSpell(): Promise<void> {
 		try {
-			await actor.createEmbeddedDocuments('Item', [{ name: 'New Spell', type: 'spell' }]);
+			await actor.createEmbeddedDocuments('Item', [{ name: localize('NWS.NewSpell'), type: 'spell' }]);
 		} catch (err) {
 			console.error('nimble-white-sheet | Failed to create spell:', err);
 		}
 	}
 
-	function castSpell(id: string): void {
-		actor.activateItem(id);
-	}
-
-	function onDragStart(event: DragEvent, item: { uuid: string }): void {
-		const dragData = { type: 'Item', uuid: item.uuid };
-		event.dataTransfer?.setData('text/plain', JSON.stringify(dragData));
-	}
 </script>
 
 <div class="nos-search">
-	<i class="fa-solid fa-search" style="color: #888;"></i>
+	<i class="fa-solid fa-search nos-muted"></i>
 	<input
 		type="text"
 		placeholder={localize('NWS.SearchSpells')}
@@ -86,38 +67,34 @@
 		<h4 class="nos-spell-tier__heading">{tier.label}</h4>
 		<div class="nos-item-grid">
 			{#each tier.spells as spell}
-				<div class="nos-item nos-item--castable" draggable="true" ondragstart={(e) => onDragStart(e, spell)} data-tooltip={spell.system?.description?.baseEffect || ''}>
-					<img class="nos-item__img" src={spell.img} alt={spell.name} />
-					<span class="nos-item__name" onclick={() => castSpell(spell.id)}>
+				<ItemRow
+					{actor}
+					item={spell}
+					{editingEnabled}
+					castable
+					tooltip={spell.system?.description?.baseEffect}
+					onactivate={() => actor.activateItem(spell.id)}
+				>
+					{#snippet label()}
 						{spell.name}
 						{#if spell.system?.concentration}
-							<span style="color: #888; font-size: 0.7rem;" data-tooltip={localize('NWS.Concentration')}>[C]</span>
+							<span class="nos-tag" data-tooltip={localize('NWS.Concentration')}>[C]</span>
 						{/if}
 						{#if spell.system?.isUtility}
-							<span style="color: #888; font-size: 0.7rem;" data-tooltip={localize('NWS.Utility')}>[U]</span>
+							<span class="nos-tag" data-tooltip={localize('NWS.Utility')}>[U]</span>
 						{/if}
-					</span>
-					<span class="nos-item__meta">
-						{spell.system?.activationCost ?? ''}
-					</span>
-					{#if editingEnabled}
-						<div class="nos-item__controls">
-							<button class="nos-icon-btn" type="button" onclick={() => configureItem(spell.id)}>
-								<i class="fa-solid fa-gear"></i>
-							</button>
-							<button class="nos-icon-btn" type="button" onclick={() => deleteItem(spell.id)}>
-								<i class="fa-solid fa-trash"></i>
-							</button>
-						</div>
-					{/if}
-				</div>
+					{/snippet}
+					{#snippet extra()}
+						<span class="nos-item__meta">{spell.system?.activationCost ?? ''}</span>
+					{/snippet}
+				</ItemRow>
 			{/each}
 		</div>
 	</div>
 {/each}
 
 {#if allSpells.length === 0}
-	<p style="color: #888; font-style: italic; text-align: center; padding: 2rem;">
+	<p class="nos-empty">
 		{localize('NWS.DropSpellsHere')}
 	</p>
 {/if}

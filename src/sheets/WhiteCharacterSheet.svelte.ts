@@ -3,6 +3,7 @@ import {
 	type SvelteApplicationRenderContext,
 } from '../lib/SvelteApplicationMixin.svelte.js';
 import type { NimbleActor, NimbleConfig, SubclassItemSystem, TokenDocument } from '../types.js';
+import localize, { format } from '../utils/localize.js';
 import WhiteSheetComponent from '../view/WhiteSheet.svelte';
 
 export default class WhiteCharacterSheet extends SvelteApplicationMixin(
@@ -50,12 +51,12 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		},
 	};
 
-	override setPosition(position?: { width?: number; height?: number; [key: string]: unknown }) {
-		if (!position) return super.setPosition(position);
-		if (position.width !== undefined && position.width < WhiteCharacterSheet.MIN_WIDTH) {
+	// Foundry may call setPosition() without arguments: default to an empty object.
+	override setPosition(position: Parameters<foundry.applications.api.ApplicationV2['setPosition']>[0] = {}) {
+		if (typeof position.width === 'number' && position.width < WhiteCharacterSheet.MIN_WIDTH) {
 			position.width = WhiteCharacterSheet.MIN_WIDTH;
 		}
-		if (position.height !== undefined && position.height < WhiteCharacterSheet.MIN_HEIGHT) {
+		if (typeof position.height === 'number' && position.height < WhiteCharacterSheet.MIN_HEIGHT) {
 			position.height = WhiteCharacterSheet.MIN_HEIGHT;
 		}
 		return super.setPosition(position);
@@ -87,12 +88,12 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 		if (allowed === false) return false;
 		if (!this.document.isOwner) return false;
 
-		let item: Item.Implementation | null;
+		let item: Item.Implementation | null | undefined;
 		try {
 			item = await Item.implementation.fromDropData(data);
 		} catch (err) {
 			console.error('nimble-white-sheet | Failed to resolve dropped item:', err);
-			ui.notifications?.error('Failed to resolve the dropped item.');
+			ui.notifications?.error(localize('NWS.ItemResolveFailed'));
 			return false;
 		}
 
@@ -127,7 +128,7 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			return await this._actor.createEmbeddedDocuments('Item', items);
 		} catch (err) {
 			console.error('nimble-white-sheet | Failed to create item(s):', err);
-			ui.notifications?.error('Failed to add the item to this character.');
+			ui.notifications?.error(localize('NWS.ItemAddFailed'));
 			return [];
 		}
 	}
@@ -152,9 +153,7 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			// Level check
 			const characterLevel = this._actor.levels?.character ?? 0;
 			if (characterLevel < 3) {
-				ui.notifications?.warn(
-					`You must be at least level 3 to select a subclass. You are currently level ${characterLevel}.`,
-				);
+				ui.notifications?.warn(format('NWS.SubclassLevelRequired', { level: characterLevel }));
 				continue;
 			}
 
@@ -166,7 +165,7 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			if (!hasMatchingClass) {
 				const className = nimbleConfig?.classes?.[parentClass ?? ''] ?? parentClass;
 				ui.notifications?.warn(
-					`The subclass "${subclass.name}" requires the ${className} class.`,
+					format('NWS.SubclassClassRequired', { name: subclass.name ?? '', className: className ?? '' }),
 				);
 				continue;
 			}
@@ -183,12 +182,15 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 				const newIdentifier = subclass.system?.identifier;
 
 				if (existingSystem?.identifier && newIdentifier && existingSystem.identifier === newIdentifier) {
-					ui.notifications?.warn(`You already have the "${existingSubclass.name}" subclass.`);
+					ui.notifications?.warn(format('NWS.SubclassAlreadyOwned', { name: existingSubclass.name }));
 					continue;
 				}
 
 				const confirmed = await foundry.applications.api.DialogV2.confirm({
-					content: `<p>You already have the <strong>${existingSubclass.name}</strong> subclass.<br />Do you want to replace it with <strong>${subclass.name}</strong>?</p>`,
+					content: `<p>${format('NWS.SubclassReplace', {
+						current: foundry.utils.escapeHTML(existingSubclass.name),
+						name: foundry.utils.escapeHTML(subclass.name ?? ''),
+					})}</p>`,
 					rejectClose: false,
 					modal: true,
 				});
@@ -199,7 +201,7 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 					await this._actor.deleteEmbeddedDocuments('Item', [existingSubclass.id!]);
 				} catch (err) {
 					console.error('nimble-white-sheet | Failed to remove existing subclass:', err);
-					ui.notifications?.error('Failed to remove the existing subclass.');
+					ui.notifications?.error(localize('NWS.SubclassRemoveFailed'));
 					continue;
 				}
 			}
@@ -213,7 +215,7 @@ export default class WhiteCharacterSheet extends SvelteApplicationMixin(
 			return await this._actor.createEmbeddedDocuments('Item', validatedItems);
 		} catch (err) {
 			console.error('nimble-white-sheet | Failed to create subclass item(s):', err);
-			ui.notifications?.error('Failed to add the subclass to this character.');
+			ui.notifications?.error(localize('NWS.SubclassAddFailed'));
 			return [];
 		}
 	}
